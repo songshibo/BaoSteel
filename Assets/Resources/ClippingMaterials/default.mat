@@ -93,7 +93,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - BackFaceColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
+    - BackFaceColor: {r: 0.39215687, g: 0.39215684, b: 0.39215684, a: 1}
     - BottomPlane: {r: 0, g: 0, b: 0, a: 0}
     - TopPlane: {r: 0, g: 200, b: 0, a: 0}
     - VerticalNormal: {r: 1, g: 0, b: 0, a: 0}
