@@ -93,11 +93,12 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Albedo: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     - BackFaceColor: {r: 0.39215687, g: 0.39215684, b: 0.39215684, a: 1}
     - BottomPlane: {r: 0, g: 0, b: 0, a: 0}
     - TopPlane: {r: 0, g: 200, b: 0, a: 0}
     - VerticalNormal: {r: 1, g: 0, b: 0, a: 0}
-    - VerticalPlane: {r: 0, g: 0, b: 0, a: 0}
+    - VerticalPlane: {r: 200, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
