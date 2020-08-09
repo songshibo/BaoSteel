@@ -32,3 +32,21 @@ build之后根据平台不同不同，webgl不可通过这种方式读配置
 #### 裁剪控制器
 
 单例的控制器，使用单例的模式调用，场景中通过继承monobehaviour的测试脚本测试功能，后期使用UI绑定时间
+
+### **数据服务管理器**
+
+1.接口:DataServiceManager.Instance().GetTemperature(funcName)
+
+- 作用：获得所有热电偶的温度数据 需传入处理函数名funcName
+
+- 注意点：
+
+  - funcName为数据后续处理函数。函数定义需要一个string类型参数（与数据类型一致） 返回值为bool类型   
+
+    eg：bool funcName(string temperatureData){ do dataOperation}
+
+  - 接口为协程 需要通过StartCoroutine()启动  ，所在脚本需继承MonoBehaviour
+
+    eg：StartCoroutine(DataServiceManager.Instance().GetTemperature(funcName));
+
+​	
