@@ -52,6 +52,11 @@ public class FocusController : MonoBehaviour
         cameraRig.position = Vector3.Lerp(cameraRig.position, rigPosition, Time.deltaTime * zoomSpeed);
     }
 
+    public void SetCameraParameters(float _zoomSpeed, float _rotateSpeed, float _dragSpeed, float _limitDistance)
+    {
+        zoomSpeed = _zoomSpeed; rotateSpeed = _rotateSpeed; dragSpeed = _dragSpeed; limitDistance = _limitDistance;
+    }
+
     public void LocateThermoCouple(Vector3 target, float offset)
     {
         // 这样防止鼠标拖动的移动未完成时出现移动不到位的bug

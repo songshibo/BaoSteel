@@ -3,7 +3,7 @@ using System.IO;
 
 public class ExternalConfigReader
 {
-    public static ExternalConfigReader instance = new ExternalConfigReader();
+    private static ExternalConfigReader instance = new ExternalConfigReader();
 
     private ExternalConfigReader()
     {
