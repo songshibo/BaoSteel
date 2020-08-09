@@ -19,7 +19,7 @@ public class FocusController : MonoBehaviour
     private Quaternion rigRotation; // CameraRig的旋转，用于水平旋转相机
     private Quaternion verticalRotation; // VerticalRig的旋转，用于垂直旋转相机
 
-    public bool cursor_control_lock = false; // true则禁止一切鼠标控制
+    public bool lockCursor = false; // true则禁止一切鼠标控制
     private Vector3 cameraRigOriginPos; // 记录camera rig的初始位置
     private Quaternion rigOriginRot; // 记录camera rig的初始旋转
     private Quaternion vertOriginRot; // 记录Vertical Rig的初始旋转
@@ -80,7 +80,7 @@ public class FocusController : MonoBehaviour
 
     protected void Zoom()
     {
-        if (!cursor_control_lock)
+        if (!lockCursor)
         {
             float amount = Input.GetAxis("Mouse ScrollWheel");
             float dis = Vector2.Distance(transform.localPosition, Vector3.zero);
@@ -106,7 +106,7 @@ public class FocusController : MonoBehaviour
 
     protected void Rotate()
     {
-        if (Input.GetMouseButton(1) && !cursor_control_lock)
+        if (Input.GetMouseButton(1) && !lockCursor)
         {
             float mouseX = Input.GetAxis("Mouse X") * rotateSpeed;
 
@@ -137,7 +137,7 @@ public class FocusController : MonoBehaviour
 
     protected void Drag()
     {
-        if (Input.GetMouseButton(2) && !cursor_control_lock)
+        if (Input.GetMouseButton(2) && !lockCursor)
         {
             float mouseX = Input.GetAxis("Mouse X") * dragSpeed;
             float mouseY = Input.GetAxis("Mouse Y") * dragSpeed;
@@ -177,6 +177,6 @@ public class FocusController : MonoBehaviour
 
     public void DisableEnableMouseControl()
     {
-        cursor_control_lock = !cursor_control_lock;
+        lockCursor = !lockCursor;
     }
 }
