@@ -10,11 +10,6 @@ public class CullingController
         ResetMaterialProperties();
     }
 
-    ~CullingController()
-    {
-        ResetMaterialProperties();
-    }
-
     public static CullingController Instance()
     {
         return instance;
