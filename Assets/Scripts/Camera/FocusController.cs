@@ -170,11 +170,6 @@ public class FocusController : MonoBehaviour
         rigPosition = cameraRigOriginPos;
     }
 
-    public float GetCurrentCameraHeight()
-    {
-        return rigPosition.y;
-    }
-
     public void DisableEnableMouseControl()
     {
         lockCursor = !lockCursor;
