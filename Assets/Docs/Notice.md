@@ -35,7 +35,7 @@ build之后根据平台不同不同，webgl不可通过这种方式读配置
 
 ### **数据服务管理器**
 
-1.接口:DataServiceManager.Instance().GetTemperature(funcName)
+**1.接口:DataServiceManager.Instance().GetTemperature(funcName)**
 
 - 作用：获得所有热电偶的温度数据 需传入处理函数名funcName
 
@@ -49,4 +49,28 @@ build之后根据平台不同不同，webgl不可通过这种方式读配置
 
     eg：StartCoroutine(DataServiceManager.Instance().GetTemperature(funcName));
 
-​	
+**2.接口：DataServiceManager.Instance().GetModel(Func<string, bool> DataArrangement, string type = "1", float min_h = 0, float max_h = 0)**
+
+- 作用：获得指定高度的指定模型
+
+- 通过输入类型代码来指定模型。
+
+  1=cooling_plate
+
+  2=cooling_plate_cross
+
+  3=cooling_wall
+
+  4=thermocouple
+
+  5=tuyere
+
+- 参数说明
+
+  - DataArrangement为带有一个string参数，返回值类型为bool的函数名
+
+  - 通过参数type指定要获取的模型，
+
+     如 string type =“1” 代表获取cooling_plate; 而string type ="1,2"代表获取cooling_plate 和 cooling_plate_cross
+
+  - min_h max_h 指定高度下限和上限 返回此高度范围内的type参数指定的模型

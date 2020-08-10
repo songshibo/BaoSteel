@@ -109,13 +109,39 @@ public class DataServiceManager
 
 
 
-    public IEnumerator GetTemperature(Func<string, bool> DataArrangement)
+    public IEnumerator GetTemperature(Func<string, bool> DataArrangement, string layer = "0")
     {
 
         if (initialized)
         {
+            string selected_l = null;
+            if(layer != "0"){
+                selected_l = "?layer=" + layer;
+            }
             
-            UnityWebRequest www = UnityWebRequest.Get(url + "/temperature");
+            UnityWebRequest www = UnityWebRequest.Get(url + "/temperature" + selected_l);
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                // Show results as text
+                string data = www.downloadHandler.text;
+
+                DataArrangement(data);
+
+                // Or retrieve results as binary data
+
+            }
+        }
+    }
+
+    public IEnumerator GetModel(Func<string, bool> DataArrangement, string type = "1", float min_h = 0, float max_h = 0){
+        if(initialized){
+             UnityWebRequest www = UnityWebRequest.Get(url + "/model?" + "type=" +type + "&&" + "min_h=" + min_h.ToString() + "&&" + "max_h=" + max_h.ToString());
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
