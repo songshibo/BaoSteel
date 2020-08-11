@@ -33,7 +33,7 @@ public sealed class ModelManager : MonoBehaviour
     {
         string max_h = mh.ToString().Trim();
         data = data.Trim();
-        
+
         List<GameObject> prefabs = new List<GameObject>();
         string tag = "Untagged";
         if (type == COOLING_WALL)
@@ -112,10 +112,9 @@ public sealed class ModelManager : MonoBehaviour
             }
         }
 
-        
         Debug.Log(type + "    " + mh.ToString() + "    " + prefabs.Count.ToString());
         JToken json = JObject.Parse(data);
-        
+
         foreach (JProperty model_type in json)
         {
             foreach (JProperty model_layer in model_type.Value)
@@ -140,7 +139,7 @@ public sealed class ModelManager : MonoBehaviour
                     obj.transform.position = new Vector3(x, y, z);
                     obj.transform.eulerAngles = new Vector3(0, (float)cur_angle, 0);
                     obj.tag = tag;
-                    obj.name = name + "_" + (i+1).ToString();
+                    obj.name = name + "_" + (i + 1).ToString();
                     //Debug.Log(x);
                     //Debug.Log(y);
                     //Debug.Log(z);
@@ -217,7 +216,7 @@ public sealed class ModelManager : MonoBehaviour
         StartCoroutine(database.GetModel(GenerateOtherModel, TUYERE, 0, 16.6f));  // tuyere
         StartCoroutine(database.GetModel(GenerateThermoModel, THERMOCOUPLE, 0, 16.6f));  // thermocouple
 
-        
+
         // part2    16.6-21.1
         // include: bosh    thermocouple    cooling_plate
         GameObject bosh = Instantiate((GameObject)Resources.Load("Prefabs/bosh"), root.transform);
@@ -261,5 +260,5 @@ public sealed class ModelManager : MonoBehaviour
         StartCoroutine(database.GetModel(GenerateOtherModel, COOLING_WALL, 41f, 60f));  // cooling_wall9 
     }
 
-    
+
 }

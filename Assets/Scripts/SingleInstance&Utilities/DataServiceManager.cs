@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using UnityEngine.Networking;
 using System.Security.Cryptography;
 using System;
+
 public class DataServiceManager
 {
     private static DataServiceManager _instance = null;
@@ -115,10 +116,11 @@ public class DataServiceManager
         if (initialized)
         {
             string selected_l = null;
-            if(layer != "0"){
+            if (layer != "0")
+            {
                 selected_l = "?layer=" + layer;
             }
-            
+
             UnityWebRequest www = UnityWebRequest.Get(url + "/temperature" + selected_l);
             yield return www.SendWebRequest();
 
@@ -139,8 +141,10 @@ public class DataServiceManager
         }
     }
 
-    public IEnumerator GetModel(Func<string, string, float, bool> DataArrangement, string type, float min_h = 0, float max_h = 0){
-        if(initialized){
+    public IEnumerator GetModel(Func<string, string, float, bool> DataArrangement, string type, float min_h = 0, float max_h = 0)
+    {
+        if (initialized)
+        {
             UnityWebRequest www = UnityWebRequest.Get(url + "/model?" + "type=" + type + "&&" + "min_h=" + min_h.ToString() + "&&" + "max_h=" + max_h.ToString());
             yield return www.SendWebRequest();
 

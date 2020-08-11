@@ -10,6 +10,11 @@ public class ConfigurationManager : MonoBehaviour
         InitializeCamera();
     }
 
+    private void Start()
+    {
+        CoroutineHandler.Instance().CoroutineTest();
+    }
+
     private void InitializeCamera()
     {
         string filename = "camera.txt";
@@ -39,20 +44,14 @@ public class ConfigurationManager : MonoBehaviour
             foreach (Match match in matchs)
             {
                 config.Add(match.Groups["key"].Value.ToString(), match.Groups["item"].Value.ToString());
-
-
             }
-
         }
 
         DataServiceManager.Instance().initialize(config);
 
         foreach (KeyValuePair<string, string> c in config)
         {
-
             Debug.Log("Key: " + c.Key + " Value: " + c.Value);
-
         }
-
     }
 }
