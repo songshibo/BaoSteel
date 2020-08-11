@@ -139,9 +139,9 @@ public class DataServiceManager
         }
     }
 
-    public IEnumerator GetModel(Func<string, bool> DataArrangement, string type = "1", float min_h = 0, float max_h = 0){
+    public IEnumerator GetModel(Func<string, string, float, bool> DataArrangement, string type, float min_h = 0, float max_h = 0){
         if(initialized){
-             UnityWebRequest www = UnityWebRequest.Get(url + "/model?" + "type=" +type + "&&" + "min_h=" + min_h.ToString() + "&&" + "max_h=" + max_h.ToString());
+            UnityWebRequest www = UnityWebRequest.Get(url + "/model?" + "type=" + type + "&&" + "min_h=" + min_h.ToString() + "&&" + "max_h=" + max_h.ToString());
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
@@ -153,8 +153,7 @@ public class DataServiceManager
                 // Show results as text
                 string data = www.downloadHandler.text;
 
-                DataArrangement(data);
-
+                DataArrangement(data, type, max_h);
                 // Or retrieve results as binary data
 
             }

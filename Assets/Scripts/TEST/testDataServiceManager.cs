@@ -6,11 +6,10 @@ public class testDataServiceManager : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    bool arr(string d)
+    public static bool arr(string d, string type, float max_h)
     {
 
         Debug.Log(d);
-
         return true;
     }
     void Start()
@@ -19,15 +18,12 @@ public class testDataServiceManager : MonoBehaviour
         // TestGetTemperatureAPI();
         TestGetModelAPI();
 
-
-
-
     }
 
     // Update is called once per frame
     void TestGetTemperatureAPI()
     {
-        StartCoroutine(DataServiceManager.Instance().GetTemperature(arr, "5, 6"));
+        //StartCoroutine(DataServiceManager.Instance().GetTemperature(arr, "5, 6"));
 
     }
 
