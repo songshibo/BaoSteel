@@ -8,7 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: top_cloth
-  m_Shader: {fileID: 4800000, guid: 2a0af21b5990d7a42ad39539d42a559d, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: fafa383ac04fb6d48964d18394bd59a2,
+    type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,6 +20,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - BumpTex:
+        m_Texture: {fileID: 2800000, guid: 7a7b1b6c1a2498c4eb32eb19c7c06562, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Metallic:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 2800000, guid: d47f84d93f8961f44b78e9bd5b4fe00e, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -56,6 +69,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - BumpScale: 1
+    - FadeDistance: 1
+    - Smoothness: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -80,6 +96,12 @@ Material:
     - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
+    - Albedo: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    - BackFaceColor: {r: 0, g: 0, b: 0, a: 1}
+    - BottomPlane: {r: 0, g: 0, b: 0, a: 0}
+    - TopPlane: {r: 0, g: 200, b: 0, a: 0}
+    - VerticalNormal: {r: 1, g: 0, b: 0, a: 0}
+    - VerticalPlane: {r: 200, g: 0, b: 0, a: 0}
     - _BottomHPPos: {r: 0, g: -10, b: 0, a: 0}
     - _Color: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
     - _Color1: {r: 0.8, g: 0.8, b: 0.8, a: 1}
