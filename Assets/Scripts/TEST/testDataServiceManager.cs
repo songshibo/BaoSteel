@@ -6,7 +6,7 @@ public class testDataServiceManager : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public static bool arr(string d, string type, float max_h)
+    public static bool arr(string d, string type)
     {
 
         Debug.Log(d);
@@ -29,6 +29,6 @@ public class testDataServiceManager : MonoBehaviour
 
     void TestGetModelAPI()
     {
-        StartCoroutine(DataServiceManager.Instance().GetModel(arr, "cooling_plate", max_h: 7));
+        StartCoroutine(DataServiceManager.Instance().GetModel(arr, "cooling_plate"));
     }
 }

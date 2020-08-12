@@ -141,7 +141,7 @@ public class DataServiceManager
         }
     }
 
-    public IEnumerator GetModel(Func<string, string, float, bool> DataArrangement, string type, float min_h = 0, float max_h = 0)
+    public IEnumerator GetModel(Func<string, string, bool> DataArrangement, string type, float min_h = 0, float max_h = 0)
     {
         if (initialized)
         {
@@ -157,7 +157,7 @@ public class DataServiceManager
                 // Show results as text
                 string data = www.downloadHandler.text;
 
-                DataArrangement(data, type, max_h);
+                DataArrangement(data, type);
                 // Or retrieve results as binary data
 
             }

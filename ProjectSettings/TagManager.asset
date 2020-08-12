@@ -3,31 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - hearth
-  - iron_outlet
-  - wind_pipeline
-  - cooling_wall1
-  - tuyere
-  - thermocouple1
-  - gas_flow
-  - bosh
-  - thermocouple2
-  - cooling_plate2
-  - waist
-  - thermocouple3
-  - cooling_plate3
-  - body
-  - cooling_cross3
-  - cooling_cross4
-  - thermocouple4
-  - cooling_plate4
-  - throat
-  - chute
-  - thermocouple5
-  - cooling_wall4
-  - cooling_wall5
-  - cross_temperature_measure
+  tags: []
   layers:
   - Default
   - TransparentFX

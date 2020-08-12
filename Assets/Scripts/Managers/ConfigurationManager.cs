@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
+
+
 public class ConfigurationManager : MonoBehaviour
 {
     private void Awake()
     {
         InitiallzieDataServiceManager();
         InitializeCamera();
+        //InitializeModelManager();
     }
 
     private void Start()
     {
-        CoroutineHandler.Instance().CoroutineTest();
+        MonoHandler.Instance().Coroutine();
     }
 
     private void InitializeCamera()
@@ -31,7 +34,18 @@ public class ConfigurationManager : MonoBehaviour
         FindObjectOfType<FocusController>().SetCameraParameters(float.Parse(lines[0]), float.Parse(lines[1]), float.Parse(lines[2]), float.Parse(lines[3]));
     }
 
-    void InitiallzieDataServiceManager()
+    private void InitializeModelManager()
+    {
+        string filename = "ModelManager.txt";
+        string config = ExternalConfigReader.Instance().ReadConfigFile(filename);
+
+        string[] lines = config.Split('\n');
+
+        // add tags, then generate models.
+        ModelManager.Instance().GeneratePipeline(lines);
+    }
+
+    private void InitiallzieDataServiceManager()
     {
         string filename = "DataServiceManagerConfig.txt";
         string configString = ExternalConfigReader.Instance().ReadConfigFile(filename);
