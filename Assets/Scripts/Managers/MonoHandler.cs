@@ -17,7 +17,7 @@ public class MonoHandler : MonoBehaviour
 
     public void Coroutine()
     {
-        StartCoroutine(DataServiceManager.Instance().GetModel(testDataServiceManager.arr, "cooling_plate"));
+        StartCoroutine(DataServiceManager.Instance.GetModel(testDataServiceManager.arr, "cooling_plate"));
     }
 
     public void InstantiatePrefab(GameObject prefab, Transform position)

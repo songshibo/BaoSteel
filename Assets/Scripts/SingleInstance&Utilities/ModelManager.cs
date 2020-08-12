@@ -68,10 +68,10 @@ public sealed class ModelManager : MonoBehaviour
             if (!done.Contains(model))
             {
                 done.Add(model);
-                
+
                 //Debug.Log(type);
                 // 注意 type 是否 五个选择之一，不带数字
-                StartCoroutine(DataServiceManager.Instance().GetModel(testDataServiceManager.arr, model));
+                StartCoroutine(DataServiceManager.Instance.GetModel(testDataServiceManager.arr, model));
             }
         }
     }
