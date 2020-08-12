@@ -6,11 +6,11 @@ using UnityEngine.Networking;
 using System.Security.Cryptography;
 using System;
 
-public class DataServiceManager
+public class DataServiceManager:Singleton<DataServiceManager>
 {
-    private static DataServiceManager _instance = null;
-    private static readonly object lockHelper = new object();
-    private DataServiceManager() { }
+    // private static DataServiceManager _instance = null;
+    // private static readonly object lockHelper = new object();
+    
 
     private bool initialized = false;
 
@@ -21,23 +21,23 @@ public class DataServiceManager
     private string ip = null;
     private string port = null;
 
-    public static DataServiceManager Instance()
-    {
+    // public static DataServiceManager Instance()
+    // {
 
-        if (_instance == null)
-        {
-            lock (lockHelper)
-            {
-                if (_instance == null)
-                {
-                    _instance = new DataServiceManager();
-                }
-            }
-        }
+    //     if (_instance == null)
+    //     {
+    //         lock (lockHelper)
+    //         {
+    //             if (_instance == null)
+    //             {
+    //                 _instance = new DataServiceManager();
+    //             }
+    //         }
+    //     }
 
-        return _instance;
+    //     return _instance;
 
-    }
+    // }
 
     public void initialize(Dictionary<string, string> config)
     {

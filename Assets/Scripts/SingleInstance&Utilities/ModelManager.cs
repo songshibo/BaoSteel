@@ -200,7 +200,7 @@ public sealed class ModelManager : MonoBehaviour
     private void GeneratePipeline()
     {
         root = GameObject.Find("Model");
-        database = DataServiceManager.Instance();
+        database = DataServiceManager.Instance;
 
 
         // part1    0-16.6，还缺少回旋区

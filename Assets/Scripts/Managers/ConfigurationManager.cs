@@ -48,7 +48,7 @@ public class ConfigurationManager : MonoBehaviour
             }
         }
 
-        DataServiceManager.Instance().initialize(config);
+        DataServiceManager.Instance.initialize(config);
 
         string log = "";
         foreach (KeyValuePair<string, string> c in config)
@@ -56,5 +56,6 @@ public class ConfigurationManager : MonoBehaviour
             log += c.Key + ":" + c.Value + "\n";
         }
         Debug.Log(log);
+        
     }
 }
