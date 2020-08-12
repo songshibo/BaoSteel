@@ -29,6 +29,6 @@ public class testDataServiceManager : MonoBehaviour
 
     void TestGetModelAPI()
     {
-        StartCoroutine(DataServiceManager.Instance().GetModel(arr, "4", max_h: 7));
+        StartCoroutine(DataServiceManager.Instance().GetModel(arr, "cooling_plate", max_h: 7));
     }
 }
