@@ -64,12 +64,12 @@ public class testDataServiceManager : MonoBehaviour
     // Update is called once per frame
     void TestGetTemperatureAPI()
     {
-        //StartCoroutine(DataServiceManager.Instance().GetTemperature(arr, "5, 6"));
+        // StartCoroutine(DataServiceManager.Instance.GetTemperature(arr, "5, 6"));
 
     }
 
     void TestGetModelAPI()
     {
-        StartCoroutine(DataServiceManager.Instance().GetModel(arr, "cooling_plate"));
+        StartCoroutine(DataServiceManager.Instance.GetModel(arr, "cooling_plate", max_h: 7));
     }
 }

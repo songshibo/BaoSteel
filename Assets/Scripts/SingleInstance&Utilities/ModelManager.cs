@@ -155,6 +155,7 @@ public sealed class ModelManager : MonoBehaviour
 
     private bool IsHasTag(string tag)
     {
+
         for (int i = 0; i < UnityEditorInternal.InternalEditorUtility.tags.Length; i++)
         {
             if (UnityEditorInternal.InternalEditorUtility.tags[i].Contains(tag))
@@ -162,6 +163,7 @@ public sealed class ModelManager : MonoBehaviour
         }
         return false;
     }
+
 
 
     //root = GameObject.Find("Model");
