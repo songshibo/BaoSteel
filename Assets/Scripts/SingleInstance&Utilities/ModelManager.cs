@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using UnityEditor;
+using System.Text.RegularExpressions;
 
 
 // 继承 MonoBehavior 类自动拒绝使用 new 关键字实例化对象。
@@ -59,51 +60,60 @@ public sealed class ModelManager : MonoBehaviour
 
     private void GenerateRemoteModel(List<string> from_database)
     {
+        List<string> done = new List<string>();
         foreach (string type in from_database)
         {
-            //print(type + type.Length);
-            StartCoroutine(DataServiceManager.Instance().GetModel(InstantiateRemoteModel, "cooling_plate"));
+            var digits = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+            string model = type.TrimEnd(digits);
+            if (!done.Contains(model))
+            {
+                done.Add(model);
+                
+                //Debug.Log(type);
+                // 注意 type 是否 五个选择之一，不带数字
+                StartCoroutine(DataServiceManager.Instance().GetModel(testDataServiceManager.arr, model));
+            }
         }
     }
 
-    private bool InstantiateRemoteModel(string data, string type)
+    public bool InstantiateRemoteModel(string data, string type)
     {
-        data = data.Trim();
+        //data = data.Trim();
 
-        JToken json = JObject.Parse(data);
+        //JToken json = JObject.Parse(data);
 
-        foreach (JProperty model_type in json)
-        {
-            foreach (JProperty one_layer in model_type.Value)
-            {
-                int cur_layer = int.Parse(one_layer.Name);
-                GameObject prefab = (GameObject)Resources.Load("Prefabs/" + one_layer.Value["prefab"].ToString().Trim());
+        //foreach (JProperty model_type in json)
+        //{
+        //    foreach (JProperty one_layer in model_type.Value)
+        //    {
+        //        int cur_layer = int.Parse(one_layer.Name);
+        //        GameObject prefab = (GameObject)Resources.Load("Prefabs/" + one_layer.Value["prefab"].ToString().Trim());
 
-                //int amount = (int)one_layer.Value["amount"];
-                //string name = one_layer.Value["name"].ToString();
-                //float y = (float)one_layer.Value["height"];
-                //float radius = (float)one_layer.Value["radius"];
-                //float angle = (float)one_layer.Value["from_angle"];
-                //float dangle = (float)(360.0 / amount);
+        //        //int amount = (int)one_layer.Value["amount"];
+        //        //string name = one_layer.Value["name"].ToString();
+        //        //float y = (float)one_layer.Value["height"];
+        //        //float radius = (float)one_layer.Value["radius"];
+        //        //float angle = (float)one_layer.Value["from_angle"];
+        //        //float dangle = (float)(360.0 / amount);
 
-                //for (int i = 0; i < amount; i++)
-                //{
-                //    double cur_angle = angle + dangle * i;
-                //    double radian = cur_angle * Math.PI / 180;
-                //    float x = (float)(Math.Sin(radian) * radius);
-                //    float z = (float)(Math.Cos(radian) * radius);
-                //    GameObject obj = Instantiate(prefab);
-                //    obj.transform.position = new Vector3(x, y, z);
-                //    obj.transform.eulerAngles = new Vector3(0, (float)cur_angle, 0);
-                //    obj.tag = tag;
-                //    obj.name = name + "_" + (i + 1).ToString();
-                //    //Debug.Log(x);
-                //    //Debug.Log(y);
-                //    //Debug.Log(z);
-                //    //break;
-                //}
-            }
-        }
+        //        //for (int i = 0; i < amount; i++)
+        //        //{
+        //        //    double cur_angle = angle + dangle * i;
+        //        //    double radian = cur_angle * Math.PI / 180;
+        //        //    float x = (float)(Math.Sin(radian) * radius);
+        //        //    float z = (float)(Math.Cos(radian) * radius);
+        //        //    GameObject obj = Instantiate(prefab);
+        //        //    obj.transform.position = new Vector3(x, y, z);
+        //        //    obj.transform.eulerAngles = new Vector3(0, (float)cur_angle, 0);
+        //        //    obj.tag = tag;
+        //        //    obj.name = name + "_" + (i + 1).ToString();
+        //        //    //Debug.Log(x);
+        //        //    //Debug.Log(y);
+        //        //    //Debug.Log(z);
+        //        //    //break;
+        //        //}
+        //    }
+        //}
         ////Debug.Log(json);
         //// 销毁铁口处的冷却壁
         return true;
