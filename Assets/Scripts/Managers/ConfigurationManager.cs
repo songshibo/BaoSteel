@@ -11,6 +11,7 @@ public class ConfigurationManager : MonoBehaviour
         InitiallzieDataServiceManager();
         InitializeCamera();
         CullingController.Instance.ResetMaterialProperties();
+        UIManager.Instance.InitializeUI();
     }
 
     private void Start()

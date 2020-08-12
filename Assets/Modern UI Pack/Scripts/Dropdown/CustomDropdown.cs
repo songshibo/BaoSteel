@@ -84,10 +84,15 @@ namespace Michsky.UI.ModernUIPack
             }
 
             if (enableScrollbar == true)
+            {
                 itemList.padding.right = 25;
-
+                scrollbar.SetActive(true);
+            }
             else
+            {
                 itemList.padding.right = 8;
+                Destroy(scrollbar);
+            }
 
             if (setHighPriorty == true)
                 transform.SetAsLastSibling();

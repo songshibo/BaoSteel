@@ -46,9 +46,8 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 
                     if (instance == null)
                     {
-                        GameObject monoSingleton = new GameObject();
+                        GameObject monoSingleton = new GameObject(typeof(T) + "(MonoSingleton)");
                         instance = monoSingleton.AddComponent<T>();
-                        monoSingleton.name = typeof(T) + "(MonoSingleton)";
 
                         if (isGolbal && Application.isPlaying)
                             DontDestroyOnLoad(monoSingleton);
