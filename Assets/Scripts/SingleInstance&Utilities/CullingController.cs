@@ -1,20 +1,8 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public class CullingController
+public class CullingController : Singleton<CullingController>
 {
-    private static CullingController instance = new CullingController();
-
-    private CullingController()
-    {
-        ResetMaterialProperties();
-    }
-
-    public static CullingController Instance()
-    {
-        return instance;
-    }
-
     private Material[] LoadMaterials()
     {
         return Resources.LoadAll("ClippingMaterials", typeof(Material)).Cast<Material>().ToArray();

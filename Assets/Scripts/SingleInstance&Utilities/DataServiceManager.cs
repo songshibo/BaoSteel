@@ -32,8 +32,6 @@ public class DataServiceManager
                 {
                     _instance = new DataServiceManager();
                 }
-
-
             }
         }
 

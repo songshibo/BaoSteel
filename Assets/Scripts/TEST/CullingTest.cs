@@ -14,10 +14,10 @@ public class CullingTest : MonoBehaviour
     {
         if (clipSwitch)
         {
-            CullingController.Instance().ClipMaterialsAtAngle(angle);
-            CullingController.Instance().ClipMaterialsAtHeight(bottom, top);
+            CullingController.Instance.ClipMaterialsAtAngle(angle);
+            CullingController.Instance.ClipMaterialsAtHeight(bottom, top);
         }
         else
-            CullingController.Instance().ResetMaterialProperties();
+            CullingController.Instance.ResetMaterialProperties();
     }
 }
