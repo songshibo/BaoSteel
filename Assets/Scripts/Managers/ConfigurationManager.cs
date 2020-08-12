@@ -10,12 +10,12 @@ public class ConfigurationManager : MonoBehaviour
     {
         InitiallzieDataServiceManager();
         InitializeCamera();
-        //InitializeModelManager();
+        CullingController.Instance.ResetMaterialProperties();
     }
 
     private void Start()
     {
-        MonoHandler.Instance().Coroutine();
+        CoroutineHandler.Instance.CoroutineTest();
     }
 
     private void InitializeCamera()
@@ -63,9 +63,11 @@ public class ConfigurationManager : MonoBehaviour
 
         DataServiceManager.Instance().initialize(config);
 
+        string log = "";
         foreach (KeyValuePair<string, string> c in config)
         {
-            Debug.Log("Key: " + c.Key + " Value: " + c.Value);
+            log += c.Key + ":" + c.Value + "\n";
         }
+        Debug.Log(log);
     }
 }
