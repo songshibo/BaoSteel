@@ -6,120 +6,137 @@ using Newtonsoft.Json.Linq;
 using UnityEditor;
 using System.Text.RegularExpressions;
 
-
-// 继承 MonoBehavior 类自动拒绝使用 new 关键字实例化对象。
-// 使用协程需要继承 MonoBehavior 类。
-// 普通单例会出现 warning。
+// 使用协程 需要 MonoBehavior
+// 继承 MonoBehavior 就不能 new， 也就不能使用普通单例
 // 单例模式实例化放在 Awake 函数里，可以避免 warning，但需要挂载到场景中。不挂载会出现空引用 error。
-// 使用 Instantiate 需要继承 MonoBehavior
-// 使用 MonoHandler 的缺点：参数怎么传？
-public sealed class ModelManager : MonoBehaviour
+// 使用 Instantiate 需要继承 MonoBehavior，可以 GameObject.Instantiate
+public sealed class ModelManager : MonoSingleton<ModelManager>
 {
-    private static ModelManager instance;
-
-    private void Awake()
-    {
-        instance = this;
-    }
-
-    private void Start()
-    {
-        string filename = "ModelManager.txt";
-        string config = ExternalConfigReader.Instance().ReadConfigFile(filename);
-
-        string[] lines = config.Split('\n');
-        GeneratePipeline(lines);
-    }
-
-    public static ModelManager Instance() { return instance; }
-
     public void GeneratePipeline(string[] models)
     {
-        List<string> from_database = new List<string>();
-        List<string> not_from_database = new List<string>();
+        List<string> done = new List<string>(); // 记录已生成的模型，例如 cooling_wall5 和 cooling_wall6 只需要请求 cooling_wall 生成一次就可以了。
 
         // 划分哪些模型需要读数据库，哪些不需要
+        // 以 '-' 开头的行，表示不需要读数据库
+        // 读数据库的行要去掉末尾的数字，例如 type 为 cooling_wall 而不是 cooling_wall8。type 错误会导致 http 错误。
         foreach (string item in models)
         {
-            if (item.StartsWith("-"))
+            string itm = item.Trim();
+            if (itm.StartsWith("-"))
             {
-                not_from_database.Add(item.Replace("-", "").Trim());
+                string s = itm.Replace("-", "");
+                GenerateTag(s);
+                GenerateLocalModel(s);
+
             }
             else
             {
-                from_database.Add(item.Trim());
+                GenerateTag(itm);
+
+                var digits = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+                itm = itm.TrimEnd(digits);
+                if (!done.Contains(itm))
+                {
+                    done.Add(itm);
+
+                    // 注意 type 是否 五个选择之一，不带数字
+                    StartCoroutine(DataServiceManager.Instance.GetModel(GenerateRemoteModel, itm));
+                }
+                
             }
         }
-
-        GenerateTags(not_from_database);
-        GenerateTags(from_database);
-
-        GenerateLocalModel(not_from_database);
-        GenerateRemoteModel(from_database);
     }
 
-    private void GenerateRemoteModel(List<string> from_database)
+    private void DestroyIronOutlet()
     {
-        List<string> done = new List<string>();
-        foreach (string type in from_database)
+        for (int i = 7; i <= 10; i++)
         {
-            var digits = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-            string model = type.TrimEnd(digits);
-            if (!done.Contains(model))
-            {
-                done.Add(model);
-
-                //Debug.Log(type);
-                // 注意 type 是否 五个选择之一，不带数字
-                StartCoroutine(DataServiceManager.Instance.GetModel(testDataServiceManager.arr, model));
-            }
+            GameObject obj1 = GameObject.Find("cooling_wall3_" + i.ToString());
+            GameObject obj2 = GameObject.Find("cooling_wall4_" + i.ToString());
+            DestroyImmediate(obj1);
+            DestroyImmediate(obj2);
         }
+        for (int i = 19; i <= 22; i++)
+        {
+            GameObject obj1 = GameObject.Find("cooling_wall3_" + i.ToString());
+            GameObject obj2 = GameObject.Find("cooling_wall4_" + i.ToString());
+            DestroyImmediate(obj1);
+            DestroyImmediate(obj2);
+        }
+        for (int i = 35; i <= 38; i++)
+        {
+            GameObject obj1 = GameObject.Find("cooling_wall3_" + i.ToString());
+            GameObject obj2 = GameObject.Find("cooling_wall4_" + i.ToString());
+            DestroyImmediate(obj1);
+            DestroyImmediate(obj2);
+        }
+        for (int i = 47; i <= 50; i++)
+        {
+            GameObject obj1 = GameObject.Find("cooling_wall3_" + i.ToString());
+            GameObject obj2 = GameObject.Find("cooling_wall4_" + i.ToString());
+            DestroyImmediate(obj1);
+            DestroyImmediate(obj2);
+        }
+        GameObject obj = GameObject.Find("cooling_wall4_" + 11.ToString());
+        DestroyImmediate(obj);
+        obj = GameObject.Find("cooling_wall4_" + 23.ToString());
+        DestroyImmediate(obj);
+        obj = GameObject.Find("cooling_wall4_" + 39.ToString());
+        DestroyImmediate(obj);
+        obj = GameObject.Find("cooling_wall4_" + 51.ToString());
+        DestroyImmediate(obj);
     }
 
-    public bool InstantiateRemoteModel(string data, string type)
+    public bool GenerateRemoteModel(string data, string type)
     {
-        //data = data.Trim();
+        data = data.Trim();
+        // Debug.Log(data);
+        JToken json = JObject.Parse(data);
 
-        //JToken json = JObject.Parse(data);
+        GameObject root = GameObject.Find("Model");
+        if (!root)
+        {
+            root = new GameObject("Model");
+        }
 
-        //foreach (JProperty model_type in json)
-        //{
-        //    foreach (JProperty one_layer in model_type.Value)
-        //    {
-        //        int cur_layer = int.Parse(one_layer.Name);
-        //        GameObject prefab = (GameObject)Resources.Load("Prefabs/" + one_layer.Value["prefab"].ToString().Trim());
+        foreach (JProperty model_type in json)
+        {
+            foreach (JProperty one_layer in model_type.Value)
+            {
+                int cur_layer = int.Parse(one_layer.Name);
+                string tag = one_layer.Value["prefab"].ToString().Trim();
+                string name = one_layer.Value["name"].ToString().Trim();
+                GameObject prefab = (GameObject)Resources.Load("Prefabs/" + one_layer.Value["prefab"].ToString().Trim());
 
-        //        //int amount = (int)one_layer.Value["amount"];
-        //        //string name = one_layer.Value["name"].ToString();
-        //        //float y = (float)one_layer.Value["height"];
-        //        //float radius = (float)one_layer.Value["radius"];
-        //        //float angle = (float)one_layer.Value["from_angle"];
-        //        //float dangle = (float)(360.0 / amount);
+                int amount = (int)one_layer.Value["amount"];
+                float y = (float)one_layer.Value["height"];
+                float radius = (float)one_layer.Value["radius"];
+                float angle = (float)one_layer.Value["from_angle"];
+                float dangle = (float)(360.0 / amount);
 
-        //        //for (int i = 0; i < amount; i++)
-        //        //{
-        //        //    double cur_angle = angle + dangle * i;
-        //        //    double radian = cur_angle * Math.PI / 180;
-        //        //    float x = (float)(Math.Sin(radian) * radius);
-        //        //    float z = (float)(Math.Cos(radian) * radius);
-        //        //    GameObject obj = Instantiate(prefab);
-        //        //    obj.transform.position = new Vector3(x, y, z);
-        //        //    obj.transform.eulerAngles = new Vector3(0, (float)cur_angle, 0);
-        //        //    obj.tag = tag;
-        //        //    obj.name = name + "_" + (i + 1).ToString();
-        //        //    //Debug.Log(x);
-        //        //    //Debug.Log(y);
-        //        //    //Debug.Log(z);
-        //        //    //break;
-        //        //}
-        //    }
-        //}
-        ////Debug.Log(json);
-        //// 销毁铁口处的冷却壁
+                for (int i = 0; i < amount; i++)
+                {
+                    double cur_angle = angle + dangle * i;
+                    double radian = cur_angle * Math.PI / 180;
+                    float x = (float)(Math.Sin(radian) * radius);
+                    float z = (float)(Math.Cos(radian) * radius);
+                    GameObject obj = Instantiate(prefab);
+                    obj.transform.position = new Vector3(x, y, z);
+                    obj.transform.eulerAngles = new Vector3(0, (float)cur_angle, 0);
+                    obj.tag = tag;
+                    obj.name = name + "_" + (i + 1).ToString();
+                    obj.transform.parent = root.transform;
+                }
+            }
+        }
+        if (type == "cooling_wall")
+        {
+            DestroyIronOutlet();
+        }
         return true;
     }
 
-    private void GenerateLocalModel(List<string> not_from_database)
+    private void GenerateLocalModel(string name)
     {
         GameObject root = GameObject.Find("Model");
         if (!root)
@@ -127,30 +144,22 @@ public sealed class ModelManager : MonoBehaviour
             root = new GameObject("Model");
         }
 
-        foreach (string name in not_from_database)
-        {
-            GameObject obj = Instantiate((GameObject)Resources.Load("Prefabs/" + name), root.transform);
-            obj.tag = name;
-            obj.name = name;
-        }
+        GameObject obj = Instantiate((GameObject)Resources.Load("Prefabs/" + name), root.transform);
+        obj.tag = name;
+        obj.name = name;
     }
 
-    private void GenerateTags(List<string> tags)
+    private void GenerateTag(string tag)
     {
-        SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
-        SerializedProperty tagProp = tagManager.FindProperty("tags");
-
-        foreach (string tag in tags)
+        if (!IsHasTag(tag))
         {
-            if (!IsHasTag(tag))
-            {
-                tagProp.InsertArrayElementAtIndex(0);
-                tagProp.GetArrayElementAtIndex(0).stringValue = tag;
-            }
+            SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
+            SerializedProperty tagProp = tagManager.FindProperty("tags");
+            tagProp.InsertArrayElementAtIndex(0);
+            tagProp.GetArrayElementAtIndex(0).stringValue = tag;
+            tagManager.ApplyModifiedProperties();
+            tagManager.Update();
         }
-
-        tagManager.ApplyModifiedProperties();
-        tagManager.Update();
     }
 
     private bool IsHasTag(string tag)
@@ -164,65 +173,4 @@ public sealed class ModelManager : MonoBehaviour
         return false;
     }
 
-
-
-    //root = GameObject.Find("Model");
-    //    database = DataServiceManager.Instance();
-
-
-    //    // part1    0-16.6，还缺少回旋区
-    //    // include: hearth    wind_pipeline   iron_outlet    cooling_wall1-5    tuyere    thermocouple    gas_flow
-    //    GameObject hearth = Instantiate((GameObject)Resources.Load("Prefabs/hearth"), root.transform);
-    //hearth.tag = "hearth";
-    //    GameObject iron_outlet = Instantiate((GameObject)Resources.Load("Prefabs/iron_outlet"), root.transform);
-    //iron_outlet.tag = "iron_outlet";
-    //    GameObject wind_pipeline = Instantiate((GameObject)Resources.Load("Prefabs/wind_pipeline"), root.transform);
-    //wind_pipeline.tag = "wind_pipeline";
-
-    //    StartCoroutine(database.GetModel(GenerateOtherModel, COOLING_WALL, 0, 16.6f));  // cooling_wall
-    //    StartCoroutine(database.GetModel(GenerateOtherModel, TUYERE, 0, 16.6f));  // tuyere
-    //    StartCoroutine(database.GetModel(GenerateThermoModel, THERMOCOUPLE, 0, 16.6f));  // thermocouple
-
-
-    //    // part2    16.6-21.1
-    //    // include: bosh    thermocouple    cooling_plate
-    //    GameObject bosh = Instantiate((GameObject)Resources.Load("Prefabs/bosh"), root.transform);
-    //bosh.tag = "bosh";
-
-    //    StartCoroutine(database.GetModel(GenerateThermoModel, THERMOCOUPLE, 16.6f, 21.1f));  // thermocouple
-    //    StartCoroutine(database.GetModel(GenerateOtherModel, COOLING_PLATE, 16.6f, 21.1f));  // cooling_plate
-
-
-    //    // part3    21.1-23.2
-    //    // include: waist    thermocouple    cooling_cross1    cooling_plate
-    //    GameObject waist = Instantiate((GameObject)Resources.Load("Prefabs/waist"), root.transform);
-    //waist.tag = "waist";
-
-    //    StartCoroutine(database.GetModel(GenerateThermoModel, THERMOCOUPLE, 21.1f, 23.2f));  // thermocouple
-    //    StartCoroutine(database.GetModel(GenerateOtherModel, COOLING_CROSS, 21.1f, 23.2f));  // cooling_cross1
-    //    StartCoroutine(database.GetModel(GenerateOtherModel, COOLING_PLATE, 21.1f, 23.2f));  // cooling_plate
-
-
-    //    // part4    23.2-41
-    //    // include: body    thermocouple    cooling_cross2-10    cooling_plate    cooling_wall6-8
-    //    GameObject body = Instantiate((GameObject)Resources.Load("Prefabs/body"), root.transform);
-    //body.tag = "body";
-
-    //    StartCoroutine(database.GetModel(GenerateThermoModel, THERMOCOUPLE, 23.2f, 41f));  // thermocouple
-    //    StartCoroutine(database.GetModel(GenerateOtherModel, COOLING_CROSS, 23.2f, 41f));  // cooling_cross2-10
-    //    StartCoroutine(database.GetModel(GenerateOtherModel, COOLING_PLATE, 23.2f, 41f));  // cooling_plate
-    //    StartCoroutine(database.GetModel(GenerateOtherModel, COOLING_WALL, 23.2f, 41f));  // cooling_wall6-8
-
-
-    //    // part5    41-60    因为上升管还有四个热电偶，所以高度上限随便设定的一个大一点的数
-    //    // include: throat    chute    cross_temperature_measurement    cooling_wall9    thermocouple
-    //    GameObject throat = Instantiate((GameObject)Resources.Load("Prefabs/throat"), root.transform);
-    //throat.tag = "throat";
-    //    GameObject chute = Instantiate((GameObject)Resources.Load("Prefabs/chute"), root.transform);
-    //chute.tag = "chute";
-    //    GameObject cross_temperature_measure = Instantiate((GameObject)Resources.Load("Prefabs/cross_temperature_measure"), root.transform);
-    //cross_temperature_measure.tag = "cross_temperature_measure";
-
-    //    StartCoroutine(database.GetModel(GenerateThermoModel, THERMOCOUPLE, 41f, 60f));  // thermocouple
-    //    StartCoroutine(database.GetModel(GenerateOtherModel, COOLING_WALL, 41f, 60f));  // cooling_wall9 
 }

@@ -6,6 +6,6 @@ public class CoroutineHandler : MonoSingleton<CoroutineHandler>
 {
     public void CoroutineTest()
     {
-        //StartCoroutine(DataServiceManager.Instance().GetModel(testDataServiceManager.arr, "4", max_h: 7));
+        //StartCoroutine(DataServiceManager.Instance().GetModel(testDataServiceManager.arr, "cooling_plate", max_h: 7));
     }
 }

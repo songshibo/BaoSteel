@@ -10,6 +10,7 @@ public class ConfigurationManager : MonoBehaviour
     {
         InitiallzieDataServiceManager();
         InitializeCamera();
+        InitializeModelManager();
         CullingController.Instance.ResetMaterialProperties();
         UIManager.Instance.InitializeUI();
     }
@@ -42,8 +43,8 @@ public class ConfigurationManager : MonoBehaviour
 
         string[] lines = config.Split('\n');
 
-        // add tags, then generate models.
-        ModelManager.Instance().GeneratePipeline(lines);
+        // GeneratePipeline: add tags, then generate models.
+        ModelManager.Instance.GeneratePipeline(lines);
     }
 
     private void InitiallzieDataServiceManager()
