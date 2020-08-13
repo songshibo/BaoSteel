@@ -1,20 +1,8 @@
 ﻿using UnityEngine;
 using System.IO;
 
-public class ExternalConfigReader
+public class ExternalConfigReader : Singleton<ExternalConfigReader>
 {
-    private static ExternalConfigReader instance = new ExternalConfigReader();
-
-    private ExternalConfigReader()
-    {
-
-    }
-
-    public static ExternalConfigReader Instance()
-    {
-        return instance;
-    }
-
     /// <summary>
     /// 读取Application.datapath/Config/ 下的对应txt文件，将内容返回为一个string
     /// </summary>

@@ -18,4 +18,10 @@ public static class Util
 
         return objects.Distinct().ToArray();
     }
+
+    // wrap angle to -180/180
+    public static float WrapAngle(float angle)
+    {
+        return angle > 180 ? angle - 360 : angle;
+    }
 }

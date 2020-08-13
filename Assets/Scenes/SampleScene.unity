@@ -303,7 +303,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 895423600}
   m_HandleRect: {fileID: 895423599}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1733,7 +1733,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 951581156}
-  - component: {fileID: 951581155}
   m_Layer: 0
   m_Name: EmptyObjectForTestScripts
   m_TagString: Untagged
@@ -1741,22 +1740,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &951581155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 951581154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e16e07757ed551e43b94876375cec235, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  angle: 0
-  bottom: 0
-  top: 0
-  clipSwitch: 0
 --- !u!4 &951581156
 Transform:
   m_ObjectHideFlags: 0
