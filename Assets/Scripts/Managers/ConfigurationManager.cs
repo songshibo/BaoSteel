@@ -70,6 +70,6 @@ public class ConfigurationManager : MonoBehaviour
             log += c.Key + ":" + c.Value + "\n";
         }
         Debug.Log(log);
-        
+
     }
 }
