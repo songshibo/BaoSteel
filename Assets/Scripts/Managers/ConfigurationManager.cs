@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
@@ -8,22 +8,17 @@ public class ConfigurationManager : MonoBehaviour
 {
     private void Awake()
     {
-        InitiallzieDataServiceManager();
+        InitializeDataServiceManager();
         InitializeCamera();
         InitializeModelManager();
+        InitilizeUI();
         CullingController.Instance.ResetMaterialProperties();
-        UIManager.Instance.InitializeUI();
-    }
-
-    private void Start()
-    {
-        CoroutineHandler.Instance.CoroutineTest();
     }
 
     private void InitializeCamera()
     {
         string filename = "camera.txt";
-        string config = ExternalConfigReader.Instance().ReadConfigFile(filename);
+        string config = ExternalConfigReader.Instance.ReadConfigFile(filename);
 
         string[] lines = config.Split('\n');
         Debug.Log("Camera parameters:\n" +
@@ -39,7 +34,7 @@ public class ConfigurationManager : MonoBehaviour
     private void InitializeModelManager()
     {
         string filename = "ModelManager.txt";
-        string config = ExternalConfigReader.Instance().ReadConfigFile(filename);
+        string config = ExternalConfigReader.Instance.ReadConfigFile(filename);
 
         string[] lines = config.Split('\n');
 
@@ -47,10 +42,10 @@ public class ConfigurationManager : MonoBehaviour
         ModelManager.Instance.GeneratePipeline(lines);
     }
 
-    private void InitiallzieDataServiceManager()
+    private void InitializeDataServiceManager()
     {
         string filename = "DataServiceManagerConfig.txt";
-        string configString = ExternalConfigReader.Instance().ReadConfigFile(filename);
+        string configString = ExternalConfigReader.Instance.ReadConfigFile(filename);
         Dictionary<string, string> config = new Dictionary<string, string>();
         Regex regex = new Regex(@"(?<key>\S+)\s*:\s*(?<item>\S+)", RegexOptions.IgnoreCase);
         if (regex.IsMatch(configString))
@@ -71,6 +66,14 @@ public class ConfigurationManager : MonoBehaviour
             log += c.Key + ":" + c.Value + "\n";
         }
         Debug.Log(log);
+    }
 
+    private void InitilizeUI()
+    {
+        string filename = "ui.txt";
+        string config = ExternalConfigReader.Instance.ReadConfigFile(filename);
+        string[] lines = config.Split('\n');
+
+        UIManager.Instance.InitializeUI(lines);
     }
 }

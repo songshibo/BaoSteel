@@ -1,33 +1,52 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using Michsky.UI.ModernUIPack;
+using UnityEngine.Events;
 
 public class UIManager : MonoSingleton<UIManager>
 {
     public CustomDropdown clipDropDown;
     public DropdownMultiSelect layerDropDown;
 
-    public void InitializeUI()
+    public void InitializeUI(string[] config)
     {
+        // first line : clip dropdown
+        string[] clipConfig = config[0].Split(' ');
         // Initialize clip dropdown list
         string spritePath = "Textures/Border/Circles/";
         Sprite clipIcon = Resources.Load<Sprite>(spritePath + "Circle Outline - Stroke 20px");
-
-        for (int i = 0; i < 2; i++)
-            clipDropDown.CreateNewItem("Clip Angle:" + (i * 180).ToString(), clipIcon);
+        for (int i = 0; i < clipConfig.Length; i++)
+        {
+            clipDropDown.CreateNewItem("Clip Angle:" + clipConfig[i], clipIcon);
+        }
+        clipDropDown.dropdownEvent.AddListener(ClipItemEvent);
+        clipDropDown.SetupDropdown();
     }
 
+    private void ClipItemEvent(int i)
+    {
+        string[] info = clipDropDown.dropdownItems[i].itemName.Split(':');
+        if (info.Length == 2)
+        {
+            float angle = float.Parse(info[1]);
+            CullingController.Instance.ClipMaterialsAtAngle(angle);
+            FindObjectOfType<FocusController>().FaceClipSurface(angle);
+        }
+        else
+        {
+            CullingController.Instance.ResetMaterialProperties();
+            FindObjectOfType<FocusController>().FaceClipSurface();
+        }
+    }
 
     private void ChangeDropDownHeight(Transform dropdown, float height)
     {
         RectTransform rect = dropdown.Find("Content/Item List").GetComponent<RectTransform>();
-        //rect.sizeDelta = new Vector2(0, height);
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-        rect.ForceUpdateRectTransforms();
     }
 
     private void LateUpdate()
     {
+        // dynamically change dropdown height
         ChangeDropDownHeight(clipDropDown.transform, clipDropDown.dropdownItems.Count * 53f + 15f);
         ChangeDropDownHeight(layerDropDown.transform, layerDropDown.dropdownItems.Count * 53f + 15f);
     }

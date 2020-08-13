@@ -151,6 +151,16 @@ public class FocusController : MonoBehaviour
         }
     }
 
+    public void FaceClipSurface(float angle = 120)
+    {
+        //default camera is at (0,0,-1)
+        //default zero axis for model is (0,0,1)
+        //so default rotation angle around Y-axis is 180
+        rigRotation = Quaternion.Euler(0, 180 + angle, 0);
+        rigPosition = cameraRigOriginPos;
+        verticalRotation = vertOriginRot;
+    }
+
     public void FullyReset()
     {
         rigPosition = cameraRigOriginPos;

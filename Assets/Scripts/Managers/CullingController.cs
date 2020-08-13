@@ -1,11 +1,21 @@
 ﻿using System.Linq;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class CullingController : Singleton<CullingController>
 {
     private Material[] LoadMaterials()
     {
-        return Resources.LoadAll("ClippingMaterials", typeof(Material)).Cast<Material>().ToArray();
+        return Resources.LoadAll<Material>("ClippingMaterials/");
+        //GameObject[] prefabs = Resources.LoadAll("Prefabs", typeof(GameObject)).Cast<GameObject>().ToArray();
+        //List<Material> sharedMaterials = new List<Material>();
+        //for (int i = 0; i < prefabs.Length; i++)
+        //{
+        //    Material material = prefabs[i].GetComponent<MeshRenderer>().sharedMaterial;
+        //    if (!sharedMaterials.Contains(material))
+        //        sharedMaterials.Add(material);
+        //}
+        //return sharedMaterials.ToArray();
     }
 
     public void ResetMaterialProperties()
@@ -13,10 +23,10 @@ public class CullingController : Singleton<CullingController>
         Material[] materials = LoadMaterials();
         for (int i = 0; i < materials.Length; ++i)
         {
-            materials[i].SetVector("VerticalPlane", new Vector4(200, 0, 0, 0));
-            materials[i].SetVector("VerticalNormal", new Vector4(1, 0, 0, 0));
-            materials[i].SetVector("TopPlane", new Vector4(0, 200, 0, 0));
-            materials[i].SetVector("BottomPlane", Vector4.zero);
+            materials[i].SetVector("_VerticalPlane", new Vector4(200, 0, 0, 0));
+            materials[i].SetVector("_VerticalNormal", new Vector4(1, 0, 0, 0));
+            materials[i].SetVector("_TopPlane", new Vector4(0, 200, 0, 0));
+            materials[i].SetVector("_BottomPlane", Vector4.zero);
         }
     }
 
@@ -27,8 +37,8 @@ public class CullingController : Singleton<CullingController>
         Material[] materials = LoadMaterials();
         for (int i = 0; i < materials.Length; ++i)
         {
-            materials[i].SetVector("VerticalPlane", Vector4.zero);
-            materials[i].SetVector("VerticalNormal", verticalNormal);
+            materials[i].SetVector("_VerticalPlane", Vector4.zero);
+            materials[i].SetVector("_VerticalNormal", verticalNormal);
         }
     }
 
@@ -39,8 +49,8 @@ public class CullingController : Singleton<CullingController>
         Material[] materials = LoadMaterials();
         for (int i = 0; i < materials.Length; ++i)
         {
-            materials[i].SetVector("TopPlane", topPlane);
-            materials[i].SetVector("BottomPlane", bottomPlane);
+            materials[i].SetVector("_TopPlane", topPlane);
+            materials[i].SetVector("_BottomPlane", bottomPlane);
         }
     }
 }

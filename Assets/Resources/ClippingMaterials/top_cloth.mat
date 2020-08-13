@@ -36,6 +36,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: d47f84d93f8961f44b78e9bd5b4fe00e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _BumpTex:
+        m_Texture: {fileID: 2800000, guid: 7a7b1b6c1a2498c4eb32eb19c7c06562, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -53,6 +57,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Metallic:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -77,6 +85,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _FadeDist: 1
+    - _FadeDistance: 1
     - _Gloss: 100
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -102,7 +111,10 @@ Material:
     - TopPlane: {r: 0, g: 200, b: 0, a: 0}
     - VerticalNormal: {r: 1, g: 0, b: 0, a: 0}
     - VerticalPlane: {r: 200, g: 0, b: 0, a: 0}
+    - _Albedo: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    - _BackFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _BottomHPPos: {r: 0, g: -10, b: 0, a: 0}
+    - _BottomPlane: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
     - _Color1: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _Color2: {r: 0.22, g: 0.22, b: 0.28, a: 1}
@@ -112,5 +124,8 @@ Material:
     - _Spec: {r: 0, g: 0, b: 0, a: 0}
     - _Specular: {r: 1, g: 1, b: 1, a: 1}
     - _TopHPPos: {r: 0, g: 150, b: 0, a: 0}
+    - _TopPlane: {r: 0, g: 200, b: 0, a: 0}
     - _VPnormal: {r: -1, g: 0, b: 0, a: 0}
     - _VPpos: {r: -75, g: 0, b: 0, a: 0}
+    - _VerticalNormal: {r: 1, g: 0, b: -0.00000004371139, a: 0}
+    - _VerticalPlane: {r: 0, g: 0, b: 0, a: 0}
