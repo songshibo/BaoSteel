@@ -14,7 +14,8 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
 {
     public void GeneratePipeline(string[] models)
     {
-        List<string> done = new List<string>(); // 记录已生成的模型，例如 cooling_wall5 和 cooling_wall6 只需要请求 cooling_wall 生成一次就可以了。
+        List<string> from_database = new List<string>();
+        List<string> from_local = new List<string>();
 
         // 划分哪些模型需要读数据库，哪些不需要
         // 以 '-' 开头的行，表示不需要读数据库
@@ -26,8 +27,10 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
             {
                 string s = itm.Replace("-", "");
                 GenerateTag(s);
-                GenerateLocalModel(s);
-
+                if (!from_local.Contains(s))
+                {
+                    from_local.Add(s);
+                }
             }
             else
             {
@@ -35,16 +38,24 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
 
                 var digits = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
                 itm = itm.TrimEnd(digits);
-                if (!done.Contains(itm))
+                if (!from_database.Contains(itm))
                 {
-                    done.Add(itm);
-
-                    // 注意 type 是否 五个选择之一，不带数字
-                    StartCoroutine(DataServiceManager.Instance.GetModel(GenerateRemoteModel, itm));
+                    from_database.Add(itm);
                 }
                 
             }
         }
+        foreach (string item in from_local)
+        {
+            GenerateLocalModel(item);
+        }
+
+        foreach (string item in from_database)
+        {
+            // 注意 type 是否 五个选择之一，不带数字
+            StartCoroutine(DataServiceManager.Instance.GetModel(GenerateRemoteModel, item));
+        }
+
     }
 
     private void DestroyIronOutlet()
@@ -103,7 +114,6 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         {
             foreach (JProperty one_layer in model_type.Value)
             {
-                int cur_layer = int.Parse(one_layer.Name);
                 string tag = one_layer.Value["prefab"].ToString().Trim();
                 string name = one_layer.Value["name"].ToString().Trim();
                 GameObject prefab = (GameObject)Resources.Load("Prefabs/" + one_layer.Value["prefab"].ToString().Trim());
