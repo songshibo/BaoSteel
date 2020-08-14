@@ -7,10 +7,10 @@ public class UIManager : MonoSingleton<UIManager>
     public CustomDropdown clipDropDown;
     public DropdownMultiSelect layerDropDown;
 
-    public void InitializeUI(string[] config)
+    public void InitializeUI(string[] configClip, string[] configShowPart)
     {
         // first line : clip dropdown
-        string[] clipConfig = config[0].Split(' ');
+        string[] clipConfig = configClip[0].Split(' ');
         // Initialize clip dropdown list
         string spritePath = "Textures/Border/Circles/";
         Sprite clipIcon = Resources.Load<Sprite>(spritePath + "Circle Outline - Stroke 20px");
@@ -22,6 +22,14 @@ public class UIManager : MonoSingleton<UIManager>
         clipDropDown.SetupDropdown();
 
         // layer dropdown initialize
+        foreach (string row in configShowPart)
+        {
+            string[] config = row.Split(':');
+            layerDropDown.AddNewItem();
+            layerDropDown.SetItemTitle(config[0]);
+            layerDropDown.CreateNewItem();
+        }
+        layerDropDown.SetupDropdown();
 
     }
 

@@ -12,7 +12,6 @@
 -top_tank
 -top_cloth
 -feed_box
--full_stove
 -ground
 -roof_pipeline
 -roof_riser
