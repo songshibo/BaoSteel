@@ -20,8 +20,14 @@ public class UIManager : MonoSingleton<UIManager>
         }
         clipDropDown.dropdownEvent.AddListener(ClipItemEvent);
         clipDropDown.SetupDropdown();
+
+        // layer dropdown initialize
+
     }
 
+    /// <summary>
+    /// clip dropdown event function
+    /// </summary>
     private void ClipItemEvent(int i)
     {
         string[] info = clipDropDown.dropdownItems[i].itemName.Split(':');
