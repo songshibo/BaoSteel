@@ -42,7 +42,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
                 {
                     from_database.Add(itm);
                 }
-                
+
             }
         }
         foreach (string item in from_local)
@@ -154,7 +154,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
             root = new GameObject("Model");
         }
 
-        GameObject obj = Instantiate((GameObject)Resources.Load("Prefabs/" + name), root.transform);
+        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/" + name), root.transform);
         obj.tag = name;
         obj.name = name;
     }

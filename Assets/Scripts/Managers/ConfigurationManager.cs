@@ -70,10 +70,14 @@ public class ConfigurationManager : MonoBehaviour
 
     private void InitilizeUI()
     {
-        string filename = "ui.txt";
-        string config = ExternalConfigReader.Instance.ReadConfigFile(filename);
-        string[] lines = config.Split('\n');
+        string filenameClip = "ui.txt";
+        string configClip = ExternalConfigReader.Instance.ReadConfigFile(filenameClip);
+        string[] linesClip = configClip.Split('\n');
 
-        UIManager.Instance.InitializeUI(lines);
+        string filenameShowPart = "ShowPartModel.txt";
+        string configShowPart = ExternalConfigReader.Instance.ReadConfigFile(filenameShowPart);
+        string[] linesShowPart = configShowPart.Split('\n');
+
+        UIManager.Instance.InitializeUI(linesClip, linesShowPart);
     }
 }

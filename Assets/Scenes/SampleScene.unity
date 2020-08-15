@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.285027, g: 0.37139374, b: 0.4960103, a: 1}
+  m_IndirectSpecularColor: {r: 0.2850269, g: 0.37139338, b: 0.49600992, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 895423600}
   m_HandleRect: {fileID: 895423599}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -856,32 +856,7 @@ MonoBehaviour:
   saveSelected: 0
   invokeAtStart: 0
   toggleTag: Multi Dropdown
-  dropdownItems:
-  - itemName: DROPDOWN ITEM 1
-    isOn: 0
-    toggleEvents:
-      m_PersistentCalls:
-        m_Calls: []
-  - itemName: DROPDOWN ITEM 2
-    isOn: 0
-    toggleEvents:
-      m_PersistentCalls:
-        m_Calls: []
-  - itemName: DROPDOWN ITEM 3
-    isOn: 0
-    toggleEvents:
-      m_PersistentCalls:
-        m_Calls: []
-  - itemName: DROPDOWN ITEM 4
-    isOn: 0
-    toggleEvents:
-      m_PersistentCalls:
-        m_Calls: []
-  - itemName: DROPDOWN ITEM 5
-    isOn: 0
-    toggleEvents:
-      m_PersistentCalls:
-        m_Calls: []
+  dropdownItems: []
   iHelper: 0
   siblingIndex: 0
 --- !u!222 &360746757
