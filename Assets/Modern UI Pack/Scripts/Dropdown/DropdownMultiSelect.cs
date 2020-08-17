@@ -61,7 +61,7 @@ namespace Michsky.UI.ModernUIPack
         public class Item
         {
             public string itemName = "Dropdown Item";
-            public bool isOn = false;
+            public bool isOn = true;
             [SerializeField] public ToggleEvent toggleEvents;
         }
 
@@ -72,7 +72,7 @@ namespace Michsky.UI.ModernUIPack
                 dropdownAnimator = this.GetComponent<Animator>();
                 itemList = itemParent.GetComponent<VerticalLayoutGroup>();
                 itemList = itemParent.GetComponent<VerticalLayoutGroup>();
-                SetupDropdown();
+                // SetupDropdown();
                 currentListParent = transform.parent;
             }
 
@@ -106,7 +106,7 @@ namespace Michsky.UI.ModernUIPack
             {
                 GameObject go = Instantiate(itemObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
                 go.transform.SetParent(itemParent, false);
-
+                go.name = "dropdown" + i.ToString();
                 setItemText = go.GetComponentInChildren<TextMeshProUGUI>();
                 textHelper = dropdownItems[i].itemName;
                 setItemText.text = textHelper;
@@ -171,11 +171,10 @@ namespace Michsky.UI.ModernUIPack
 
         public void UpdateToggle(bool isOn)
         {
-            //   if (isOn)
-            //         dropdownItems[iHelper].isOn = true;
-            //      else
-            //
-            //        dropdownItems[iHelper].isOn = false;
+            if (isOn)
+                dropdownItems[iHelper].isOn = true;
+            else
+                dropdownItems[iHelper].isOn = false;
         }
 
         public void SaveToggle(bool isOn)

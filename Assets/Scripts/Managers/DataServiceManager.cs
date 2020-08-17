@@ -150,7 +150,7 @@ public class DataServiceManager:Singleton<DataServiceManager>
 
             if (www.isNetworkError || www.isHttpError)
             {
-                Debug.Log(type);
+                Debug.Log(type + "数据库读取失败");
                 Debug.Log(www.error);
             }
             else

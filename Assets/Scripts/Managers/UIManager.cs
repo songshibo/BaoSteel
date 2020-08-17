@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Michsky.UI.ModernUIPack;
 using UnityEngine.Events;
+using UnityEngine.UI;
+
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -21,16 +23,40 @@ public class UIManager : MonoSingleton<UIManager>
         clipDropDown.dropdownEvent.AddListener(ClipItemEvent);
         clipDropDown.SetupDropdown();
 
+
         // layer dropdown initialize
         foreach (string row in configShowPart)
         {
             string[] config = row.Split(':');
-            layerDropDown.AddNewItem();
-            layerDropDown.SetItemTitle(config[0]);
-            layerDropDown.CreateNewItem();
+            DropdownMultiSelect.Item item = new DropdownMultiSelect.Item();
+            item.itemName = config[0];
+            layerDropDown.dropdownItems.Add(item);
+            //layerDropDown.SetItemTitle(config[0]);
+            //layerDropDown.CreateNewItem();
         }
         layerDropDown.SetupDropdown();
 
+        for (int i = 0; i < configShowPart.Length; i++)
+        {
+            string[] config = configShowPart[i].Split(':');
+            GameObject obj = layerDropDown.transform.Find("Content/Item List/Scroll Area/List/dropdown" + i.ToString()).gameObject;
+            obj.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => ShowPartItemEvent(config[1], value));
+
+        }
+
+    }
+
+    /// <summary>
+    /// shouw part of model dropdown event function
+    /// </summary>
+    private void ShowPartItemEvent(string s, bool ison)
+    {
+        string[] infos = s.Split(' ');
+        foreach (string info in infos)
+        {
+            string item = info.Trim();
+
+        }
     }
 
     /// <summary>
@@ -38,6 +64,7 @@ public class UIManager : MonoSingleton<UIManager>
     /// </summary>
     private void ClipItemEvent(int i)
     {
+        Debug.Log(i);
         string[] info = clipDropDown.dropdownItems[i].itemName.Split(':');
         if (info.Length == 2)
         {
