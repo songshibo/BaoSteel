@@ -183,4 +183,19 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         return false;
     }
 
+    public List<GameObject> FindByHeight(string type, float min, float max)
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(type);
+        List<GameObject> result = new List<GameObject>();
+
+        foreach (GameObject item in objects)
+        {
+            float height = item.transform.position.y;
+            if (height >= min && height <= max)
+            {
+                result.Add(item);
+            }
+        }
+        return result;
+    }
 }

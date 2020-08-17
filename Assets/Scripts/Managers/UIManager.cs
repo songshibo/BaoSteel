@@ -2,7 +2,7 @@
 using Michsky.UI.ModernUIPack;
 using UnityEngine.Events;
 using UnityEngine.UI;
-
+using System.Collections.Generic;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -51,11 +51,30 @@ public class UIManager : MonoSingleton<UIManager>
     /// </summary>
     private void ShowPartItemEvent(string s, bool ison)
     {
+        List<GameObject> dst = new List<GameObject>();
         string[] infos = s.Split(' ');
         foreach (string info in infos)
         {
-            string item = info.Trim();
-
+            string[] items = info.Trim().Split('?');
+            if (items.Length == 1)
+            {
+                dst.Add(GameObject.FindGameObjectWithTag(items[0]));
+            }
+            else
+            {
+                string[] heights = items[1].Split('-');
+                float min = float.Parse(heights[0]);
+                float max = float.Parse(heights[1]);
+                dst.AddRange(ModelManager.Instance.FindByHeight(items[0], min, max));
+            }
+        }
+        if (ison)
+        {
+            // 隐藏
+        }
+        else
+        {
+            // 显示
         }
     }
 
