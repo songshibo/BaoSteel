@@ -68,7 +68,11 @@ public class UIManager : MonoSingleton<UIManager>
                 dst.AddRange(ModelManager.Instance.FindByHeight(items[0], min, max));
             }
         }
+<<<<<<< HEAD
+=======
 
+
+>>>>>>> 1ab634ffb5c96f65e3c85b40edf89fa3f3cc23fe
         foreach (GameObject item in dst)
         {
             item.SetActive(ison);
