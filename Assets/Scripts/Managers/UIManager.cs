@@ -56,9 +56,10 @@ public class UIManager : MonoSingleton<UIManager>
         foreach (string info in infos)
         {
             string[] items = info.Trim().Split('?');
+
             if (items.Length == 1)
             {
-                dst.Add(GameObject.FindGameObjectWithTag(items[0]));
+                dst.AddRange(GameObject.FindGameObjectsWithTag(items[0]));
             }
             else
             {
