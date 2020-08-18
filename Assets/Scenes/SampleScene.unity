@@ -1342,7 +1342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 653260038}
   - component: {fileID: 653260036}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Post-process Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2262,7 +2262,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 716999617}
   m_HandleRect: {fileID: 716999615}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
