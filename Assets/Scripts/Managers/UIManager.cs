@@ -68,13 +68,11 @@ public class UIManager : MonoSingleton<UIManager>
                 dst.AddRange(ModelManager.Instance.FindByHeight(items[0], min, max));
             }
         }
-        if (ison)
+
+
+        foreach (GameObject item in dst)
         {
-            // 隐藏
-        }
-        else
-        {
-            // 显示
+            item.SetActive(ison);
         }
     }
 
