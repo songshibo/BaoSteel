@@ -9,7 +9,7 @@
 选择 BaoSteel 预设
 
 ## 制作prefab
-材质，布料材质
+材质; 布料材质 溜槽材质 地面材质
 修改transform position
 
 ## Assets/Docs/ModelManager.txt
