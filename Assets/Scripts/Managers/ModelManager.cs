@@ -183,6 +183,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         return false;
     }
 
+    // 根据高度找冷却板或者热电偶
     public List<GameObject> FindByHeight(string type, float min, float max)
     {
         GameObject[] objs = GameObject.FindGameObjectsWithTag(type);
@@ -196,8 +197,8 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
                 result.Add(item);
             }
         }
-        print(result.Count);
-        print(objs.Length);
         return result;
     }
+
+
 }
