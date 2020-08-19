@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8736297573463925471}
   - component: {fileID: 5661671031444843898}
   - component: {fileID: 7599468711429495216}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: full_stove
   m_TagString: Untagged
   m_Icon: {fileID: 0}

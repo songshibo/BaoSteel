@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3381598840906757051}
   - component: {fileID: 1820019054620032030}
   - component: {fileID: 4514567144607926484}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: roof_riser
   m_TagString: Untagged
   m_Icon: {fileID: 0}

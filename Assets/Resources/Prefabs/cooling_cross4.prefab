@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3541940636666268251}
   - component: {fileID: 470726953172502014}
   - component: {fileID: 2408489989883851060}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cooling_cross4
   m_TagString: Untagged
   m_Icon: {fileID: 0}

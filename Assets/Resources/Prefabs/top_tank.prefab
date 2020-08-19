@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7999529986568595774}
   - component: {fileID: 6389431080089200283}
   - component: {fileID: 9173593843165975121}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: top_tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}

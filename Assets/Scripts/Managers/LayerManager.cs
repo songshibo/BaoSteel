@@ -9,13 +9,13 @@ public class LayerManager : Singleton<LayerManager>
         Resources.Load<Material>("ColorMaskBlitMat").SetFloat("_LerpValue", lerpValue);
     }
 
-    public void AddToHighlight(GameObject gameObject)
+    private void AddToHighlight(GameObject gameObject)
     {
         gameObject.layer = LayerMask.NameToLayer("highlight");
         SetBackgroundColorMaskWeight(0.8f);
     }
 
-    public void MoveFromHighlight(GameObject gameObject)
+    private void MoveFromHighlight(GameObject gameObject)
     {
         gameObject.layer = LayerMask.NameToLayer("default");
     }

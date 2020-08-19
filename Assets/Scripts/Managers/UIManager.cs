@@ -70,9 +70,15 @@ public class UIManager : MonoSingleton<UIManager>
             }
         }
 
-        foreach (GameObject item in dst)
+        if (ison)
         {
-            item.SetActive(ison);
+            // 进入高亮层
+            LayerManager.Instance.AddAllToHighlight(dst.ToArray());
+        }
+        else
+        {
+            // 进入默认层
+            LayerManager.Instance.MoveAllFromHighlight(dst.ToArray());
         }
     }
 
