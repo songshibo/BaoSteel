@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8461170549616541299}
   - component: {fileID: 4810906927144694230}
   - component: {fileID: 7288848490568615196}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: wind_pipeline
   m_TagString: Untagged
   m_Icon: {fileID: 0}

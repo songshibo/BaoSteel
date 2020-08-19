@@ -25,10 +25,10 @@ MonoBehaviour:
     fallbackErrorPS: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 4294967295
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 4294967295
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 0
@@ -53,4 +53,4 @@ MonoBehaviour:
   settings:
     IsEnabled: 1
     WhenToInsert: 1000
-    MaterialToBlit: {fileID: 2100000, guid: d6e05326289bc40e0a75109425cb1fcf, type: 2}
+    MaterialToBlit: {fileID: 2100000, guid: 3bdd12d96f2ed42138d83fb3cb1af54e, type: 2}
