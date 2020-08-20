@@ -12,18 +12,20 @@ public class LayerManager : Singleton<LayerManager>
     private void AddToHighlight(GameObject gameObject)
     {
         gameObject.layer = LayerMask.NameToLayer("highlight");
-        SetBackgroundColorMaskWeight(0.8f);
     }
 
     private void MoveFromHighlight(GameObject gameObject)
     {
-        gameObject.layer = LayerMask.NameToLayer("default");
+        gameObject.layer = LayerMask.NameToLayer("ambient");
     }
 
     public void AddAllToHighlight(GameObject[] gameObjects)
     {
         for (int i = 0; i < gameObjects.Length; i++)
             AddToHighlight(gameObjects[i]);
+
+        if (!Util.IsAnyObjectsInLayer("ambient"))
+            SetBackgroundColorMaskWeight(0.0f);
     }
 
     public void MoveAllFromHighlight(GameObject[] gameObjects)
@@ -31,7 +33,6 @@ public class LayerManager : Singleton<LayerManager>
         for (int i = 0; i < gameObjects.Length; i++)
             MoveFromHighlight(gameObjects[i]);
 
-        if (!Util.IsAnyObjectsInLayer("highlight"))
-            SetBackgroundColorMaskWeight(0.0f);
+        SetBackgroundColorMaskWeight(0.7f);
     }
 }

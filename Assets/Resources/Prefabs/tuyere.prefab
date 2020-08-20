@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5440086058838665253}
   - component: {fileID: 8993911553013917568}
   - component: {fileID: 6571945574591746890}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: tuyere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

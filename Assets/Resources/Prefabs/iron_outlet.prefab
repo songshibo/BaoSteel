@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 220135692629608298}
   - component: {fileID: 3792540691475564751}
   - component: {fileID: 1388578610634128389}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: iron_outlet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5028437866634604082}
   - component: {fileID: 8243630263472480663}
   - component: {fileID: 6161968025881744733}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: cross_temperature_measurement
   m_TagString: Untagged
   m_Icon: {fileID: 0}

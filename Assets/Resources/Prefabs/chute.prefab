@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8192063869561766676}
   - component: {fileID: 5052991755717545137}
   - component: {fileID: 7060274719065733243}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: chute
   m_TagString: Untagged
   m_Icon: {fileID: 0}

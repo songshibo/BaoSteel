@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2823057518323850947}
   - component: {fileID: 1189610345056915814}
   - component: {fileID: 3992070567467394476}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: throat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
