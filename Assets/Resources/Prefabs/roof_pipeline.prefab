@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4149001838838252415}
   - component: {fileID: 1025673537570639066}
   - component: {fileID: 3017160975862888464}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: roof_pipeline
   m_TagString: Untagged
   m_Icon: {fileID: 0}

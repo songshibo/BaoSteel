@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3013688265212842739}
   - component: {fileID: 2196945280745168214}
   - component: {fileID: 4150605122136287644}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: cooling_wall9
   m_TagString: Untagged
   m_Icon: {fileID: 0}

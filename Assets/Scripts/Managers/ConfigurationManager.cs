@@ -13,12 +13,13 @@ public class ConfigurationManager : MonoBehaviour
         InitializeModelManager();
         InitilizeUI();
         CullingController.Instance.ResetMaterialProperties();
+        LayerManager.Instance.SetBackgroundColorMaskWeight(0);
     }
 
     private void InitializeCamera()
     {
         string filename = "camera.txt";
-        string config = ExternalConfigReader.Instance.ReadConfigFile(filename);
+        string config = Util.ReadConfigFile(filename);
 
         string[] lines = config.Split('\n');
         Debug.Log("Camera parameters:\n" +
@@ -34,7 +35,7 @@ public class ConfigurationManager : MonoBehaviour
     private void InitializeModelManager()
     {
         string filename = "ModelManager.txt";
-        string config = ExternalConfigReader.Instance.ReadConfigFile(filename);
+        string config = Util.ReadConfigFile(filename);
 
         string[] lines = config.Split('\n');
 
@@ -45,7 +46,7 @@ public class ConfigurationManager : MonoBehaviour
     private void InitializeDataServiceManager()
     {
         string filename = "DataServiceManagerConfig.txt";
-        string configString = ExternalConfigReader.Instance.ReadConfigFile(filename);
+        string configString = Util.ReadConfigFile(filename);
         Dictionary<string, string> config = new Dictionary<string, string>();
         Regex regex = new Regex(@"(?<key>\S+)\s*:\s*(?<item>\S+)", RegexOptions.IgnoreCase);
         if (regex.IsMatch(configString))
@@ -71,11 +72,11 @@ public class ConfigurationManager : MonoBehaviour
     private void InitilizeUI()
     {
         string filenameClip = "ui.txt";
-        string configClip = ExternalConfigReader.Instance.ReadConfigFile(filenameClip);
+        string configClip = Util.ReadConfigFile(filenameClip);
         string[] linesClip = configClip.Split('\n');
 
         string filenameShowPart = "ShowPartModel.txt";
-        string configShowPart = ExternalConfigReader.Instance.ReadConfigFile(filenameShowPart);
+        string configShowPart = Util.ReadConfigFile(filenameShowPart);
         string[] linesShowPart = configShowPart.Split('\n');
 
         UIManager.Instance.InitializeUI(linesClip, linesShowPart);
