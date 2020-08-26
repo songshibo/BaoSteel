@@ -143,8 +143,33 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         {
             DestroyIronOutlet();
         }
+        else if (type == "thermocouple")
+        {
+            ChangeThermoAngle();
+        }
         return true;
     }
+
+    private void ChangeThermoAngle()
+    {
+        GameObject obj7 = GameObject.Find("TI7807_1");
+        obj7.transform.Rotate(180, 0, 0);
+
+        GameObject obj8 = GameObject.Find("TI7808_1");
+        obj8.transform.Rotate(180, 0, 0);
+
+        GameObject obj9 = GameObject.Find("TI7809_1");
+        obj9.transform.Rotate(180, 0, 0);
+
+        GameObject obj10 = GameObject.Find("TI7810_1");
+        obj10.transform.Rotate(180, 0, 0);
+
+        //Debug.Log(obj10.transform.position);
+        //Vector3 position = obj10.transform.position;
+        //float angle = (float)((Math.Atan(position.x / position.z) * 180) / Math.PI);
+        //Debug.Log(angle);
+    }
+
 
     private void GenerateLocalModel(string name)
     {
