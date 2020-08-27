@@ -107,13 +107,13 @@
       }
     },
     "com.unityfx.outline": {
-      "version": "file:/Users/saber/Downloads/ChromeDownload/UnityFx.Outline-0.8.0/Outline.Core/Packages/UnityFx.Outline",
+      "version": "file:./UnityFx.Outline-0.8.0/Outline.Core/Packages/UnityFx.Outline",
       "depth": 0,
       "source": "local",
       "dependencies": {}
     },
     "com.unityfx.outline.urp": {
-      "version": "file:/Users/saber/Downloads/ChromeDownload/UnityFx.Outline-0.8.0/Outline.URP/Packages/UnityFx.Outline.URP",
+      "version": "file:./UnityFx.Outline-0.8.0/Outline.URP/Packages/UnityFx.Outline.URP",
       "depth": 0,
       "source": "local",
       "dependencies": {
