@@ -60,6 +60,10 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
 8. UIManager: MonoSingleton
 
    根据配置文件给对应的UI元素添加子项和相应的事件(目前包括裁剪的dropdown和模型分块选择的multi-select dropdown)
+   
+9. EnterExitOutline:Mono
+
+   监听 DropDown 鼠标进入退出。鼠标进入某个 toggle ，则该 toggle 对应的所有模型 outline 。
 
 ## Util 全局静态方法(Util.${MethodName}调用)
 

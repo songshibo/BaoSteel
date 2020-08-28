@@ -6,20 +6,37 @@ using UnityEngine.EventSystems;
 
 public class EnterExitOutline : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private string targets;
+    private string s;
+    private GameObject[] targets;
+    private bool flag; // targets 是否有值的标志
 
     public void SetTargets(string tar)
     {
-        targets = tar;
+        s = tar;
+        flag = false;
+    }
+
+    private void GetTargets()
+    {
+        targets = ModelManager.Instance.SplitStringGetObjects(s);
+        flag = true;
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
-        SelectionManager.Instance.AddAllToOutlineList(ModelManager.Instance.SplitStringGetObjects(targets));
+        if (!flag)
+        {
+            GetTargets();
+        }
+        SelectionManager.Instance.AddAllToOutlineList(targets);
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
-        SelectionManager.Instance.MoveAllFromOutlineList(ModelManager.Instance.SplitStringGetObjects(targets));
+        if (!flag)
+        {
+            GetTargets();
+        }
+        SelectionManager.Instance.MoveAllFromOutlineList(targets);
     }
 }
