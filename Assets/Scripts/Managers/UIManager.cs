@@ -43,43 +43,19 @@ public class UIManager : MonoSingleton<UIManager>
             string[] config = configShowPart[i].Split(':');
             GameObject obj = layerDropDown.transform.Find("Content/Item List/Scroll Area/List/dropdown" + i.ToString()).gameObject;
             
-            // 得到该 toggle 对应的所有 GameObjects
-            GameObject[] tar = SplitStringGetObjects(config[1]);
-            obj.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => ShowPartItemEvent(tar, value));
+            obj.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => ShowPartItemEvent(config[1], value));
             obj.AddComponent<EnterExitOutline>();
-            obj.GetComponent<EnterExitOutline>().SetTargets(tar);
+            obj.GetComponent<EnterExitOutline>().SetTargets(config[1]);
         }
 
-    }
-
-    private GameObject[] SplitStringGetObjects(string s)
-    {
-        List<GameObject> dst = new List<GameObject>();
-        string[] infos = s.Split(' ');
-        foreach (string info in infos)
-        {
-            string[] items = info.Trim().Split('?');
-
-            if (items.Length == 1)
-            {
-                dst.AddRange(GameObject.FindGameObjectsWithTag(items[0]));
-            }
-            else
-            {
-                string[] heights = items[1].Split('-');
-                float min = float.Parse(heights[0]);
-                float max = float.Parse(heights[1]);
-                dst.AddRange(ModelManager.Instance.FindByHeight(items[0], min, max));
-            }
-        }
-        return dst.ToArray();
     }
 
     /// <summary>
     /// shouw part of model dropdown event function
     /// </summary>
-    private void ShowPartItemEvent(GameObject[] targets, bool ison)
+    private void ShowPartItemEvent(string s, bool ison)
     {
+        GameObject[] targets = ModelManager.Instance.SplitStringGetObjects(s);
         if (ison)
         {
             // 进入高亮层

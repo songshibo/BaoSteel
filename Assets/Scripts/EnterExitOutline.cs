@@ -6,20 +6,20 @@ using UnityEngine.EventSystems;
 
 public class EnterExitOutline : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private GameObject[] targets;
+    private string targets;
 
-    public void SetTargets(GameObject[] tar)
+    public void SetTargets(string tar)
     {
         targets = tar;
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
-        SelectionManager.Instance.AddAllToOutlineList(targets);
+        SelectionManager.Instance.AddAllToOutlineList(ModelManager.Instance.SplitStringGetObjects(targets));
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
-        SelectionManager.Instance.MoveAllFromOutlineList(targets);
+        SelectionManager.Instance.MoveAllFromOutlineList(ModelManager.Instance.SplitStringGetObjects(targets));
     }
 }
