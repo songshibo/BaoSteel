@@ -55,7 +55,9 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
 
 7. SelectionManager : Singleton
 
-   基于UnityFx.Outline Package的描边效果，提供当鼠标选中或者某些ui元素的mouse enter event触发时，添加或移除边缘高亮的效果，具体描边效果设置在Settings/OutlineLayerCollection
+   基于UnityFx.Outline Package的描边效果，提供当鼠标选中或者某些ui元素的mouse enter event触发时，添加或移除边缘高亮的效果，具体描边效果设置在Settings/OutlineLayerCollection。
+
+   layerIndex参数默认为0，是热电偶选择对应的layer；dropdown按钮的mouse enter和exit事件对应layerIndex参数应为1
 
 8. UIManager: MonoSingleton
 
