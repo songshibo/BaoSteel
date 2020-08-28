@@ -26,7 +26,7 @@ MonoBehaviour:
       _outlineColor: {r: 0, g: 1, b: 1, a: 1}
       _outlineWidth: 10
       _outlineIntensity: 5
-      _outlineMode: -1
+      _outlineMode: 1
     _name: 
     _enabled: 1
   _layerMask: 0
