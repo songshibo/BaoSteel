@@ -17,9 +17,9 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
   port:xxxxx
   ```
 
-- ModelManager: ==TODO==
+- ModelManager: 程序需要实例化的模型。以 ’-‘ 开头的行代表该模型不需要读取数据库的信息。
 
-- ShowPartModel: ==TODO==
+- ShowPartModel: 每一行对应于 dropdown 中的一个 toggle ，分号前表示该 toggle 的名字，分号后表示该 toggle 所影响的模型。问号后代表属于某个高度范围的模型。
 
 - ui: 空格隔开，每个参数为可以裁剪的角度
 
@@ -51,7 +51,7 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
 
 6. ModelManager: MonoSingleton
 
-   ==TODO==
+   模型管理器，主要负责生成 tag 、场景中所有的模型生成，以及查找场景中的模型。
 
 7. SelectionManager : Singleton
 
