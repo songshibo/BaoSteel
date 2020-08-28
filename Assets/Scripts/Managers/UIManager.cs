@@ -42,12 +42,33 @@ public class UIManager : MonoSingleton<UIManager>
         {
             string[] config = configShowPart[i].Split(':');
             GameObject obj = layerDropDown.transform.Find("Content/Item List/Scroll Area/List/dropdown" + i.ToString()).gameObject;
-            
+
             obj.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => ShowPartItemEvent(config[1], value));
-            obj.AddComponent<EnterExitOutline>();
-            obj.GetComponent<EnterExitOutline>().SetTargets(config[1]);
+            EventTrigger eventTrigger = obj.AddComponent<EventTrigger>();
+            // Point enter event
+            EventTrigger.Entry pointerEnter = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerEnter
+            };
+            pointerEnter.callback.AddListener((e) => HighlightPartItemsEvent(config[1]));
+            eventTrigger.triggers.Add(pointerEnter);
+            // Point exit event
+            EventTrigger.Entry pointerExit = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerExit
+            };
+            pointerExit.callback.AddListener((e) => HighlightPartItemsEvent("Exit"));
+            eventTrigger.triggers.Add(pointerExit);
+
+            //obj.AddComponent<EnterExitOutline>();
+            //obj.GetComponent<EnterExitOutline>().SetTargets(config[1]);
         }
 
+    }
+
+    private void HighlightPartItemsEvent(string s)
+    {
+        Debug.Log(s);
     }
 
     /// <summary>
