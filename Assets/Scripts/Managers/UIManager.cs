@@ -2,7 +2,9 @@
 using Michsky.UI.ModernUIPack;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
+
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -40,16 +42,17 @@ public class UIManager : MonoSingleton<UIManager>
         {
             string[] config = configShowPart[i].Split(':');
             GameObject obj = layerDropDown.transform.Find("Content/Item List/Scroll Area/List/dropdown" + i.ToString()).gameObject;
-            obj.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => ShowPartItemEvent(config[1], value));
-
+            
+            // 得到该 toggle 对应的所有 GameObjects
+            GameObject[] tar = SplitStringGetObjects(config[1]);
+            obj.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => ShowPartItemEvent(tar, value));
+            obj.AddComponent<EnterExitOutline>();
+            obj.GetComponent<EnterExitOutline>().SetTargets(tar);
         }
 
     }
 
-    /// <summary>
-    /// shouw part of model dropdown event function
-    /// </summary>
-    private void ShowPartItemEvent(string s, bool ison)
+    private GameObject[] SplitStringGetObjects(string s)
     {
         List<GameObject> dst = new List<GameObject>();
         string[] infos = s.Split(' ');
@@ -69,16 +72,23 @@ public class UIManager : MonoSingleton<UIManager>
                 dst.AddRange(ModelManager.Instance.FindByHeight(items[0], min, max));
             }
         }
+        return dst.ToArray();
+    }
 
+    /// <summary>
+    /// shouw part of model dropdown event function
+    /// </summary>
+    private void ShowPartItemEvent(GameObject[] targets, bool ison)
+    {
         if (ison)
         {
             // 进入高亮层
-            LayerManager.Instance.AddAllToHighlight(dst.ToArray());
+            LayerManager.Instance.AddAllToHighlight(targets);
         }
         else
         {
             // 进入默认层
-            LayerManager.Instance.MoveAllFromHighlight(dst.ToArray());
+            LayerManager.Instance.MoveAllFromHighlight(targets);
         }
     }
 
