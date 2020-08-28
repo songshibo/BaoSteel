@@ -9,10 +9,23 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
 ### 配置文件说明
 
 - camera: 四行参数(换行)，分别表示滚轮缩放速度(1-10)/相机旋转速度(1-10)/鼠标中键拖拽速度(1-10)/相机离中心最近距离(0.1-30)
-- DataServiceManagerConfig: 格式为ip: xxx.xxx.xxx.xxx \n port: xxxxx
+
+- DataServiceManagerConfig: 格式为
+
+  ```
+  ip:xxx.xxx.xxx.xxx
+  port:xxxxx
+  ```
+
 - ModelManager: ==TODO==
+
 - ShowPartModel: ==TODO==
+
 - ui: 空格隔开，每个参数为可以裁剪的角度
+
+  ```
+  ${angle0} ${angle1} ${angle2} ...
+  ```
 
 ## Manager Scripts
 
