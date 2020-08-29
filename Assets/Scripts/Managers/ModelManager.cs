@@ -225,5 +225,27 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         return result;
     }
 
+    // 负责解析 DropDown 中所对应的模型
+    public GameObject[] SplitStringGetObjects(string s)
+    {
+        List<GameObject> dst = new List<GameObject>();
+        string[] infos = s.Split(' ');
+        foreach (string info in infos)
+        {
+            string[] items = info.Trim().Split('?');
 
+            if (items.Length == 1)
+            {
+                dst.AddRange(GameObject.FindGameObjectsWithTag(items[0]));
+            }
+            else
+            {
+                string[] heights = items[1].Split('-');
+                float min = float.Parse(heights[0]);
+                float max = float.Parse(heights[1]);
+                dst.AddRange(ModelManager.Instance.FindByHeight(items[0], min, max));
+            }
+        }
+        return dst.ToArray();
+    }
 }

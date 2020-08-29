@@ -10,6 +10,8 @@
     "com.unity.textmeshpro": "2.1.1",
     "com.unity.timeline": "1.2.15",
     "com.unity.ugui": "1.0.0",
+    "com.unityfx.outline": "file:./UnityFx.Outline-0.8.0/Outline.Core/Packages/UnityFx.Outline",
+    "com.unityfx.outline.urp": "file:./UnityFx.Outline-0.8.0/Outline.URP/Packages/UnityFx.Outline.URP",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",

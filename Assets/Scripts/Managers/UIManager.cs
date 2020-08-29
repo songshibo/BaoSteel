@@ -2,7 +2,9 @@
 using Michsky.UI.ModernUIPack;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
+
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -40,10 +42,33 @@ public class UIManager : MonoSingleton<UIManager>
         {
             string[] config = configShowPart[i].Split(':');
             GameObject obj = layerDropDown.transform.Find("Content/Item List/Scroll Area/List/dropdown" + i.ToString()).gameObject;
-            obj.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => ShowPartItemEvent(config[1], value));
 
+            obj.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => ShowPartItemEvent(config[1], value));
+            EventTrigger eventTrigger = obj.AddComponent<EventTrigger>();
+            // Point enter event
+            EventTrigger.Entry pointerEnter = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerEnter
+            };
+            pointerEnter.callback.AddListener((e) => HighlightPartItemsEvent(config[1]));
+            eventTrigger.triggers.Add(pointerEnter);
+            // Point exit event
+            EventTrigger.Entry pointerExit = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerExit
+            };
+            pointerExit.callback.AddListener((e) => HighlightPartItemsEvent("Exit"));
+            eventTrigger.triggers.Add(pointerExit);
+
+            //obj.AddComponent<EnterExitOutline>();
+            //obj.GetComponent<EnterExitOutline>().SetTargets(config[1]);
         }
 
+    }
+
+    private void HighlightPartItemsEvent(string s)
+    {
+        Debug.Log(s);
     }
 
     /// <summary>
@@ -51,34 +76,16 @@ public class UIManager : MonoSingleton<UIManager>
     /// </summary>
     private void ShowPartItemEvent(string s, bool ison)
     {
-        List<GameObject> dst = new List<GameObject>();
-        string[] infos = s.Split(' ');
-        foreach (string info in infos)
-        {
-            string[] items = info.Trim().Split('?');
-
-            if (items.Length == 1)
-            {
-                dst.AddRange(GameObject.FindGameObjectsWithTag(items[0]));
-            }
-            else
-            {
-                string[] heights = items[1].Split('-');
-                float min = float.Parse(heights[0]);
-                float max = float.Parse(heights[1]);
-                dst.AddRange(ModelManager.Instance.FindByHeight(items[0], min, max));
-            }
-        }
-
+        GameObject[] targets = ModelManager.Instance.SplitStringGetObjects(s);
         if (ison)
         {
             // 进入高亮层
-            LayerManager.Instance.AddAllToHighlight(dst.ToArray());
+            LayerManager.Instance.AddAllToHighlight(targets);
         }
         else
         {
             // 进入默认层
-            LayerManager.Instance.MoveAllFromHighlight(dst.ToArray());
+            LayerManager.Instance.MoveAllFromHighlight(targets);
         }
     }
 

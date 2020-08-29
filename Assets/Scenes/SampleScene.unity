@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.285027, g: 0.37139374, b: 0.4960103, a: 1}
+  m_IndirectSpecularColor: {r: 0.28502715, g: 0.371394, b: 0.49601093, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -596,6 +596,7 @@ GameObject:
   - component: {fileID: 312171363}
   - component: {fileID: 312171366}
   - component: {fileID: 312171364}
+  - component: {fileID: 312171365}
   m_Layer: 0
   m_Name: Hightlight Camera
   m_TagString: Untagged
@@ -642,12 +643,26 @@ MonoBehaviour:
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
-  m_StopNaN: 0
+  m_StopNaN: 1
   m_Dithering: 0
   m_ClearDepth: 1
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &312171365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312171362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e746e776b0ae00d4a9d458b9430b95d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _outlineLayers: {fileID: 11400000, guid: 2c9bb72756ec44e5ebc5da69db25bb55, type: 2}
+  _content: []
 --- !u!20 &312171366
 Camera:
   m_ObjectHideFlags: 0
@@ -657,8 +672,8 @@ Camera:
   m_GameObject: {fileID: 312171362}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3134,8 +3149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
+  m_RequiresDepthTextureOption: 1
+  m_RequiresOpaqueTextureOption: 0
   m_CameraType: 0
   m_Cameras:
   - {fileID: 312171366}
