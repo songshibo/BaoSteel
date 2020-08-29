@@ -90,53 +90,102 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         {
             GameObject obj1 = GameObject.Find("cooling_wall3_" + i.ToString());
             GameObject obj2 = GameObject.Find("cooling_wall4_" + i.ToString());
-            DestroyImmediate(obj1);
-            DestroyImmediate(obj2);
+            if (obj1)
+            {
+                DestroyImmediate(obj1);
+            }
+            if (obj2)
+            {
+                DestroyImmediate(obj2);
+            }
         }
         for (int i = 19; i <= 22; i++)
         {
             GameObject obj1 = GameObject.Find("cooling_wall3_" + i.ToString());
             GameObject obj2 = GameObject.Find("cooling_wall4_" + i.ToString());
-            DestroyImmediate(obj1);
-            DestroyImmediate(obj2);
+            if (obj1)
+            {
+                DestroyImmediate(obj1);
+            }
+            if (obj2)
+            {
+                DestroyImmediate(obj2);
+            }
         }
         for (int i = 35; i <= 38; i++)
         {
             GameObject obj1 = GameObject.Find("cooling_wall3_" + i.ToString());
             GameObject obj2 = GameObject.Find("cooling_wall4_" + i.ToString());
-            DestroyImmediate(obj1);
-            DestroyImmediate(obj2);
+            if (obj1)
+            {
+                DestroyImmediate(obj1);
+            }
+            if (obj2)
+            {
+                DestroyImmediate(obj2);
+            }
         }
         for (int i = 47; i <= 50; i++)
         {
             GameObject obj1 = GameObject.Find("cooling_wall3_" + i.ToString());
             GameObject obj2 = GameObject.Find("cooling_wall4_" + i.ToString());
-            DestroyImmediate(obj1);
-            DestroyImmediate(obj2);
+            if (obj1)
+            {
+                DestroyImmediate(obj1);
+            }
+            if (obj2)
+            {
+                DestroyImmediate(obj2);
+            }
         }
         GameObject obj = GameObject.Find("cooling_wall4_" + 11.ToString());
-        DestroyImmediate(obj);
+        if (obj)
+        {
+            DestroyImmediate(obj);
+        }
         obj = GameObject.Find("cooling_wall4_" + 23.ToString());
-        DestroyImmediate(obj);
+        if (obj)
+        {
+            DestroyImmediate(obj);
+        }
         obj = GameObject.Find("cooling_wall4_" + 39.ToString());
-        DestroyImmediate(obj);
+        if (obj)
+        {
+            DestroyImmediate(obj);
+        }
         obj = GameObject.Find("cooling_wall4_" + 51.ToString());
-        DestroyImmediate(obj);
+        if (obj)
+        {
+            DestroyImmediate(obj);
+        }
     }
 
     private void ChangeThermoAngle()
     {
         GameObject obj7 = GameObject.Find("TI7807_1");
-        obj7.transform.Rotate(180, 0, 0);
+        if (obj7)
+        {
+            obj7.transform.Rotate(180, 0, 0);
+        }
+        
 
         GameObject obj8 = GameObject.Find("TI7808_1");
-        obj8.transform.Rotate(180, 0, 0);
+        if (obj8)
+        {
+            obj8.transform.Rotate(180, 0, 0);
+        }
 
         GameObject obj9 = GameObject.Find("TI7809_1");
-        obj9.transform.Rotate(180, 0, 0);
+        if (obj9)
+        {
+            obj9.transform.Rotate(180, 0, 0);
+        }
 
         GameObject obj10 = GameObject.Find("TI7810_1");
-        obj10.transform.Rotate(180, 0, 0);
+        if (obj10)
+        {
+            obj10.transform.Rotate(180, 0, 0);
+        }
 
         //Debug.Log(obj10.transform.position);
         //Vector3 position = obj10.transform.position;
@@ -179,14 +228,14 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
                 }
             }
         }
-        //if (type == "cooling_wall")
-        //{
-        //    DestroyIronOutlet();
-        //}
-        //else if (type == "thermocouple")
-        //{
-        //    ChangeThermoAngle();
-        //}
+        if (type == "cooling_wall")
+        {
+            DestroyIronOutlet();
+        }
+        else if (type == "thermocouple")
+        {
+            ChangeThermoAngle();
+        }
         return true;
     }
 
