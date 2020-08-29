@@ -49,7 +49,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
                 }
                 else
                 {
-                    GenerateTag(m);
+                    GenerateTag(m.Trim());
                     char[] digits = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }; // cooling_wall3 只需要传入 type 即 cooling_wall 。
                     StartCoroutine(DataServiceManager.Instance.GetModel(GenerateRemoteModel, m.Trim().TrimEnd(digits), parent, min_height, max_height));
                 }
