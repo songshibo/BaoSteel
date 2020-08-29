@@ -37,7 +37,7 @@ public class ConfigurationManager : MonoBehaviour
         string filename = "ModelManager.txt";
         string config = Util.ReadConfigFile(filename);
 
-        string[] lines = config.Split('\n');
+        string[] lines = Util.RemoveComments(config.Split('\n'));
 
         // GeneratePipeline: add tags, then generate models.
         ModelManager.Instance.GeneratePipeline(lines);
@@ -75,10 +75,10 @@ public class ConfigurationManager : MonoBehaviour
         string configClip = Util.ReadConfigFile(filenameClip);
         string[] linesClip = configClip.Split('\n');
 
-        string filenameShowPart = "ShowPartModel.txt";
-        string configShowPart = Util.ReadConfigFile(filenameShowPart);
-        string[] linesShowPart = configShowPart.Split('\n');
+        //string filenameShowPart = "ModelManger.txt";
+        //string configShowPart = Util.ReadConfigFile(filenameShowPart);
+        //string[] linesShowPart = Util.RemoveComments(configShowPart.Split('\n'));
 
-        UIManager.Instance.InitializeUI(linesClip, linesShowPart);
+        //UIManager.Instance.InitializeUI(linesClip, linesShowPart);
     }
 }

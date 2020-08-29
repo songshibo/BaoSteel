@@ -8,7 +8,7 @@ public class testDataServiceManager : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public static bool arr(string data, string type)
+    public static bool arr(string data, string type, GameObject parent)
     {
         Debug.Log(data);
         return true;
@@ -31,6 +31,6 @@ public class testDataServiceManager : MonoBehaviour
 
     void TestGetModelAPI()
     {
-        StartCoroutine(DataServiceManager.Instance.GetModel(arr, "cooling_plate", max_h: 7));
+        StartCoroutine(DataServiceManager.Instance.GetModel(arr, "cooling_plate", new GameObject("test")));
     }
 }

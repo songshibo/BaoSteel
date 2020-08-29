@@ -1,9 +1,0 @@
-hearth:hearth wind_pipeline iron_outlet tuyere thermocouple?0-16.6 cooling_wall1 cooling_wall2 cooling_wall3 cooling_wall4 cooling_wall5
-bosh:bosh thermocouple?16.6-21.1? cooling_plate?16.6-21.1
-waist:waist thermocouple?21.1-23.2 cooling_plate?21.1-23.2 cooling_cross1
-body:body thermocouple?23.2-41 cooling_plate?23.2-41 cooling_wall6 cooling_wall7 cooling_wall8 cooling_cross2 cooling_cross3 cooling_cross4 cooling_cross5 cooling_cross6 cooling_cross7 cooling_cross8 cooling_cross9 cooling_cross10
-throat:throat chute cross_temperature_measurement thermocouple?41-60 cooling_wall9
-bottom_tank:bottom_tank bottom_cloth
-top_tank:top_tank top_cloth
-feed_box:feed_box
-shelf:shelf roof_pipeline roof_riser

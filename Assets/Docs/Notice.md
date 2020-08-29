@@ -49,16 +49,18 @@ build之后根据平台不同不同，webgl不可通过这种方式读配置
 
     eg：StartCoroutine(DataServiceManager.Instance().GetTemperature(funcName));
 
-**2.接口：DataServiceManager.Instance().GetModel(Func<string, bool> DataArrangement, string type = "cooling_plate", float min_h = 0, float max_h = 0)**
+**2.接口：DataServiceManager.Instance().GetModel(Func<string, string, GameObject, bool> DataArrangement, string type, GameObject parent, float min_h = 0, float max_h = 0)**
 
 - 作用：获得指定高度的指定模型
 
 - 参数说明
 
-  - DataArrangement为带有一个string参数，返回值类型为bool的函数名
+  - DataArrangement参数为 读到的数据、模型类型、所属父物体，返回值类型为bool的函数名
 
   - 通过参数type指定要获取的模型，
 
      如 string type =“cooling_plate” 代表获取cooling_plate; 而string type ="cooling_plate, cooling_cross"代表获取cooling_plate 和 cooling_plate_cross
+
+     parent 表示该模型所有哪个分组
 
   - min_h max_h 指定高度下限和上限 返回此高度范围内的type参数指定的模型

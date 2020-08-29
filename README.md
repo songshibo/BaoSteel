@@ -17,9 +17,7 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
   port:xxxxx
   ```
 
-- ModelManager: 程序需要实例化的模型。以 ’-‘ 开头的行代表该模型不需要读取数据库的信息。
-
-- ShowPartModel: 每一行对应于 dropdown 中的一个 toggle ，分号前表示该 toggle 的名字，分号后表示该 toggle 所影响的模型。问号后代表属于某个高度范围的模型。
+- ModelManager: 分号前表示 toggle 的名字，分号后表示该 toggle 所控制的模型。以 '-' 开始的模型表示本地模型。'?' 表示后面为高度数据，'<' 表示最低高度到最高高度。
 
 - ui: 空格隔开，每个参数为可以裁剪的角度
 
@@ -63,9 +61,6 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
 
    根据配置文件给对应的UI元素添加子项和相应的事件(目前包括裁剪的dropdown和模型分块选择的multi-select dropdown)
    
-9. EnterExitOutline:Mono
-
-   监听 DropDown 鼠标进入退出。鼠标进入某个 toggle ，则该 toggle 对应的所有模型 outline 。
 
 ## Util 全局静态方法(Util.${MethodName}调用)
 

@@ -22,6 +22,20 @@ public static class Util
             return null;
         }
     }
+
+    public static string[] RemoveComments(string[] contents)
+    {
+        List<string> result = new List<string>();
+        foreach (string item in contents)
+        {
+            if (!item.StartsWith("#"))
+            {
+                result.Add(item);
+            }
+        }
+        return result.ToArray();
+    }
+
     /// <summary>
     /// find all distinct gameobject array by tags
     /// </summary>

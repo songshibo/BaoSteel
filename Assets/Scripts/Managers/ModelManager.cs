@@ -14,48 +14,74 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
 {
     public void GeneratePipeline(string[] models)
     {
-        List<string> from_database = new List<string>();
-        List<string> from_local = new List<string>();
+        //以 '-' 开头的行，表示不需要读数据库
+        //读数据库的行要去掉末尾的数字，例如 type 为 cooling_wall 而不是 cooling_wall8。type 错误会导致 http 错误。
+        GameObject root = GameObject.Find("Model");
+        if (!root)
+        {
+            root = new GameObject("Model");
+        }
 
-        // 划分哪些模型需要读数据库，哪些不需要
-        // 以 '-' 开头的行，表示不需要读数据库
-        // 读数据库的行要去掉末尾的数字，例如 type 为 cooling_wall 而不是 cooling_wall8。type 错误会导致 http 错误。
         foreach (string item in models)
         {
-            string itm = item.Trim();
-            if (itm.StartsWith("-"))
+            string[] name_model = item.Split(':'); // 所在分组的名字，以及该分组拥有的模型
+            string name = name_model[0].Split('?')[0]; // 分组的名字
+            float min_height = 0;
+            float max_height = 0;
+            if (name_model[0].Split('?').Length > 1)
             {
-                string s = itm.Replace("-", "");
-                GenerateTag(s);
-                if (!from_local.Contains(s))
+                min_height = float.Parse(name_model[0].Split('?')[1].Split('<')[0]); // 该分组的下高度
+                max_height = float.Parse(name_model[0].Split('?')[1].Split('<')[1]); // 该分组的上高度
+            }
+            
+
+
+            GameObject parent = new GameObject(name);
+            parent.transform.SetParent(root.transform);
+
+            string[] ms = name_model[1].Split(' '); // 该分组拥有的模型
+            foreach (string m in ms)
+            {
+                if (m.StartsWith("-")) // 以 ‘-’ 开头为本地模型，先生成 tag，再生成模型，要去掉开头的 ‘-’
                 {
-                    from_local.Add(s);
+                    GenerateTag(m.Trim('-'));
+                    GenerateLocalModel(m.Trim('-'), parent);
+                }
+                else
+                {
+                    GenerateTag(m);
+                    var digits = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }; // cooling_wall3 只需要传入 type 即 cooling_wall 。
+                    StartCoroutine(DataServiceManager.Instance.GetModel(GenerateRemoteModel, m.TrimEnd(digits), parent, min_height, max_height));
                 }
             }
-            else
-            {
-                GenerateTag(itm);
-
-                var digits = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-                itm = itm.TrimEnd(digits);
-                if (!from_database.Contains(itm))
-                {
-                    from_database.Add(itm);
-                }
-
-            }
-        }
-        foreach (string item in from_local)
-        {
-            GenerateLocalModel(item);
         }
 
-        foreach (string item in from_database)
-        {
-            // 注意 type 是否 五个选择之一，不带数字
-            StartCoroutine(DataServiceManager.Instance.GetModel(GenerateRemoteModel, item));
-        }
+        
+        //foreach (string item in models)
+        //{
+        //    string itm = item.Trim();
+        //    if (itm.StartsWith("-"))
+        //    {
+        //        string s = itm.Replace("-", "");
+        //        GenerateTag(s);
+        //        if (!from_local.Contains(s))
+        //        {
+        //            from_local.Add(s);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        GenerateTag(itm);
 
+        //        var digits = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        //        itm = itm.TrimEnd(digits);
+        //        if (!from_database.Contains(itm))
+        //        {
+        //            from_database.Add(itm);
+        //        }
+
+        //    }
+        //}
     }
 
     private void DestroyIronOutlet()
@@ -98,17 +124,31 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         DestroyImmediate(obj);
     }
 
-    public bool GenerateRemoteModel(string data, string type)
+    private void ChangeThermoAngle()
+    {
+        GameObject obj7 = GameObject.Find("TI7807_1");
+        obj7.transform.Rotate(180, 0, 0);
+
+        GameObject obj8 = GameObject.Find("TI7808_1");
+        obj8.transform.Rotate(180, 0, 0);
+
+        GameObject obj9 = GameObject.Find("TI7809_1");
+        obj9.transform.Rotate(180, 0, 0);
+
+        GameObject obj10 = GameObject.Find("TI7810_1");
+        obj10.transform.Rotate(180, 0, 0);
+
+        //Debug.Log(obj10.transform.position);
+        //Vector3 position = obj10.transform.position;
+        //float angle = (float)((Math.Atan(position.x / position.z) * 180) / Math.PI);
+        //Debug.Log(angle);
+    }
+
+    public bool GenerateRemoteModel(string data, string type, GameObject parent)
     {
         data = data.Trim();
         // Debug.Log(data);
         JToken json = JObject.Parse(data);
-
-        GameObject root = GameObject.Find("Model");
-        if (!root)
-        {
-            root = new GameObject("Model");
-        }
 
         foreach (JProperty model_type in json)
         {
@@ -135,53 +175,34 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
                     obj.transform.eulerAngles = new Vector3(0, (float)cur_angle, 0);
                     obj.tag = tag;
                     obj.name = name + "_" + (i + 1).ToString();
-                    obj.transform.parent = root.transform;
+                    obj.transform.parent = parent.transform;
                 }
             }
         }
-        if (type == "cooling_wall")
-        {
-            DestroyIronOutlet();
-        }
-        else if (type == "thermocouple")
-        {
-            ChangeThermoAngle();
-        }
+        //if (type == "cooling_wall")
+        //{
+        //    DestroyIronOutlet();
+        //}
+        //else if (type == "thermocouple")
+        //{
+        //    ChangeThermoAngle();
+        //}
         return true;
     }
 
-    private void ChangeThermoAngle()
+    private void GenerateLocalModel(string name, GameObject parent)
     {
-        GameObject obj7 = GameObject.Find("TI7807_1");
-        obj7.transform.Rotate(180, 0, 0);
-
-        GameObject obj8 = GameObject.Find("TI7808_1");
-        obj8.transform.Rotate(180, 0, 0);
-
-        GameObject obj9 = GameObject.Find("TI7809_1");
-        obj9.transform.Rotate(180, 0, 0);
-
-        GameObject obj10 = GameObject.Find("TI7810_1");
-        obj10.transform.Rotate(180, 0, 0);
-
-        //Debug.Log(obj10.transform.position);
-        //Vector3 position = obj10.transform.position;
-        //float angle = (float)((Math.Atan(position.x / position.z) * 180) / Math.PI);
-        //Debug.Log(angle);
-    }
-
-
-    private void GenerateLocalModel(string name)
-    {
-        GameObject root = GameObject.Find("Model");
-        if (!root)
+        try
         {
-            root = new GameObject("Model");
-        }
+            GameObject obj = Instantiate(Resources.Load<GameObject>(("Prefabs/" + name).Trim()), parent.transform);
+            obj.tag = name;
+            obj.name = name;
 
-        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/" + name), root.transform);
-        obj.tag = name;
-        obj.name = name;
+        }
+        catch (Exception)
+        {
+            print("Prefabs/" + name + "本地模型生成失败，添加 trim 试试");
+        }
     }
 
     private void GenerateTag(string tag)

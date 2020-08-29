@@ -141,10 +141,11 @@ public class DataServiceManager:Singleton<DataServiceManager>
 
 
     // 类型不对，会引起 HTTP/1.1 500 Internal Server Error
-    public IEnumerator GetModel(Func<string, string, bool> DataArrangement, string type, float min_h = 0, float max_h = 0)
+    public IEnumerator GetModel(Func<string, string, GameObject, bool> DataArrangement, string type, GameObject parent, float min_h = 0, float max_h = 0)
     {
         if (initialized)
         {
+
             UnityWebRequest www = UnityWebRequest.Get(url + "/model?" + "type=" + type + "&&" + "min_h=" + min_h.ToString() + "&&" + "max_h=" + max_h.ToString());
             yield return www.SendWebRequest();
 
@@ -158,7 +159,7 @@ public class DataServiceManager:Singleton<DataServiceManager>
                 // Show results as text
                 string data = www.downloadHandler.text;
 
-                DataArrangement(data, type);
+                DataArrangement(data, type, parent);
                 // Or retrieve results as binary data
 
             }
