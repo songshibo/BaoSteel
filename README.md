@@ -82,3 +82,18 @@ Resources/ClippingMaterals为需要裁剪的材质
 Resouces/Prefabs为动态生成的模型的prefab
 
 其他需要动态加载的部分也应当放在Resources目录下
+
+# TODO
+
+完成的项用~~删除线~~划掉
+
+- TimerManager(MonoSingleton): 读取每个更新器的更新时间，维护一个全局计时器，到特定时间调用相应的更新器
+- ThermocoupleUpdater(Singleton): 处理所有热电偶的更新
+- TuyereUpdater(Singleton): 处理所有关于风口的更新
+- HeatmapUpdater(Singleton): 处理热力图的更新 (ssb)
+- 热电偶按钮的UI生成 (ss)
+- SelectionManager的补全，包括鼠标点选热电偶显示对应信息(ssb)
+- 风口标签显示，最好UI跟踪，或者3D Billboard效果实现，标签位置以风口水平高度对齐，会有相互遮挡
+- 每个模型使用不同材质(需要裁剪的材质放到Resources/ClippingMaterials下)
+- 不同区域的模型生成在同一个空父物体下 (ss)
+
