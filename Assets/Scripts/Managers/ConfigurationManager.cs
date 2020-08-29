@@ -75,10 +75,10 @@ public class ConfigurationManager : MonoBehaviour
         string configClip = Util.ReadConfigFile(filenameClip);
         string[] linesClip = configClip.Split('\n');
 
-        //string filenameShowPart = "ModelManger.txt";
-        //string configShowPart = Util.ReadConfigFile(filenameShowPart);
-        //string[] linesShowPart = Util.RemoveComments(configShowPart.Split('\n'));
+        string filenameShowPart = "ModelManager.txt";
+        string configShowPart = Util.ReadConfigFile(filenameShowPart);
+        string[] linesShowPart = Util.RemoveComments(configShowPart.Split('\n'));
 
-        //UIManager.Instance.InitializeUI(linesClip, linesShowPart);
+        UIManager.Instance.InitializeUI(linesClip, linesShowPart);
     }
 }

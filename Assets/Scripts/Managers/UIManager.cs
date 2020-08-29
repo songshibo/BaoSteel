@@ -31,7 +31,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             string[] config = row.Split(':');
             DropdownMultiSelect.Item item = new DropdownMultiSelect.Item();
-            item.itemName = config[0];
+            item.itemName = config[0].Split('?')[0];
             layerDropDown.dropdownItems.Add(item);
             //layerDropDown.SetItemTitle(config[0]);
             //layerDropDown.CreateNewItem();
@@ -43,21 +43,23 @@ public class UIManager : MonoSingleton<UIManager>
             string[] config = configShowPart[i].Split(':');
             GameObject obj = layerDropDown.transform.Find("Content/Item List/Scroll Area/List/dropdown" + i.ToString()).gameObject;
 
-            obj.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => ShowPartItemEvent(config[1], value));
+            GameObject target = GameObject.Find(layerDropDown.dropdownItems[i].itemName + "_parent");
+            obj.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => ShowPartItemEvent(target, value));
             EventTrigger eventTrigger = obj.AddComponent<EventTrigger>();
+
             // Point enter event
             EventTrigger.Entry pointerEnter = new EventTrigger.Entry
             {
                 eventID = EventTriggerType.PointerEnter
             };
-            pointerEnter.callback.AddListener((e) => HighlightPartItemsEvent(config[1]));
+            pointerEnter.callback.AddListener((e) => SelectionManager.Instance.AddToOutlineList(target, 1));
             eventTrigger.triggers.Add(pointerEnter);
             // Point exit event
             EventTrigger.Entry pointerExit = new EventTrigger.Entry
             {
                 eventID = EventTriggerType.PointerExit
             };
-            pointerExit.callback.AddListener((e) => HighlightPartItemsEvent("Exit"));
+            pointerExit.callback.AddListener((e) => SelectionManager.Instance.MoveFromOutlineList(target, 1));
             eventTrigger.triggers.Add(pointerExit);
 
             //obj.AddComponent<EnterExitOutline>();
@@ -66,26 +68,21 @@ public class UIManager : MonoSingleton<UIManager>
 
     }
 
-    private void HighlightPartItemsEvent(string s)
-    {
-        Debug.Log(s);
-    }
-
     /// <summary>
     /// shouw part of model dropdown event function
     /// </summary>
-    private void ShowPartItemEvent(string s, bool ison)
+    private void ShowPartItemEvent(GameObject target, bool ison)
     {
-        GameObject[] targets = ModelManager.Instance.SplitStringGetObjects(s);
+        GameObject[] children = Util.FindChildren(target);
         if (ison)
         {
             // 进入高亮层
-            LayerManager.Instance.AddAllToHighlight(targets);
+            LayerManager.Instance.AddAllToHighlight(children);
         }
         else
         {
             // 进入默认层
-            LayerManager.Instance.MoveAllFromHighlight(targets);
+            LayerManager.Instance.MoveAllFromHighlight(children);
         }
     }
 

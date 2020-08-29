@@ -36,7 +36,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
             
 
 
-            GameObject parent = new GameObject(name);
+            GameObject parent = new GameObject(name + "_parent");
             parent.transform.SetParent(root.transform);
 
             string[] ms = name_model[1].Split(' '); // 该分组拥有的模型

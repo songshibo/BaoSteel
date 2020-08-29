@@ -22,6 +22,17 @@ public static class Util
             return null;
         }
     }
+    
+
+    public static GameObject[] FindChildren(GameObject obj)
+    {
+        List<GameObject> results = new List<GameObject>();
+        foreach (Transform item in obj.transform)
+        {
+            results.Add(item.gameObject);
+        }
+        return results.ToArray();
+    }
 
     public static string[] RemoveComments(string[] contents)
     {
