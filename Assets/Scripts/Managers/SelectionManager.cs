@@ -1,23 +1,57 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityFx.Outline;
 
-public class SelectionManager : Singleton<SelectionManager>
+public class SelectionManager : MonoSingleton<SelectionManager>
 {
+    [SerializeField]
+    private bool selectionModel = false;
+    public int RayCastLayer { get; set; } = 1 << 9; // default layer: highlight
+    public string RayCastTag { get; set; } = "";
+
     private OutlineBuilder GetOutlineBuilder()
     {
         OutlineBuilder outlineBuilder = null;
         try
         {
-            outlineBuilder = UnityEngine.Object.FindObjectOfType<OutlineBuilder>();
+            outlineBuilder = FindObjectOfType<OutlineBuilder>();
         }
         catch (NullReferenceException e)
         {
-            Debug.Log("No OutlineBuilder:" + e);
+            Debug.LogWarning("No OutlineBuilder:" + e);
         }
         return outlineBuilder;
+    }
+
+    private void Update()
+    {
+        if (selectionModel)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, RayCastLayer))
+            {
+                if (hit.transform.gameObject.tag.Contains(RayCastTag) && Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    if (!GetOutlineBuilder().OutlineLayers.GetOrAddLayer(0).Contains(hit.transform.gameObject))
+                    {
+                        // Clear other selected object
+                        ClearCertainLayerContents(0);
+                        AddToOutlineList(hit.transform.gameObject);
+                    }
+                    else
+                        MoveFromOutlineList(hit.transform.gameObject);
+                }
+            }
+        }
+    }
+
+    public void SetSelectionModel(bool value)
+    {
+        selectionModel = value;
+        if (!selectionModel)
+        {
+            ClearCertainLayerContents(0);
+        }
     }
 
     /// <summary>
@@ -76,5 +110,10 @@ public class SelectionManager : Singleton<SelectionManager>
     public void ClearLayersContent()
     {
         GetOutlineBuilder().OutlineLayers.ClearLayerContent();
+    }
+
+    public void ClearCertainLayerContents(int layerIndex)
+    {
+        GetOutlineBuilder().OutlineLayers.GetOrAddLayer(layerIndex).Clear();
     }
 }
