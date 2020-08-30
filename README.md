@@ -90,5 +90,5 @@ Resouces/Prefabs为动态生成的模型的prefab
 - SelectionManager的补全，包括鼠标点选热电偶显示对应信息(ssb)
 - 风口标签显示，最好UI跟踪，或者3D Billboard效果实现，标签位置以风口水平高度对齐，会有相互遮挡
 - 每个模型使用不同材质(需要裁剪的材质放到Resources/ClippingMaterials下)
-- 不同区域的模型生成在同一个空父物体下 (ss)
+- ~~不同区域的模型生成在同一个空父物体下 (ss)~~
 
