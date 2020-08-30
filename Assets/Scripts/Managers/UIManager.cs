@@ -91,7 +91,6 @@ public class UIManager : MonoSingleton<UIManager>
     /// </summary>
     private void ClipItemEvent(int i)
     {
-        Debug.Log(i);
         string[] info = clipDropDown.dropdownItems[i].itemName.Split(':');
         if (info.Length == 2)
         {
