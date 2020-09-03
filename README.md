@@ -55,7 +55,7 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
 
    基于UnityFx.Outline Package的描边效果，提供当鼠标选中或者某些ui元素的mouse enter event触发时，添加或移除边缘高亮的效果，具体描边效果设置在Settings/OutlineLayerCollection。
 
-   layerIndex参数默认为0，是热电偶选择对应的layer；dropdown按钮的mouse enter和exit事件对应layerIndex参数应为1
+   layerIndex参数默认为0，是热电偶选择对应的layer；dropdown按钮的mouse enter和exit事件对应layerIndex参数应为1。
 
 8. UIManager: MonoSingleton
 
@@ -87,8 +87,9 @@ Resouces/Prefabs为动态生成的模型的prefab
 - TuyereUpdater(Singleton): 处理所有关于风口的更新
 - HeatmapUpdater(Singleton): 处理热力图的更新 (ssb)
 - 热电偶按钮的UI生成 (ss)
-- SelectionManager的补全，包括鼠标点选热电偶显示对应信息(ssb)
+- ~~SelectionManager的补全，包括鼠标点选热电偶显示对应信息(ssb)~~(需要UI对接，数据库对接)
 - 风口标签显示，最好UI跟踪，或者3D Billboard效果实现，标签位置以风口水平高度对齐，会有相互遮挡
-- 每个模型使用不同材质(需要裁剪的材质放到Resources/ClippingMaterials下)
+- 每个模型使用不同材质(需要裁剪的材质放到Resources/ClippingMaterials下)(ssb)
 - ~~不同区域的模型生成在同一个空父物体下 (ss)~~
+- 展示单个热电偶信息的浮动UI以及获取相应UI数据的接口
 
