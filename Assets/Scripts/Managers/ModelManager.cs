@@ -5,6 +5,7 @@ using UnityEngine;
 using Newtonsoft.Json.Linq;
 using UnityEditor;
 using System.Text.RegularExpressions;
+using UnityEngine.UI;
 
 // 使用协程 需要 MonoBehavior
 // 继承 MonoBehavior 就不能 new， 也就不能使用普通单例
@@ -236,7 +237,21 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         {
             ChangeThermoAngle();
         }
+        else if (type == "tuyere")
+        {
+            ChangeTuyereUI();
+        }
         return true;
+    }
+
+    private void ChangeTuyereUI()
+    {
+        GameObject[] tuyeres = GameObject.FindGameObjectsWithTag("tuyere");
+        foreach (GameObject tuyere in tuyeres)
+        {
+            tuyere.transform.Find("Canvas").Find("number").GetComponent<Text>().text = tuyere.name.Split('_')[1] + "号";
+            tuyere.transform.Find("Canvas").Find("angle").GetComponent<Text>().text = tuyere.transform.localEulerAngles.y.ToString("#0") + "°";
+        }
     }
 
     private void GenerateLocalModel(string name, GameObject parent)
