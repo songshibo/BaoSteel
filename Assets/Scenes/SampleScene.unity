@@ -1887,7 +1887,7 @@ MonoBehaviour:
   cancelButton: {fileID: 891022247}
   mwAnimator: {fileID: 620010260}
   icon: {fileID: 21300000, guid: 9df0f4d8c02014347ad2d7de427e0ced, type: 3}
-  titleText: STYLE 1 - WITH TABS
+  titleText: temperature panel
   descriptionText: 
   onConfirm:
     m_PersistentCalls:
@@ -2489,8 +2489,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.9995984
-  m_Size: 0.63779163
+  m_Value: 0.000000058509876
+  m_Size: 0.6377917
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2831,7 +2831,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 229, y: -260.58057}
+  m_AnchoredPosition: {x: -229.26416, y: 260.79004}
   m_SizeDelta: {x: 2160, y: 1440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &917905874
@@ -2927,7 +2927,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GRAY
+  m_text: temperature
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
   m_sharedMaterial: {fileID: 21261991626553910, guid: 84dd14695854bbc43a5faa24fcf93d0d,
@@ -3193,7 +3193,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: STYLE 1 - WITH TABS
+  m_text: temperature panel
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fa328c1ae3ffb6b4583cf371153b0be6, type: 2}
   m_sharedMaterial: {fileID: 21918420405216288, guid: fa328c1ae3ffb6b4583cf371153b0be6,
@@ -3589,7 +3589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a12ddbc47b17cd478cb447d1113a22b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonText: GRAY
+  buttonText: temperature
   buttonEvent:
     m_PersistentCalls:
       m_Calls:
@@ -5137,7 +5137,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.00057583826
+  m_Value: 1.0000001
   m_Size: 0.7877184
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -6052,7 +6052,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
