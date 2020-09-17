@@ -363,7 +363,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 895423600}
   m_HandleRect: {fileID: 895423599}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2489,8 +2489,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.000000058509876
-  m_Size: 0.6377917
+  m_Value: 0.0000004100325
+  m_Size: 0.27828154
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2809,7 +2809,7 @@ GameObject:
   - component: {fileID: 917905875}
   - component: {fileID: 917905874}
   m_Layer: 5
-  m_Name: Image
+  m_Name: TemperaturePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2831,9 +2831,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -229.26416, y: 260.79004}
-  m_SizeDelta: {x: 2160, y: 1440}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1800.0001, y: -459.16553}
+  m_SizeDelta: {x: 3600, y: 3300}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2853,7 +2853,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4ee2db58249c0374e9c6851f8c8a4913, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3919,7 +3919,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 716999617}
   m_HandleRect: {fileID: 716999615}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4980,7 +4980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6135429adb5a440e39a4dfaa7c262e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionModel: 0
+  selectionModel: 1
 --- !u!1 &1638095907
 GameObject:
   m_ObjectHideFlags: 0
@@ -5137,8 +5137,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 1.0000001
-  m_Size: 0.7877184
+  m_Value: 0.50000006
+  m_Size: 0.47267148
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
