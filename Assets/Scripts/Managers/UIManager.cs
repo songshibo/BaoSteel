@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
-
+using UnityEditor;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -66,6 +66,8 @@ public class UIManager : MonoSingleton<UIManager>
             //obj.GetComponent<EnterExitOutline>().SetTargets(config[1]);
         }
 
+        Invoke("GenerateThermoUI", 5);
+
     }
 
     /// <summary>
@@ -116,5 +118,32 @@ public class UIManager : MonoSingleton<UIManager>
         // dynamically change dropdown height
         ChangeDropDownHeight(clipDropDown.transform, clipDropDown.dropdownItems.Count * 53f + 15f);
         ChangeDropDownHeight(layerDropDown.transform, layerDropDown.dropdownItems.Count * 53f + 15f);
+    }
+
+    private void GenerateThermoUI()
+    {
+        GameObject prefab = (GameObject)Resources.Load("Prefabs/button");
+        GameObject root = GameObject.Find("TemperaturePanel");
+        float xRatio = root.GetComponent<RectTransform>().sizeDelta.x / 360;
+        float yRatio = root.GetComponent<RectTransform>().sizeDelta.y / 55;
+        print(root.GetComponent<RectTransform>().sizeDelta.x);
+        GameObject[] thermos = GameObject.FindGameObjectsWithTag("thermocouple");
+        float count = 0;
+        foreach (GameObject thermo in thermos)
+        {
+            GameObject obj = Instantiate(prefab, root.transform);
+            Vector3 position = thermo.transform.position;
+            float angle = Mathf.Atan2(position.x, position.z) * 180 / Mathf.PI;
+            if (angle < 0)
+            {
+                angle += 360;
+            }
+            float x = angle * xRatio + 10;
+            float y = position.y * yRatio;
+            obj.GetComponent<RectTransform>().localPosition = new Vector2(x, y);
+            obj.name = thermo.name;
+            count += 1;
+        }
+        print(count);
     }
 }

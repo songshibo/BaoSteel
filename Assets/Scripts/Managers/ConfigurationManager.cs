@@ -16,6 +16,7 @@ public class ConfigurationManager : MonoBehaviour
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
     }
 
+
     private void InitializeCamera()
     {
         string filename = "camera.txt";
