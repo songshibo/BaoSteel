@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEditor;
+using System;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -66,8 +67,8 @@ public class UIManager : MonoSingleton<UIManager>
             //obj.GetComponent<EnterExitOutline>().SetTargets(config[1]);
         }
 
-        Invoke("GenerateThermoUI", 5);
 
+        Invoke("GenerateThermoUI", 5);
     }
 
     /// <summary>
@@ -131,7 +132,7 @@ public class UIManager : MonoSingleton<UIManager>
         float count = 0;
         foreach (GameObject thermo in thermos)
         {
-            GameObject obj = Instantiate(prefab, root.transform);
+            GameObject UIobj = Instantiate(prefab, root.transform);
             Vector3 position = thermo.transform.position;
             float angle = Mathf.Atan2(position.x, position.z) * 180 / Mathf.PI;
             if (angle < 0)
@@ -140,10 +141,48 @@ public class UIManager : MonoSingleton<UIManager>
             }
             float x = angle * xRatio + 10;
             float y = position.y * yRatio;
-            obj.GetComponent<RectTransform>().localPosition = new Vector2(x, y);
-            obj.name = thermo.name;
+            UIobj.GetComponent<RectTransform>().localPosition = new Vector2(x, y);
+            UIobj.name = thermo.name;
+            UIobj.transform.Find("height").GetComponent<Text>().text = position.y.ToString("0.###") + "m";
+            UIobj.transform.Find("angle").GetComponent<Text>().text = angle.ToString("0") + "°";
+
+            UIobj.GetComponent<Button>().onClick.AddListener(delegate () { OnClick(thermo, UIobj); });
+
+            EventTrigger eventTrigger = UIobj.AddComponent<EventTrigger>();
+            // Point enter event
+            EventTrigger.Entry pointerEnter = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerEnter
+            };
+            pointerEnter.callback.AddListener((e) => ShowInfoDetail(UIobj, true));
+            eventTrigger.triggers.Add(pointerEnter);
+            // Point exit event
+            EventTrigger.Entry pointerExit = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerExit
+            };
+            pointerExit.callback.AddListener((e) => ShowInfoDetail(UIobj, false));
+            eventTrigger.triggers.Add(pointerExit);
+
             count += 1;
         }
         print(count);
+    }
+
+    private void OnClick(GameObject thermo, GameObject UIobj)
+    {
+        print("dianji");
+    }
+
+    private void ShowInfoDetail(GameObject obj, bool flag)
+    {
+        if (flag)
+        {
+            print("show");
+        }
+        else
+        {
+            print("hide");
+        }
     }
 }
