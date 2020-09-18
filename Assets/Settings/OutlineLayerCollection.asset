@@ -16,8 +16,8 @@ MonoBehaviour:
   - _settings:
       _outlineSettings: {fileID: 0}
       _outlineColor: {r: 1, g: 0, b: 0, a: 1}
-      _outlineWidth: 10
-      _outlineIntensity: 5
+      _outlineWidth: 5
+      _outlineIntensity: 30
       _outlineMode: 1
     _name: SelectedOutline
     _enabled: 1
