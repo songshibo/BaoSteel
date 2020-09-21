@@ -3,7 +3,46 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - roof_riser
+  - roof_pipeline
+  - shelf
+  - "feed_box\r"
+  - "top_cloth\r"
+  - top_tank
+  - "bottom_cloth\r"
+  - bottom_tank
+  - cooling_wall9
+  - cross_temperature_measurement
+  - chute
+  - throat
+  - cooling_cross10
+  - cooling_cross9
+  - cooling_cross8
+  - cooling_cross7
+  - cooling_cross6
+  - cooling_cross5
+  - cooling_cross4
+  - cooling_cross3
+  - cooling_cross2
+  - cooling_wall8
+  - cooling_wall7
+  - cooling_wall6
+  - body
+  - cooling_cross1
+  - waist
+  - cooling_plate
+  - bosh
+  - cooling_wall5
+  - cooling_wall4
+  - cooling_wall3
+  - cooling_wall2
+  - cooling_wall1
+  - thermocouple
+  - tuyere
+  - iron_outlet
+  - wind_pipeline
+  - hearth
   layers:
   - Default
   - TransparentFX
