@@ -1,0 +1,38 @@
+﻿#pragma kernel CSMain
+
+RWTexture2D<float4> Result;
+
+StructuredBuffer<float3> points;
+uniform int len;
+
+uniform float xRes;
+uniform float yRes;
+uniform float power;
+uniform float smoothin;
+uniform float yHeight;
+
+[numthreads(16, 16, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	float2 xy = float2(id.x * 360 / xRes, id.y * yHeight / yRes);
+
+	float nominator = 0;
+	float denominator = 0;
+
+	for (int i = 0; i < len; i++)
+	{
+		float xdiff = abs(xy.x - points[i].x);
+		if (xdiff > 180)
+			xdiff = 360 - xdiff;
+		float ydiff = xy.y - points[i].y;
+		float dis = sqrt(xdiff * xdiff + ydiff * ydiff + smoothin * smoothin);
+		float pow_dis = pow(dis, power);
+		nominator += points[i].z / pow_dis;
+		denominator += 1 / pow_dis;
+	}
+
+	float value = nominator / denominator;
+
+	float3 rgb = float3(value, value, value) / 60;//根据宝钢给的正常温度范围 取范围最大
+	Result[id.xy] = float4(rgb, 1.0);
+}
