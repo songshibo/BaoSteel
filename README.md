@@ -88,8 +88,9 @@ Resouces/Prefabs为动态生成的模型的prefab
 - HeatmapUpdater(Singleton): 处理热力图的更新 (ssb)
 - 热电偶按钮的UI生成 (ss)
 - ~~SelectionManager的补全，包括鼠标点选热电偶显示对应信息(ssb)~~(需要UI对接，数据库对接)
-- 风口标签显示，最好UI跟踪，或者3D Billboard效果实现，标签位置以风口水平高度对齐，会有相互遮挡
-- 每个模型使用不同材质(需要裁剪的材质放到Resources/ClippingMaterials下)(ssb)
+- ~~风口标签显示，最好UI跟踪，或者3D Billboard效果实现，标签位置以风口水平高度对齐，会有相互遮挡~~(目前用UI制作，需要调整canvas大小以及在模型background层时的显示问题)(ss)
+- ~~每个模型使用不同材质(需要裁剪的材质放到Resources/ClippingMaterials下)(ssb)~~
 - ~~不同区域的模型生成在同一个空父物体下 (ss)~~
 - 展示单个热电偶信息的浮动UI以及获取相应UI数据的接口
+- **ModelManager里生成tag的部分时通过UnityEditor实现的，因此存在无法build的问题，如果没有解决办法则把这个部分写成一个单独继承UnityEditor的脚本，在build之前固定Tag**
 
