@@ -71,7 +71,7 @@ public class UIManager : MonoSingleton<UIManager>
 
         EnterExitInfo = GameObject.Find("EnterExitInfo");
         EnterExitInfo.SetActive(false);
-        Invoke("GenerateThermoUI", 5);
+        Invoke("GenerateThermoUI", 3);
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public class UIManager : MonoSingleton<UIManager>
             float x = angle * xRatio + 10;
             float y = position.y * yRatio;
             UIobj.GetComponent<RectTransform>().localPosition = new Vector2(x, y);
-            UIobj.name = thermo.name;
+            UIobj.name = MergeThermocoupleName(thermo.name);
             UIobj.transform.Find("height").GetComponent<Text>().text = position.y.ToString("0.###") + "m";
             UIobj.transform.Find("angle").GetComponent<Text>().text = angle.ToString("0") + "°";
             UIobj.transform.Find("temperature").GetComponent<Text>().text = "0°C";
@@ -174,6 +174,20 @@ public class UIManager : MonoSingleton<UIManager>
         print(count);
     }
 
+    // TE4560A-TE4560B_1  to TE4560
+    private string MergeThermocoupleName(string name)
+    {
+        string[] names = name.Split('_')[0].Split('-');
+        if (names.Length == 1)
+        {
+            return names[0];
+        }
+        else
+        {
+            return names[0].Substring(0, names[0].Length - 1);
+        }
+    }
+
     private void OnClick(GameObject thermo, GameObject UIobj)
     {
         print("dianji");
@@ -184,7 +198,7 @@ public class UIManager : MonoSingleton<UIManager>
         if (flag)
         {
             EnterExitInfo.SetActive(true);
-            string content = "编号：" + "TE4650" + "\n温度：" + obj.transform.Find("temperature").GetComponent<Text>().text +
+            string content = "编号：" + obj.name + "\n温度：" + obj.transform.Find("temperature").GetComponent<Text>().text +
                 "\n高度：" + obj.transform.Find("height").GetComponent<Text>().text + "\n角度：" + obj.transform.Find("angle").GetComponent<Text>().text;
             EnterExitInfo.GetComponent<Text>().text = content;
             float x = obj.GetComponent<RectTransform>().localPosition.x;
