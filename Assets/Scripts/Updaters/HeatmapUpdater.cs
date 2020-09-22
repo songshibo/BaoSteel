@@ -85,4 +85,10 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
             test();
         }
     }
+
+    private void OnDestroy()
+    {
+        if (buffer != null)
+            buffer.Dispose();
+    }
 }
