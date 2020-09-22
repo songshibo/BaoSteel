@@ -1,0 +1,2 @@
+thermocouple_timing:10
+tuyere_timing:5

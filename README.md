@@ -25,6 +25,14 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
   ${angle0} ${angle1} ${angle2} ...
   ```
 
+- timing: 分号前表示计时器的名字，分号后表示计时器触发时间
+
+  ```
+  name:number # such as thermocouple_timing:10
+  ```
+
+  
+
 ## Manager Scripts
 
 1. ConfigurationManager : Mono
@@ -82,13 +90,13 @@ Resouces/Prefabs为动态生成的模型的prefab
 
 完成的项用~~删除线~~划掉
 
-- TimerManager(MonoSingleton): 读取每个更新器的更新时间，维护一个全局计时器，到特定时间调用相应的更新器
+- ~~TimerManager(MonoSingleton): 读取每个更新器的更新时间，维护一个全局计时器，到特定时间调用相应的更新器~~
 - ThermocoupleUpdater(Singleton): 处理所有热电偶的更新
 - TuyereUpdater(Singleton): 处理所有关于风口的更新
 - HeatmapUpdater(Singleton): 处理热力图的更新 (ssb)
-- 热电偶按钮的UI生成 (ss)
+- ~~热电偶按钮的UI生成 (ss)~~
 - ~~SelectionManager的补全，包括鼠标点选热电偶显示对应信息(ssb)~~(需要UI对接，数据库对接)
-- ~~风口标签显示，最好UI跟踪，或者3D Billboard效果实现，标签位置以风口水平高度对齐，会有相互遮挡~~(目前用UI制作，需要调整canvas大小以及在模型background层时的显示问题)(ss)
+- 风口标签显示，最好UI跟踪，或者3D Billboard效果实现，标签位置以风口水平高度对齐，会有相互遮挡(目前用UI制作，需要调整canvas大小以及在模型background层时的显示问题)(ss)
 - ~~每个模型使用不同材质(需要裁剪的材质放到Resources/ClippingMaterials下)(ssb)~~
 - ~~不同区域的模型生成在同一个空父物体下 (ss)~~
 - 展示单个热电偶信息的浮动UI以及获取相应UI数据的接口

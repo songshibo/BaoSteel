@@ -334,4 +334,8 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         }
         return dst.ToArray();
     }
+    public void TuyereUpdater()
+    {
+        print("tuyere");
+    }
 }

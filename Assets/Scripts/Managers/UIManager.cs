@@ -217,4 +217,9 @@ public class UIManager : MonoSingleton<UIManager>
             EnterExitInfo.SetActive(false);
         }
     }
+
+    public void ThermocoupleUpdater()
+    {
+        print("thermocouple");
+    }
 }

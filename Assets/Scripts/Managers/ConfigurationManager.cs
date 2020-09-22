@@ -6,8 +6,11 @@ using System.Text.RegularExpressions;
 
 public class ConfigurationManager : MonoBehaviour
 {
+    private Dictionary<string, float[]> times;
+
     private void Awake()
     {
+        InitilizeTiming();
         InitializeDataServiceManager();
         InitializeCamera();
         InitializeModelManager();
@@ -15,7 +18,6 @@ public class ConfigurationManager : MonoBehaviour
         CullingController.Instance.ResetMaterialProperties();
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
     }
-
 
     private void InitializeCamera()
     {
@@ -81,5 +83,43 @@ public class ConfigurationManager : MonoBehaviour
         string[] linesShowPart = Util.RemoveComments(configShowPart.Split('\n'));
 
         UIManager.Instance.InitializeUI(linesClip, linesShowPart);
+    }
+
+    private void InitilizeTiming()
+    {
+        string filetiming = "timing.txt";
+        string configTiming = Util.ReadConfigFile(filetiming);
+        string[] linesTiming = configTiming.Split('\n');
+
+        times = new Dictionary<string, float[]>();
+        foreach (string line in linesTiming)
+        {
+            string[] temp = line.Split(':');
+            times[temp[0]] = new float[]{0, float.Parse(temp[1])};
+        }
+    }
+
+    // 添加计时器需要做两步
+    // 第一，在 times.txt 中添加计时器
+    // 第二，在 Update() 中添加该调用的方法
+    private void Update()
+    {
+        foreach (var item in times)
+        {
+            if (item.Value[0] >= item.Value[1])
+            {
+                if (item.Key.Equals("thermocouple_timing"))
+                {
+                    UIManager.Instance.ThermocoupleUpdater();
+                }
+                else if (item.Key.Equals("tuyere_timing"))
+                {
+                    ModelManager.Instance.TuyereUpdater();
+                }
+
+                item.Value[0] = 0;
+            }
+            item.Value[0] += Time.deltaTime;
+        }
     }
 }
