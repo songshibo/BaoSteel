@@ -110,7 +110,8 @@ public class ConfigurationManager : MonoBehaviour
             {
                 if (item.Key.Equals("thermocouple_timing"))
                 {
-                    UIManager.Instance.ThermocoupleUpdater();
+                    StartCoroutine(DataServiceManager.Instance.GetThermocoupleTemperature(UIManager.Instance.ThermocoupleUpdater));
+                    
                 }
                 else if (item.Key.Equals("tuyere_timing"))
                 {

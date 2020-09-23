@@ -13,6 +13,7 @@ public class UIManager : MonoSingleton<UIManager>
     public DropdownMultiSelect layerDropDown;
     private GameObject EnterExitInfo;
     private Vector2 ThermocouplePanel_Width_Height;
+    private Dictionary<string, GameObject> name_gameobject = new Dictionary<string, GameObject>();
 
     public void InitializeUI(string[] configClip, string[] configShowPart)
     {
@@ -147,10 +148,18 @@ public class UIManager : MonoSingleton<UIManager>
             float x = angle * xRatio + 10;
             float y = position.y * yRatio;
             UIobj.GetComponent<RectTransform>().localPosition = new Vector2(x, y);
-            UIobj.name = MergeThermocoupleName(thermo.name);
+            UIobj.name = Util.MergeThermocoupleName(thermo.name);
+            if (name_gameobject.ContainsKey(UIobj.name))
+            {
+                print(UIobj.name);
+            }
+            else
+            {
+                name_gameobject.Add(UIobj.name, UIobj);
+            }
             UIobj.transform.Find("height").GetComponent<Text>().text = position.y.ToString("0.###") + "m";
             UIobj.transform.Find("angle").GetComponent<Text>().text = angle.ToString("0") + "°";
-            UIobj.transform.Find("temperature").GetComponent<Text>().text = "0°C";
+            UIobj.transform.Find("temperature").GetComponent<Text>().text = "0 0 0 0 0";
             UIobj.GetComponent<Button>().onClick.AddListener(delegate () { OnClick(thermo, UIobj); });
 
             EventTrigger eventTrigger = UIobj.AddComponent<EventTrigger>();
@@ -172,20 +181,6 @@ public class UIManager : MonoSingleton<UIManager>
             count += 1;
         }
         print(count);
-    }
-
-    // TE4560A-TE4560B_1  to TE4560
-    private string MergeThermocoupleName(string name)
-    {
-        string[] names = name.Split('_')[0].Split('-');
-        if (names.Length == 1)
-        {
-            return names[0];
-        }
-        else
-        {
-            return names[0].Substring(0, names[0].Length - 1);
-        }
     }
 
     private void OnClick(GameObject thermo, GameObject UIobj)
@@ -218,8 +213,44 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public void ThermocoupleUpdater()
+    public bool ThermocoupleUpdater(string content)
     {
-        print("thermocouple");
+        content = content.Substring(1, content.Length - 2); // 去掉两边的大括号
+        string[] str = content.Split(',');
+        Dictionary<string, string> name_temperature = new Dictionary<string, string>();
+        char[] MyChar = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+        foreach (string substr in str)
+        {
+            string[] single = substr.Split(':');
+            string name = single[0].Substring(1, single[0].Length - 2).TrimEnd(MyChar); // 去掉双引号和末尾的字母
+            string temperature = single[1];
+            if (name_temperature.ContainsKey(name))
+            {
+                name_temperature[name] += " " + temperature;
+            }
+            else
+            {
+                name_temperature.Add(name, temperature); 
+            }
+
+
+        }
+        foreach (var item in name_gameobject)
+        {
+            item.Value.transform.Find("temperature").GetComponent<Text>().text = name_temperature[item.Key];
+            float temp = float.Parse(name_temperature[item.Key].Split(' ')[0]);
+            if (temp > 50)
+            {
+                item.Value.GetComponent<Image>().color = Color.red;
+            }
+            else
+            {
+                item.Value.GetComponent<Image>().color = Color.green;
+            }
+        }
+        print(name_temperature.Count);
+        print(name_gameobject.Count);
+        print("两个应该一致，但是发现有的热电偶很特殊 TI3853-TI3861");
+        return true;
     }
 }

@@ -336,6 +336,6 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
     }
     public void TuyereUpdater()
     {
-        print("tuyere");
+        print("tuyere数据更新");
     }
 }
