@@ -2426,8 +2426,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 180}
+  m_AnchoredPosition: {x: -0.00048828125, y: 0}
+  m_SizeDelta: {x: 210, y: 180}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &784102019
 MonoBehaviour:
@@ -2461,7 +2461,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u7F16\u53F7\uFF1ATE4650\n\u6E29\u5EA6\uFF1A56\n\u9AD8\u5EA6\uFF1A45m\n\u89D2\u5EA6\uFF1A45\xB0"
+  m_Text: "\u7F16\u53F7\uFF1ATE4650-TE4650\n\u6E29\u5EA6\uFF1A56\n\u9AD8\u5EA6\uFF1A45m\n\u89D2\u5EA6\uFF1A45\xB0"
 --- !u!222 &784102020
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2567,8 +2567,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.2230087
-  m_Size: 0.26067418
+  m_Value: 0.15486431
+  m_Size: 0.2605549
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2915,7 +2915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1800.0001, y: -974.2035}
+  m_AnchoredPosition: {x: -1800.0001, y: -807.81067}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -5221,8 +5221,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.50000006
-  m_Size: 0.49988905
+  m_Value: 0.5000001
+  m_Size: 0.5000833
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5465,7 +5465,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1755404020
 MonoBehaviour:
   m_ObjectHideFlags: 0

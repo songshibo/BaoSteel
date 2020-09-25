@@ -149,14 +149,12 @@ public class UIManager : MonoSingleton<UIManager>
             float y = position.y * yRatio;
             UIobj.GetComponent<RectTransform>().localPosition = new Vector2(x, y);
             UIobj.name = Util.MergeThermocoupleName(thermo.name);
-            if (name_gameobject.ContainsKey(UIobj.name))
+            string[] names = UIobj.name.Split('-');
+            foreach (string name in names)
             {
-                print(UIobj.name);
+                name_gameobject.Add(name, UIobj);
             }
-            else
-            {
-                name_gameobject.Add(UIobj.name, UIobj);
-            }
+            
             UIobj.transform.Find("height").GetComponent<Text>().text = position.y.ToString("0.###") + "m";
             UIobj.transform.Find("angle").GetComponent<Text>().text = angle.ToString("0") + "°";
             UIobj.transform.Find("temperature").GetComponent<Text>().text = "0 0 0 0 0";
@@ -180,7 +178,8 @@ public class UIManager : MonoSingleton<UIManager>
 
             count += 1;
         }
-        print(count);
+        print(count.ToString() + "个 UI 温度按钮");
+        print(name_gameobject.Count + "实际热电偶个数，但是同一位置只生成了一个，所以会出现多对一，多个编号对应一个热电偶按钮");
     }
 
     private void OnClick(GameObject thermo, GameObject UIobj)
@@ -237,7 +236,11 @@ public class UIManager : MonoSingleton<UIManager>
         }
         foreach (var item in name_gameobject)
         {
-            item.Value.transform.Find("temperature").GetComponent<Text>().text = name_temperature[item.Key];
+            item.Value.transform.Find("temperature").GetComponent<Text>().text = "";
+        }
+        foreach (var item in name_gameobject)
+        {
+            item.Value.transform.Find("temperature").GetComponent<Text>().text += name_temperature[item.Key] + " ";
             float temp = float.Parse(name_temperature[item.Key].Split(' ')[0]);
             if (temp > 50)
             {
@@ -248,9 +251,6 @@ public class UIManager : MonoSingleton<UIManager>
                 item.Value.GetComponent<Image>().color = Color.green;
             }
         }
-        print(name_temperature.Count);
-        print(name_gameobject.Count);
-        print("两个应该一致，但是发现有的热电偶很特殊 TI3853-TI3861");
         return true;
     }
 }

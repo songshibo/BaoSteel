@@ -93,6 +93,8 @@ public static class Util
     }
 
     // TE4560A-TE4560B_1  to TE4560
+    // TI4370-TI4379_1 to TI4370-TI4379
+    // TE4360_1 to TE4360
     public static string MergeThermocoupleName(string name)
     {
         string[] names = name.Split('_')[0].Split('-');
@@ -103,7 +105,14 @@ public static class Util
         }
         else
         {
-            return names[0].TrimEnd(MyChar);
+            if (names[0].TrimEnd(MyChar).Length == names[0].Length)
+            {
+                return name.Split('_')[0];
+            }
+            else
+            {
+                return names[0].TrimEnd(MyChar);
+            }
         }
     }
 }
