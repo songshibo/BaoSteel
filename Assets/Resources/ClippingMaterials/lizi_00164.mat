@@ -78,6 +78,7 @@ Material:
     - _EmissionEnabled: 0
     - _EnableExternalAlpha: 0
     - _FadeDist: 0.5
+    - _FadeDistance: 1
     - _FlipbookMode: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -100,6 +101,7 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - _BottomHPPos: {r: 0, g: -10, b: 0, a: 0}
+    - _BottomPlane: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 0.27450982}
     - _ColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
@@ -109,7 +111,10 @@ Material:
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _SelectColor: {r: 1, g: 0, b: 0, a: 0}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
-    - _TintColor: {r: 0.31877163, g: 0.47046283, b: 0.64705884, a: 0.13725491}
+    - _TintColor: {r: 0.3187716, g: 0.4704628, b: 0.64705884, a: 0.3529412}
     - _TopHPPos: {r: 0, g: 150, b: 0, a: 0}
+    - _TopPlane: {r: 0, g: 200, b: 0, a: 0}
     - _VPnormal: {r: -1, g: 0, b: 0, a: 0}
     - _VPpos: {r: -75, g: 0, b: 0, a: 0}
+    - _VerticalNormal: {r: 1, g: 0, b: 0, a: 0}
+    - _VerticalPlane: {r: 200, g: 0, b: 0, a: 0}
