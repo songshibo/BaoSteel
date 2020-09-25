@@ -249,8 +249,9 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         GameObject[] tuyeres = GameObject.FindGameObjectsWithTag("tuyere");
         foreach (GameObject tuyere in tuyeres)
         {
-            tuyere.transform.Find("Canvas").Find("number").GetComponent<Text>().text = tuyere.name.Split('_')[1] + "号";
-            tuyere.transform.Find("Canvas").Find("angle").GetComponent<Text>().text = tuyere.transform.localEulerAngles.y.ToString("#0") + "°";
+            tuyere.transform.Find("tuyere_model").Find("Canvas").Find("info").GetComponent<Text>().text = tuyere.name.Split('_')[1] + "号" + "\n" +
+                tuyere.transform.localEulerAngles.y.ToString("#0") + "°";
+
         }
     }
 
