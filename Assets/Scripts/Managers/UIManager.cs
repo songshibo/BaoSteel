@@ -133,7 +133,7 @@ public class UIManager : MonoSingleton<UIManager>
 
         float xRatio = root.GetComponent<RectTransform>().sizeDelta.x / 360;
         float yRatio = root.GetComponent<RectTransform>().sizeDelta.y / 55;
-        print(root.GetComponent<RectTransform>().sizeDelta.x);
+        
         GameObject[] thermos = GameObject.FindGameObjectsWithTag("thermocouple");
         float count = 0;
         foreach (GameObject thermo in thermos)
@@ -237,20 +237,21 @@ public class UIManager : MonoSingleton<UIManager>
         foreach (var item in name_gameobject)
         {
             item.Value.transform.Find("temperature").GetComponent<Text>().text = "";
+            item.Value.GetComponent<Image>().color = Color.green;
         }
         foreach (var item in name_gameobject)
         {
             item.Value.transform.Find("temperature").GetComponent<Text>().text += name_temperature[item.Key] + " ";
-            float temp = float.Parse(name_temperature[item.Key].Split(' ')[0]);
-            if (temp > 50)
+            if (item.Value.name.StartsWith(item.Key))
             {
-                item.Value.GetComponent<Image>().color = Color.red;
-            }
-            else
-            {
-                item.Value.GetComponent<Image>().color = Color.green;
+                float temp = float.Parse(name_temperature[item.Key].Split(' ')[0]);
+                if (temp > 50)
+                {
+                    item.Value.GetComponent<Image>().color = Color.red;
+                }
             }
         }
+        print("热电偶温度更新");
         return true;
     }
 }

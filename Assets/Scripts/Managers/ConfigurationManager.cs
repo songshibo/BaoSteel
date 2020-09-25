@@ -115,7 +115,7 @@ public class ConfigurationManager : MonoBehaviour
                 }
                 else if (item.Key.Equals("tuyere_timing"))
                 {
-                    ModelManager.Instance.TuyereUpdater();
+                    StartCoroutine(DataServiceManager.Instance.GetTuyereSize(ModelManager.Instance.TuyereUpdater));
                 }
 
                 item.Value[0] = 0;
