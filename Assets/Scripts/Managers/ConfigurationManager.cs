@@ -117,6 +117,10 @@ public class ConfigurationManager : MonoBehaviour
                 {
                     StartCoroutine(DataServiceManager.Instance.GetTuyereSize(ModelManager.Instance.TuyereUpdater));
                 }
+                else if (item.Key.Equals("batch_timing"))
+                {
+                    BatchManager.Instance.UpdateBatch();
+                }
 
                 item.Value[0] = 0;
             }
