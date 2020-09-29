@@ -20,6 +20,11 @@ public class BatchManager : MonoSingleton<BatchManager>
         
     }
 
+    private void Update()
+    {
+        transform.position -= new Vector3(0, 0.25f, 0) * Time.deltaTime;
+    }
+
     public void UpdateBatch()
     {
         GenerateBatchLayer(JsonConvert.SerializeObject(data));
@@ -28,10 +33,10 @@ public class BatchManager : MonoSingleton<BatchManager>
         data.Add("layer" + (start + 17).ToString(), data["layer" + (start + 16).ToString()] + 1);
         start++;
 
-        for (int i = 0; i < data.Count; i++)
-        {
-            data["layer" + (start + i).ToString()]--;
-        }
+        //for (int i = 0; i < data.Count; i++)
+        //{
+        //    data["layer" + (start + i).ToString()]--;
+        //}
 
         print("料层");
     }
