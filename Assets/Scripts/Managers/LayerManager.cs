@@ -12,11 +12,19 @@ public class LayerManager : Singleton<LayerManager>
     private void AddToHighlight(GameObject gameObject)
     {
         gameObject.layer = LayerMask.NameToLayer("highlight");
+        foreach (Transform child in gameObject.transform)
+        {
+            AddToHighlight(child.gameObject);
+        }
     }
 
     private void MoveFromHighlight(GameObject gameObject)
     {
         gameObject.layer = LayerMask.NameToLayer("ambient");
+        foreach (Transform child in gameObject.transform)
+        {
+            MoveFromHighlight(child.gameObject);
+        }
     }
 
     public void AddAllToHighlight(GameObject[] gameObjects)
