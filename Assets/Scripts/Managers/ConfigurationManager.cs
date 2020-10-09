@@ -119,7 +119,7 @@ public class ConfigurationManager : MonoBehaviour
                 }
                 else if (item.Key.Equals("batch_timing"))
                 {
-                    BatchManager.Instance.Test();
+                    BatchManager.Instance.NewLayer(item.Value[1]);
                 }
 
                 item.Value[0] = 0;
