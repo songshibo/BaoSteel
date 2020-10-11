@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Linq;
 using System.IO;
+using Unity.Mathematics;
 
 public static class Util
 {
@@ -22,7 +23,7 @@ public static class Util
             return null;
         }
     }
-    
+
 
     public static GameObject[] FindChildren(GameObject obj)
     {
@@ -114,5 +115,42 @@ public static class Util
                 return names[0].TrimEnd(MyChar);
             }
         }
+    }
+
+    /// <summary>
+    /// Generate Gradient Textures
+    /// </summary>
+    /// <param name="colorKey">Gradient Color Keys(Array)</param>
+    /// <param name="width">Width of gradient texture</param>
+    public static Texture2D GenerateGradient(Color[] colors, int width = 512, bool isLinear = false)
+    {
+        Texture2D texture = new Texture2D(width, 1, TextureFormat.ARGB32, false, isLinear)
+        {
+            alphaIsTransparency = true,
+            wrapMode = TextureWrapMode.Clamp,
+            filterMode = FilterMode.Point
+        };
+
+        Gradient gradient = new Gradient();
+        //alpha & Color key
+        GradientColorKey[] colorKey = new GradientColorKey[colors.Length];
+        GradientAlphaKey[] alphaKey = new GradientAlphaKey[colors.Length];
+        for (int i = 0; i < colors.Length; i++)
+        {
+            colorKey[i].color = colors[i];
+            colorKey[i].time = colors[i].a;
+            alphaKey[i].alpha = 1.0f;
+            alphaKey[i].time = colors[i].a;
+        }
+        //Set up Gradient
+        gradient.SetKeys(colorKey, alphaKey);
+        //Set up Texture
+        for (int i = 0; i < width; i++)
+        {
+            texture.SetPixel(i, 0, gradient.Evaluate(i / (float)width));
+        }
+        texture.Apply(false);// do not update minimap
+
+        return texture;
     }
 }

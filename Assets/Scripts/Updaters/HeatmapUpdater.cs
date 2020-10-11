@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
 
 public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 {
+    public Color[] keys;
     public ComputeShader shader;
     private ComputeBuffer buffer;
 
-    [Space(10)]
+    [Space(20)]
     public int xRes, yRes; // yRes = yAxisScaleFactor * xRes
     public float power;
     public float smoothin;
@@ -19,6 +19,9 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     public RenderTexture texture;
     private int kernel;
+
+    [Space(10)]
+    public Texture2D gradient;
 
     private void GenerateHeatMap()
     {
@@ -83,6 +86,12 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         if (Input.GetKeyDown(KeyCode.Space))
         {
             test();
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if (keys.Length == 0)
+                return;
+            gradient = Util.GenerateGradient(keys);
         }
     }
 
