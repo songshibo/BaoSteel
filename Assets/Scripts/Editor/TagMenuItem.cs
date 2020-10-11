@@ -6,7 +6,7 @@ public class TagMenuItem
     [MenuItem("Tools/Generate Tags")]
     private static void TagGenerationMenu()
     {
-        string filename = "ModelManager.txt";
+        string filename = "Tag.txt";
         string config = Util.ReadConfigFile(filename);
 
         string[] lines = Util.RemoveComments(config.Split('\n'));

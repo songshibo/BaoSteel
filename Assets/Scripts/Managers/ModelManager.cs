@@ -51,45 +51,16 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
             string[] ms = name_model[1].Split(' '); // 该分组拥有的模型
             foreach (string m in ms)
             {
-                if (m.StartsWith("-")) // 以 ‘-’ 开头为本地模型，先生成 tag，再生成模型，要去掉开头的 ‘-’
+                if (m.StartsWith("-")) // 以 ‘-’ 开头为本地模型，先生成 tag，再生成模型，要去掉开头的 ‘-’，这里 tag 统一由 editor-tools 生成
                 {
-                    GenerateTag(m.Trim('-'));
                     GenerateLocalModel(m.Trim('-'), parent);
                 }
                 else
                 {
-                    GenerateTag(m.Trim());
                     StartCoroutine(DataServiceManager.Instance.GetModel(GenerateRemoteModel, m.Trim(), parent, min_height, max_height));
                 }
             }
         }
-
-        
-        //foreach (string item in models)
-        //{
-        //    string itm = item.Trim();
-        //    if (itm.StartsWith("-"))
-        //    {
-        //        string s = itm.Replace("-", "");
-        //        GenerateTag(s);
-        //        if (!from_local.Contains(s))
-        //        {
-        //            from_local.Add(s);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        GenerateTag(itm);
-
-        //        var digits = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-        //        itm = itm.TrimEnd(digits);
-        //        if (!from_database.Contains(itm))
-        //        {
-        //            from_database.Add(itm);
-        //        }
-
-        //    }
-        //}
     }
 
     private void DestroyIronOutlet()
@@ -285,31 +256,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
             print("Prefabs/" + name + "本地模型生成失败，添加 trim 试试");
         }
     }
-
-    private void GenerateTag(string tag)
-    {
-        if (!IsHasTag(tag))
-        {
-            SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
-            SerializedProperty tagProp = tagManager.FindProperty("tags");
-            tagProp.InsertArrayElementAtIndex(0);
-            tagProp.GetArrayElementAtIndex(0).stringValue = tag;
-            tagManager.ApplyModifiedProperties();
-            tagManager.Update();
-        }
-    }
-
-    private bool IsHasTag(string tag)
-    {
-
-        for (int i = 0; i < UnityEditorInternal.InternalEditorUtility.tags.Length; i++)
-        {
-            if (UnityEditorInternal.InternalEditorUtility.tags[i].Contains(tag))
-                return true;
-        }
-        return false;
-    }
-
+    
     // 根据高度找冷却板或者热电偶
     public List<GameObject> FindByHeight(string type, float min, float max)
     {
@@ -350,6 +297,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         }
         return dst.ToArray();
     }
+
     public bool TuyereUpdater(string content)
     {
         //string[] items = content.Substring(1, content.Length - 2).Split(',');
