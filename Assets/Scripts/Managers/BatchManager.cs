@@ -11,12 +11,13 @@ public class BatchManager : MonoSingleton<BatchManager>
     private Vector3 from;
     private Vector3 target;
     private float moveSpeed;
-    private int count = 1;
+    private int count = 1; // 料层的编号
+    private int number = 21; // 料层最大数量
 
     private void Start()
     {
         from = new Vector3(2.5f, 41, 0);
-        target = new Vector3(2.5f, 21, 0);
+        target = new Vector3(2.5f, 22, 0);
         moveSpeed = 1f;
 
     }
@@ -29,16 +30,26 @@ public class BatchManager : MonoSingleton<BatchManager>
         obj.transform.Find("Canvas").Find("number").GetComponent<Text>().text = number;
         obj.name = number;
 
-        while (obj.transform.position != target)
+        while (obj.transform.position.y > target.y)
         {
-            obj.transform.position = Vector3.MoveTowards(obj.transform.position, target, moveSpeed * Time.deltaTime);
+            float y = obj.transform.position.y - moveSpeed * Time.deltaTime;
+            float x = GetX(y);
+            float z = 0;
+            obj.transform.position = new Vector3(x, y, z);
             yield return 0;
         }
+        //yield return 0;
         DestroyImmediate(obj);
     }
 
-    public void Test()
+    private float GetX(float y)
     {
+        return (float)(6.8 - Math.Log(3.67 * (y - 21)));
+    }
+
+    public void NewLayer(float time)
+    {
+        moveSpeed = (from.y - target.y) / (number * time);
         StartCoroutine(GenerateLayer("layer" + count.ToString()));
         count++;
     }
