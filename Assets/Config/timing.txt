@@ -1,3 +1,4 @@
 thermocouple_timing:10
 tuyere_timing:5
 batch_timing:4
+heatload_timing:5
