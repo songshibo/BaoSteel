@@ -5,7 +5,10 @@ using Newtonsoft.Json.Linq;
 
 public class HeatLoadManager : MonoSingleton<HeatLoadManager>
 {
-    
+    public void ShowHeatLoad()
+    {
+        print(1);
+    }
 
     public bool HeatLoadUpdater(string content)
     {
@@ -32,4 +35,5 @@ public class HeatLoadManager : MonoSingleton<HeatLoadManager>
         }
         return true;
     }
+
 }
