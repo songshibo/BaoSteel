@@ -195,13 +195,12 @@ public class DataServiceManager:Singleton<DataServiceManager>
     {
         if (initialized)
         {
-
             UnityWebRequest www = UnityWebRequest.Get(url + "/tuyeresize");
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
             {
-                Debug.Log("热电偶温度数据读取失败");
+                Debug.Log("风口数据读取失败");
                 Debug.Log(www.error);
             }
             else
@@ -212,6 +211,30 @@ public class DataServiceManager:Singleton<DataServiceManager>
                 DataArrangement(data.Trim());
                 // Or retrieve results as binary data
 
+            }
+        }
+    }
+
+    public IEnumerator GetHeadLoad(Func<string, bool> DataArrangement)
+    {
+        if (initialized)
+        {
+
+            UnityWebRequest www = UnityWebRequest.Get("http://172.16.12.9:8899/heatload");
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log("热负荷温度数据读取失败");
+                Debug.Log(www.error);
+            }
+            else
+            {
+                // Show results as text
+                string data = www.downloadHandler.text;
+
+                DataArrangement(data.Trim());
+                // Or retrieve results as binary data
             }
         }
     }

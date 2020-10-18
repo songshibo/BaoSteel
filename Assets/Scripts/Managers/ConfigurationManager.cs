@@ -104,6 +104,7 @@ public class ConfigurationManager : MonoBehaviour
     // 第二，在 Update() 中添加该调用的方法
     private void Update()
     {
+        
         foreach (var item in times)
         {
             if (item.Value[0] >= item.Value[1])
@@ -120,6 +121,10 @@ public class ConfigurationManager : MonoBehaviour
                 else if (item.Key.Equals("batch_timing"))
                 {
                     BatchManager.Instance.NewLayer(item.Value[1]);
+                }
+                else if (item.Key.Equals("heatload_timing"))
+                {
+                    StartCoroutine(DataServiceManager.Instance.GetHeadLoad(HeatLoadManager.Instance.HeatLoadUpdater));
                 }
 
                 item.Value[0] = 0;
