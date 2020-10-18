@@ -2723,8 +2723,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.9333386
-  m_Size: 0.26451498
+  m_Value: 0.934501
+  m_Size: 0.2664826
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4159,7 +4159,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 716999617}
   m_HandleRect: {fileID: 716999615}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5377,8 +5377,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.76297635
-  m_Size: 0.49370506
+  m_Value: 0.7613694
+  m_Size: 0.49059236
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6119,10 +6119,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keys:
   - {r: 0, g: 0.4745098, b: 1, a: 0.2509804}
-  - {r: 0, g: 1, b: 0.12156863, a: 0.5019608}
-  - {r: 1, g: 0.79607844, b: 0, a: 0.7490196}
+  - {r: 0, g: 1, b: 0.12156863, a: 0.5}
+  - {r: 1, g: 0.79607844, b: 0, a: 0.75}
   - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 0, a: 0.6}
+  - {r: 0, g: 0, b: 0, a: 0.4}
   shader: {fileID: 7200000, guid: dad65ca1ddb714e408b41386fefac2b7, type: 3}
   xRes: 1024
   yRes: 5120
