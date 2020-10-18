@@ -1,10 +1,12 @@
+[toc]
+
 # BaoSteel
 
 ## Configuration  File
 
 开发时文件路径: Asssets/Config/
 
-Build之后文件路径: ${ApplicationName}_Data/Config/
+Build之后文件路径: {ApplicationName}_Data/Config/
 
 ### 配置文件说明
 
@@ -31,7 +33,7 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
   name:number # such as thermocouple_timing:10
   ```
 
-  
+- Tag：格式ModelManager一致，不过更具体到小的编号，例如cooling_wall7，以生成tag。
 
 ## Manager Scripts
 
@@ -53,7 +55,7 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
 
 5. LayerManager: Singleton
 
-   层管理器，选中的物体在highlight层，未选中的在ambient层，当ambient层有物体时，会打开SRP的Custom Blit Render Feature给背景层相机添加蒙版(默认关闭是权重为0，打开权重为0.7)
+   层管理器，选中的物体在highlight层，未选中的在ambient层，当ambient层有物体时，会打开SRP的Custom Blit Render Feature给背景层相机添加蒙版(默认关闭是权重为0，打开权重为0.7)。
 
 6. ModelManager: MonoSingleton
 
@@ -67,22 +69,32 @@ Build之后文件路径: ${ApplicationName}_Data/Config/
 
 8. UIManager: MonoSingleton
 
-   根据配置文件给对应的UI元素添加子项和相应的事件(目前包括裁剪的dropdown和模型分块选择的multi-select dropdown)
+   根据配置文件给对应的UI元素添加子项和相应的事件(目前包括裁剪的dropdown和模型分块选择的multi-select dropdown)。
    
+9. HeatLoadManager: MonoSingleton
+
+   处理热负荷数据。
+
+10. BatchManager: MonoSingleton
+
+    处理料层数据。
 
 ## Util 全局静态方法(Util.${MethodName}调用)
 
 - ```ReadConfigFile``` 读取路径下的配置文件，全部内容返回为单个string(自主用正则或者分割解析)
+- ```FindChildren```找到物体的所有子物体gameobject
+- ```RemoveComments```读取配置文件时，去掉注释
 - ```FindDistinctObjectsWithTags``` 查找多个tag下所有的物体(去重)
 - ```WrapAngle``` 把0\~360的角度映射到-180\~180
 - ```FindObjectsInLayer``` 查找特定layer下所有的物体
 - ```IsAnyObjectsInLayer``` 查找特定layer下是否有物体
+- ```MergeThermocoupleName```得到热电偶的真正编号，TE4560A-TE4560B_1 to TE4560，TI4370-TI4379_1 to TI4370-TI4379，TE4360_1 to TE4360
 
 ## Others
 
 Resources/ClippingMaterals为需要裁剪的材质
 
-Resouces/Prefabs为动态生成的模型的prefab
+Resources/Prefabs为动态生成的模型的prefab
 
 其他需要动态加载的部分也应当放在Resources目录下
 
@@ -101,4 +113,6 @@ Resouces/Prefabs为动态生成的模型的prefab
 - ~~不同区域的模型生成在同一个空父物体下 (ss)~~
 - 展示单个热电偶信息的浮动UI以及获取相应UI数据的接口
 - **ModelManager里生成tag的部分时通过UnityEditor实现的，因此存在无法build的问题，如果没有解决办法则把这个部分写成一个单独继承UnityEditor的脚本，在build之前固定Tag**
+- 料层图片的生成（qjl）
+- 根据温度采样颜色API（ssb）
 
