@@ -115,4 +115,4 @@ Resources/Prefabs为动态生成的模型的prefab
 - **ModelManager里生成tag的部分时通过UnityEditor实现的，因此存在无法build的问题，如果没有解决办法则把这个部分写成一个单独继承UnityEditor的脚本，在build之前固定Tag**
 - 料层图片的生成（qjl）
 - 根据温度采样颜色API（ssb）
-
+- 热负荷数据（ss）
