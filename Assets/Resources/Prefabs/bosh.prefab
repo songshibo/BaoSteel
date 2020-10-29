@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 671622043883593864}
   - component: {fileID: 4539011759478927149}
   - component: {fileID: 1808538763637234663}
+  - component: {fileID: -4444362261686712395}
   m_Layer: 9
   m_Name: bosh
   m_TagString: Untagged
@@ -80,3 +81,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &-4444362261686712395
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151367688637168178}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8359270437403354576, guid: d878061ebd33ecc4a8cece9460899a96, type: 3}

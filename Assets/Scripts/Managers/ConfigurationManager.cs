@@ -15,6 +15,7 @@ public class ConfigurationManager : MonoBehaviour
         InitializeCamera();
         InitializeModelManager();
         InitilizeUI();
+        InitilizeHeatLoad();
         CullingController.Instance.ResetMaterialProperties();
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
     }
@@ -83,6 +84,11 @@ public class ConfigurationManager : MonoBehaviour
         string[] linesShowPart = Util.RemoveComments(configShowPart.Split('\n'));
 
         UIManager.Instance.InitializeUI(linesClip, linesShowPart);
+    }
+
+    private void InitilizeHeatLoad()
+    {
+        //HeatLoadManager.Instance.InitializeHeadLoad();
     }
 
     private void InitilizeTiming()
