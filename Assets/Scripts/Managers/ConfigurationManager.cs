@@ -23,9 +23,9 @@ public class ConfigurationManager : MonoBehaviour
 
     private void InitilizeTuyere()
     {
-        // ·ç¿Ú¸üÐÂÆ÷ÀïÐèÒª³õÊ¼»¯·ç¿ÚµÄ´óÐ¡£¬°üÀ¨³¤¿í¸ß
-        // µ«ÊÇ²»È·¶¨·ç¿ÚÊ²Ã´Ê±ºòÉú³É£¬ËùÒÔ´Ë´¦´úÂëÐ´ÔÚ ModelManager Àï
-        // ´ý·ç¿ÚÉú³ÉºÃºó£¬ÓÉ ModelManager µ÷ÓÃ·ç¿Ú¸üÐÂÆ÷ÀïµÄ GetTuyereSize
+        // ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ÚµÄ´ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½Ç²ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½Ê²Ã´Ê±ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½Ô´Ë´ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ ModelManager ï¿½ï¿½
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉºÃºï¿½ï¿½ï¿½ ModelManager ï¿½ï¿½ï¿½Ã·ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ GetTuyereSize
 
     }
 
@@ -110,16 +110,15 @@ public class ConfigurationManager : MonoBehaviour
         foreach (string line in linesTiming)
         {
             string[] temp = line.Split(':');
-            times[temp[0]] = new float[]{0, float.Parse(temp[1])};
+            times[temp[0]] = new float[] { 0, float.Parse(temp[1]) };
         }
     }
 
-    // Ìí¼Ó¼ÆÊ±Æ÷ÐèÒª×öÁ½²½
-    // µÚÒ»£¬ÔÚ times.txt ÖÐÌí¼Ó¼ÆÊ±Æ÷
-    // µÚ¶þ£¬ÔÚ Update() ÖÐÌí¼Ó¸Ãµ÷ÓÃµÄ·½·¨
+    // ï¿½ï¿½Ó¼ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ times.txt ï¿½ï¿½ï¿½ï¿½Ó¼ï¿½Ê±ï¿½ï¿½
+    // ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ Update() ï¿½ï¿½ï¿½ï¿½Ó¸Ãµï¿½ï¿½ÃµÄ·ï¿½ï¿½ï¿½
     private void Update()
     {
-        
         foreach (var item in times)
         {
             if (item.Value[0] >= item.Value[1])
