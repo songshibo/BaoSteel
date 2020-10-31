@@ -49,6 +49,7 @@ public class HeatLoadManager : MonoSingleton<HeatLoadManager>
     public void ShowHeatLoad()
     {
         openHeatLoad = !openHeatLoad;
+        // TODO：
     }
 
     void OnGUI()

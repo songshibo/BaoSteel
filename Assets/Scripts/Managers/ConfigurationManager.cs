@@ -101,16 +101,15 @@ public class ConfigurationManager : MonoBehaviour
         foreach (string line in linesTiming)
         {
             string[] temp = line.Split(':');
-            times[temp[0]] = new float[]{0, float.Parse(temp[1])};
+            times[temp[0]] = new float[] { 0, float.Parse(temp[1]) };
         }
     }
 
-    // Ìí¼Ó¼ÆÊ±Æ÷ÐèÒª×öÁ½²½
-    // µÚÒ»£¬ÔÚ times.txt ÖÐÌí¼Ó¼ÆÊ±Æ÷
-    // µÚ¶þ£¬ÔÚ Update() ÖÐÌí¼Ó¸Ãµ÷ÓÃµÄ·½·¨
+    // ï¿½ï¿½Ó¼ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ times.txt ï¿½ï¿½ï¿½ï¿½Ó¼ï¿½Ê±ï¿½ï¿½
+    // ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ Update() ï¿½ï¿½ï¿½ï¿½Ó¸Ãµï¿½ï¿½ÃµÄ·ï¿½ï¿½ï¿½
     private void Update()
     {
-        
         foreach (var item in times)
         {
             if (item.Value[0] >= item.Value[1])
@@ -118,7 +117,7 @@ public class ConfigurationManager : MonoBehaviour
                 if (item.Key.Equals("thermocouple_timing"))
                 {
                     StartCoroutine(DataServiceManager.Instance.GetThermocoupleTemperature(UIManager.Instance.ThermocoupleUpdater));
-                    
+
                 }
                 else if (item.Key.Equals("tuyere_timing"))
                 {
