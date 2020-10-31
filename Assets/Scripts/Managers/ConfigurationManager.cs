@@ -126,7 +126,7 @@ public class ConfigurationManager : MonoBehaviour
                 if (item.Key.Equals("thermocouple_timing"))
                 {
                     StartCoroutine(DataServiceManager.Instance.GetThermocoupleTemperature(ThermocoupleUpdater.Instance.UpdateThermocoupleData));
-                    
+
                 }
                 else if (item.Key.Equals("tuyere_timing"))
                 {
@@ -138,7 +138,11 @@ public class ConfigurationManager : MonoBehaviour
                 }
                 else if (item.Key.Equals("heatload_timing"))
                 {
-                    StartCoroutine(DataServiceManager.Instance.GetHeadLoad(HeatLoadUpdater.Instance.UpdateHeatLoadData));
+                    StartCoroutine(DataServiceManager.Instance.GetHeatLoad(HeatLoadUpdater.Instance.UpdateHeatLoadData));
+                }
+                else if (item.Key.Equals("heatmap_timing"))
+                {
+                    StartCoroutine(DataServiceManager.Instance.GetHeatmap(HeatmapUpdater.Instance.UpdateHeatmap));
                 }
 
                 item.Value[0] = 0;

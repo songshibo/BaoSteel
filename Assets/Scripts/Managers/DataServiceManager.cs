@@ -6,11 +6,11 @@ using UnityEngine.Networking;
 using System.Security.Cryptography;
 using System;
 
-public class DataServiceManager:Singleton<DataServiceManager>
+public class DataServiceManager : Singleton<DataServiceManager>
 {
     // private static DataServiceManager _instance = null;
     // private static readonly object lockHelper = new object();
-    
+
 
     private bool initialized = false;
 
@@ -215,12 +215,12 @@ public class DataServiceManager:Singleton<DataServiceManager>
         }
     }
 
-    public IEnumerator GetHeadLoad(Func<string, bool> DataArrangement)
+    public IEnumerator GetHeatLoad(Func<string, bool> DataArrangement)
     {
         if (initialized)
         {
 
-            UnityWebRequest www = UnityWebRequest.Get("http://172.16.12.9:8899/heatload");
+            UnityWebRequest www = UnityWebRequest.Get(url + "/heatload");
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
@@ -239,4 +239,27 @@ public class DataServiceManager:Singleton<DataServiceManager>
         }
     }
 
+    public IEnumerator GetHeatmap(Func<string, bool> DataArrangement)
+    {
+        if (initialized)
+        {
+
+            UnityWebRequest www = UnityWebRequest.Get(url + "/heatmap");
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log("热力图数据读取失败");
+                Debug.Log(www.error);
+            }
+            else
+            {
+                // Show results as text
+                string data = www.downloadHandler.text;
+
+                DataArrangement(data.Trim());
+                // Or retrieve results as binary data
+            }
+        }
+    }
 }

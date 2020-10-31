@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 {
@@ -37,33 +38,36 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         targetMat.SetTexture("Heatmap", texture);
     }
 
-    private void test()
+    public bool UpdateHeatmap(string jsondata)
     {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("thermocouple");
-        print(objects.Length);
+        Debug.Log("热力图更新");
         List<Vector3> data = new List<Vector3>();
-        float yMax = 47.8f;
-        // float yMax = float.MinValue;
-        for (int i = 0; i < objects.Length; i++)
+        Regex regex = new Regex(@"{""angle"":(?<angle>\d*\.*\d*),""height"":(?<height>\d*\.*\d*),""temperature"":(?<temperature>\d*\.*\d*)}", RegexOptions.IgnoreCase);
+        if (regex.IsMatch(jsondata))
         {
-            float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(objects[i].transform.position.z, objects[i].transform.position.x), 2) + 180;
-            float height = (float)Math.Round(objects[i].transform.position.y, 2);
-            // if (height > yMax)
-            //     yMax = height;
-
-            Vector3 single_data = new Vector3(angle, height * yAxisScaleFactor, height + UnityEngine.Random.Range(20, 30));
-
-            if (height > 10 && height < 15 && angle > 40 && angle < 120)
+            MatchCollection matchs = regex.Matches(jsondata);
+            foreach (Match match in matchs)
             {
-                single_data.z += 50;
+                float angle = (float)Math.Round(double.Parse(match.Groups["angle"].Value.ToString()), 2);
+                float height = (float)Math.Round(double.Parse(match.Groups["height"].Value.ToString()), 2);
+                string s = match.Groups["temperature"].Value.ToString();
+                double temperaturef = double.Parse(s);
+
+                float temperature = (float)Math.Round(temperaturef, 2);
+                Vector3 single_data = new Vector3(angle, height * yAxisScaleFactor, temperature);
+                data.Add(single_data);
+                if (angle == 0)
+                {
+                    data.Add(new Vector3(360, height * yAxisScaleFactor, temperature));
+                }
             }
-
-            data.Add(single_data);
-            if (angle == 0)
-                data.Add(new Vector3(360, height * yAxisScaleFactor, height + UnityEngine.Random.Range(10, 40)));
         }
-        yMax *= yAxisScaleFactor;
+        else
+        {
+            Debug.LogWarning("HeatMapData Not Matched");
+        }
 
+        float yMax = 47.8f * yAxisScaleFactor;
         buffer = new ComputeBuffer(data.Count, Marshal.SizeOf(typeof(Vector3)));
         buffer.SetData(data);
 
@@ -74,24 +78,38 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         shader.SetFloat("smoothin", smoothin);
         shader.SetInt("len", data.Count);
         shader.SetFloat("yHeight", yMax);
+        shader.SetFloat("maxTemperture", 50);
 
         targetMat.SetFloat("yFactor", yAxisScaleFactor);
         targetMat.SetFloat("yHeight", yMax);
 
+        float time = Time.realtimeSinceStartup;
         GenerateHeatMap();
+        Debug.Log(((Time.realtimeSinceStartup - time) * 1000).ToString() + "ms");
+        buffer.Release();
+        return true;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            test();
+            gradient = Util.GenerateGradient(keys);
         }
     }
 
-    private void GradientTexture()
+    private void GradientTexture(float[] isolines, Color isoline_color)
     {
+        if (keys.Length <= 0)
+        {
+            Debug.LogError("The number of keys for gradient texture can not be" + keys.Length.ToString());
+            return;
+        }
         gradient = Util.GenerateGradient(keys);
+        for (int i = 0; i < isolines.Length; i++)
+        {
+            // 根据指定的等高线位置修改gradient的颜色
+        }
     }
 
     private void OnDestroy()
