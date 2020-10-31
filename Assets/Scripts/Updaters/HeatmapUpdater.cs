@@ -89,6 +89,11 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         }
     }
 
+    private void GradientTexture()
+    {
+        gradient = Util.GenerateGradient(keys);
+    }
+
     private void OnDestroy()
     {
         if (buffer != null)
