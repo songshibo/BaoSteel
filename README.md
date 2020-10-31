@@ -89,6 +89,7 @@ Build之后文件路径: {ApplicationName}_Data/Config/
 - ```FindObjectsInLayer``` 查找特定layer下所有的物体
 - ```IsAnyObjectsInLayer``` 查找特定layer下是否有物体
 - ```MergeThermocoupleName```得到热电偶的真正编号，TE4560A-TE4560B_1 to TE4560，TI4370-TI4379_1 to TI4370-TI4379，TE4360_1 to TE4360
+- ```GenerateGradient```生成gradient贴图，输入是gradient的一系列颜色~~(注意按照a通道，从低到高排序)~~自动排序，a通道代表的意思即是这个颜色key所处在整个gradient贴图里的百分比。
 
 ## Others
 

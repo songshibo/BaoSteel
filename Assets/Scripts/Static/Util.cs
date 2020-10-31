@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using System.IO;
 using Unity.Mathematics;
+using System;
 
 public static class Util
 {
@@ -71,7 +72,7 @@ public static class Util
     public static GameObject[] FindObjectsInLayer(string layerName)
     {
         int layer = LayerMask.NameToLayer(layerName);
-        GameObject[] objects = Object.FindObjectsOfType<GameObject>();
+        GameObject[] objects = UnityEngine.Object.FindObjectsOfType<GameObject>();
         List<GameObject> objectsInLayer = new List<GameObject>();
         for (int i = 0; i < objects.Length; i++)
         {
@@ -84,7 +85,7 @@ public static class Util
     public static bool IsAnyObjectsInLayer(string layerName)
     {
         int layer = LayerMask.NameToLayer(layerName);
-        GameObject[] objects = Object.FindObjectsOfType<GameObject>();
+        GameObject[] objects = UnityEngine.Object.FindObjectsOfType<GameObject>();
         for (int i = 0; i < objects.Length; i++)
         {
             if (objects[i].layer == layer)
@@ -130,6 +131,7 @@ public static class Util
             wrapMode = TextureWrapMode.Clamp,
             filterMode = FilterMode.Point
         };
+        Array.Sort(colors, SortColorsbyAChannel);
 
         Gradient gradient = new Gradient();
         //alpha & Color key
@@ -152,5 +154,15 @@ public static class Util
         texture.Apply(false);// do not update minimap
 
         return texture;
+    }
+
+    private static int SortColorsbyAChannel(Color a, Color b)
+    {
+        if (a.a < b.a)
+            return 1;
+        else if (a.a > b.a)
+            return -1;
+        else
+            return 0;
     }
 }

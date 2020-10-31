@@ -42,7 +42,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
                 min_height = float.Parse(name_model[0].Split('?')[1].Split('<')[0]); // 该分组的下高度
                 max_height = float.Parse(name_model[0].Split('?')[1].Split('<')[1]); // 该分组的上高度
             }
-            
+
 
 
             GameObject parent = new GameObject(name + "_parent");
@@ -146,7 +146,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         {
             obj7.transform.Rotate(180, 0, 0);
         }
-        
+
 
         GameObject obj8 = GameObject.Find("TI7808_1");
         if (obj8)
@@ -256,7 +256,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
             print("Prefabs/" + name + "本地模型生成失败，添加 trim 试试");
         }
     }
-    
+
     // 根据高度找冷却板或者热电偶
     public List<GameObject> FindByHeight(string type, float min, float max)
     {

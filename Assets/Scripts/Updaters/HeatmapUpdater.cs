@@ -87,12 +87,6 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         {
             test();
         }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            if (keys.Length == 0)
-                return;
-            gradient = Util.GenerateGradient(keys);
-        }
     }
 
     private void OnDestroy()
