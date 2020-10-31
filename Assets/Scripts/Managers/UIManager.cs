@@ -13,7 +13,7 @@ public class UIManager : MonoSingleton<UIManager>
     public DropdownMultiSelect layerDropDown;
     private GameObject EnterExitInfo;
     private Vector2 ThermocouplePanel_Width_Height;
-    private Dictionary<string, GameObject> name_gameobject = new Dictionary<string, GameObject>();
+    
 
     public void InitializeUI(string[] configClip, string[] configShowPart)
     {
@@ -152,7 +152,7 @@ public class UIManager : MonoSingleton<UIManager>
             string[] names = UIobj.name.Split('-');
             foreach (string name in names)
             {
-                name_gameobject.Add(name, UIobj);
+                ThermocoupleUpdater.Instance.name_gameobject.Add(name, UIobj);
             }
             
             UIobj.transform.Find("height").GetComponent<Text>().text = position.y.ToString("0.###") + "m";
@@ -179,7 +179,7 @@ public class UIManager : MonoSingleton<UIManager>
             count += 1;
         }
         print(count.ToString() + "个 UI 温度按钮");
-        print(name_gameobject.Count + "实际热电偶个数，但是同一位置只生成了一个，所以会出现多对一，多个编号对应一个热电偶按钮");
+        print(ThermocoupleUpdater.Instance.name_gameobject.Count + "实际热电偶个数，但是同一位置只生成了一个，所以会出现多对一，多个编号对应一个热电偶按钮");
     }
 
     private void OnClick(GameObject thermo, GameObject UIobj)
@@ -212,46 +212,5 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public bool ThermocoupleUpdater(string content)
-    {
-        content = content.Substring(1, content.Length - 2); // 去掉两边的大括号
-        string[] str = content.Split(',');
-        Dictionary<string, string> name_temperature = new Dictionary<string, string>();
-        char[] MyChar = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
-        foreach (string substr in str)
-        {
-            string[] single = substr.Split(':');
-            string name = single[0].Substring(1, single[0].Length - 2).TrimEnd(MyChar); // 去掉双引号和末尾的字母
-            string temperature = single[1];
-            if (name_temperature.ContainsKey(name))
-            {
-                name_temperature[name] += " " + temperature;
-            }
-            else
-            {
-                name_temperature.Add(name, temperature); 
-            }
-
-
-        }
-        foreach (var item in name_gameobject)
-        {
-            item.Value.transform.Find("temperature").GetComponent<Text>().text = "";
-            item.Value.GetComponent<Image>().color = Color.green;
-        }
-        foreach (var item in name_gameobject)
-        {
-            item.Value.transform.Find("temperature").GetComponent<Text>().text += name_temperature[item.Key] + " ";
-            if (item.Value.name.StartsWith(item.Key))
-            {
-                float temp = float.Parse(name_temperature[item.Key].Split(' ')[0]);
-                if (temp > 50)
-                {
-                    item.Value.GetComponent<Image>().color = Color.red;
-                }
-            }
-        }
-        print("热电偶温度更新");
-        return true;
-    }
+    
 }

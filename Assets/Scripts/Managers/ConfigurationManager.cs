@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
-
+using System;
 
 public class ConfigurationManager : MonoBehaviour
 {
@@ -16,8 +16,17 @@ public class ConfigurationManager : MonoBehaviour
         InitializeModelManager();
         InitilizeUI();
         InitilizeHeatLoad();
+        //InitilizeTuyere();
         CullingController.Instance.ResetMaterialProperties();
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
+    }
+
+    private void InitilizeTuyere()
+    {
+        // 风口更新器里需要初始化风口的大小，包括长宽高
+        // 但是不确定风口什么时候生成，所以此处代码写在 ModelManager 里
+        // 待风口生成好后，由 ModelManager 调用风口更新器里的 GetTuyereSize
+
     }
 
     private void InitializeCamera()
@@ -117,20 +126,20 @@ public class ConfigurationManager : MonoBehaviour
             {
                 if (item.Key.Equals("thermocouple_timing"))
                 {
-                    StartCoroutine(DataServiceManager.Instance.GetThermocoupleTemperature(UIManager.Instance.ThermocoupleUpdater));
+                    StartCoroutine(DataServiceManager.Instance.GetThermocoupleTemperature(ThermocoupleUpdater.Instance.UpdateThermocoupleData));
                     
                 }
                 else if (item.Key.Equals("tuyere_timing"))
                 {
-                    StartCoroutine(DataServiceManager.Instance.GetTuyereSize(ModelManager.Instance.TuyereUpdater));
+                    StartCoroutine(DataServiceManager.Instance.GetTuyereSize(TuyereUpdater.Instance.UpdateTuyereData));
                 }
                 else if (item.Key.Equals("batch_timing"))
                 {
-                    BatchManager.Instance.NewLayer(item.Value[1]);
+                    BatchLayerUpdater.Instance.NewLayer(item.Value[1]);
                 }
                 else if (item.Key.Equals("heatload_timing"))
                 {
-                    StartCoroutine(DataServiceManager.Instance.GetHeadLoad(HeatLoadManager.Instance.HeatLoadUpdater));
+                    StartCoroutine(DataServiceManager.Instance.GetHeadLoad(HeatLoadUpdater.Instance.UpdateHeatLoadData));
                 }
 
                 item.Value[0] = 0;

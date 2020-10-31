@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Newtonsoft.Json;
 using System;
 
-public class BatchManager : MonoSingleton<BatchManager>
+public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
 {
     private Vector3 from;
     private Vector3 target;

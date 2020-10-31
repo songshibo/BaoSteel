@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 using UnityEngine.EventSystems;
 
 
-public class HeatLoadManager : MonoSingleton<HeatLoadManager>
+public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
 {
     private bool openHeatLoad = false;  // 是否打开了热负荷
     private bool openTemp = false;  // 鼠标是否进入炉体，是否显示温度
@@ -72,7 +72,7 @@ public class HeatLoadManager : MonoSingleton<HeatLoadManager>
         }
     }
 
-    public bool HeatLoadUpdater(string content)
+    public bool UpdateHeatLoadData(string content)
     {
         Dictionary<string, Dictionary<string, float>> heatload = new Dictionary<string, Dictionary<string, float>>(); // 用来保存content中的所有信息
 
