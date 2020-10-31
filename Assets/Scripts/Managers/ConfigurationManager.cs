@@ -23,9 +23,9 @@ public class ConfigurationManager : MonoBehaviour
 
     private void InitilizeTuyere()
     {
-        // ��ڸ���������Ҫ��ʼ����ڵĴ�С������������
-        // ���ǲ�ȷ�����ʲôʱ�����ɣ����Դ˴�����д�� ModelManager ��
-        // ��������ɺú��� ModelManager ���÷�ڸ�������� GetTuyereSize
+        // 风口更新器里需要初始化风口的大小，包括长宽高
+        // 但是不确定风口什么时候生成，所以此处代码写在 ModelManager 里
+        // 待风口生成好后，由 ModelManager 调用风口更新器里的 GetTuyereSize
 
     }
 
@@ -114,10 +114,10 @@ public class ConfigurationManager : MonoBehaviour
         }
     }
 
-    // ��Ӽ�ʱ����Ҫ������
-    // ��һ���� times.txt ����Ӽ�ʱ��
-    // �ڶ����� Update() ����Ӹõ��õķ���
-    private void Update()
+    // 添加计时器需要做两步
+    // 第一，在 times.txt 中添加计时器
+    // 第二，在 Update() 中添加该调用的方法
+    private void LateUpdate()
     {
         foreach (var item in times)
         {
