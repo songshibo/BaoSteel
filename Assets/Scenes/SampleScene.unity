@@ -9956,7 +9956,6 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0.12156863, a: 0.5}
   - {r: 1, g: 0.79607844, b: 0, a: 0.75}
   - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 1, g: 0, b: 0.8117647, a: 0.8509804}
   shader: {fileID: 7200000, guid: dad65ca1ddb714e408b41386fefac2b7, type: 3}
   xRes: 1024
   yRes: 5120
