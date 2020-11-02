@@ -15,14 +15,21 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public float power;
     public float smoothin;
     public float yAxisScaleFactor;
+    public float maxTemp = 50;
     [Space]
     public Material targetMat;
 
-    public RenderTexture texture;
+    [Space]
+    [SerializeField]
+    private RenderTexture texture;
+    [SerializeField]
+    private Texture2D gradient;
     private int kernel;
 
-    [Space(10)]
-    public Texture2D gradient;
+    public void SwitchHeatMap()
+    {
+        targetMat.SetFloat("_RenderHeatMap", targetMat.GetFloat("_RenderHeatMap") == 0f ? 1 : 0);
+    }
 
     private void GenerateHeatMap()
     {
@@ -78,27 +85,17 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         shader.SetFloat("smoothin", smoothin);
         shader.SetInt("len", data.Count);
         shader.SetFloat("yHeight", yMax);
-        shader.SetFloat("maxTemperture", 50);
+        shader.SetFloat("maxTemperture", maxTemp);
 
         targetMat.SetFloat("yFactor", yAxisScaleFactor);
         targetMat.SetFloat("yHeight", yMax);
 
-        float time = Time.realtimeSinceStartup;
         GenerateHeatMap();
-        Debug.Log(((Time.realtimeSinceStartup - time) * 1000).ToString() + "ms");
         buffer.Release();
         return true;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            gradient = Util.GenerateGradient(keys);
-        }
-    }
-
-    private void GradientTexture(float[] isolines, Color isoline_color)
+    public void InitializeHeatMapGradient()
     {
         if (keys.Length <= 0)
         {
@@ -106,10 +103,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
             return;
         }
         gradient = Util.GenerateGradient(keys);
-        for (int i = 0; i < isolines.Length; i++)
-        {
-            // 根据指定的等高线位置修改gradient的颜色
-        }
+        targetMat.SetTexture("_CustomGradient", gradient);
     }
 
     private void OnDestroy()
