@@ -32,7 +32,17 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     public void SwitchHeatMap()
     {
-        targetMat.SetFloat("_RenderHeatMap", targetMat.GetFloat("_RenderHeatMap") == 0f ? 1 : 0);
+        ModalWindowManager windowManager = GameObject.Find("HeatMapWindow").GetComponent<ModalWindowManager>();
+        float finalValue = targetMat.GetFloat("_RenderHeatMap") == 0f ? 1 : 0;
+        targetMat.SetFloat("_RenderHeatMap", finalValue);
+        if (finalValue == 1f)
+        {
+            windowManager.OpenWindow();
+        }
+        else
+        {
+            windowManager.CloseWindow();
+        }
     }
 
     public void ApplyHeatMapProperties()

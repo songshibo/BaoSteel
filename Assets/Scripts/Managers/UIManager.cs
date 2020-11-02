@@ -13,7 +13,7 @@ public class UIManager : MonoSingleton<UIManager>
     public DropdownMultiSelect layerDropDown;
     private GameObject EnterExitInfo;
     private Vector2 ThermocouplePanel_Width_Height;
-    
+
 
     public void InitializeUI(string[] configClip, string[] configShowPart)
     {
@@ -133,7 +133,7 @@ public class UIManager : MonoSingleton<UIManager>
 
         float xRatio = root.GetComponent<RectTransform>().sizeDelta.x / 360;
         float yRatio = root.GetComponent<RectTransform>().sizeDelta.y / 55;
-        
+
         GameObject[] thermos = GameObject.FindGameObjectsWithTag("thermocouple");
         float count = 0;
         foreach (GameObject thermo in thermos)
@@ -154,7 +154,7 @@ public class UIManager : MonoSingleton<UIManager>
             {
                 ThermocoupleUpdater.Instance.name_gameobject.Add(name, UIobj);
             }
-            
+
             UIobj.transform.Find("height").GetComponent<Text>().text = position.y.ToString("0.###") + "m";
             UIobj.transform.Find("angle").GetComponent<Text>().text = angle.ToString("0") + "°";
             UIobj.transform.Find("temperature").GetComponent<Text>().text = "0 0 0 0 0";
@@ -212,5 +212,5 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    
+
 }
