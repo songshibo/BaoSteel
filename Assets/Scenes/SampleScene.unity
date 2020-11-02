@@ -4377,8 +4377,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.5160498
-  m_Size: 0.26507923
+  m_Value: 0.5199957
+  m_Size: 0.26057696
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5025,7 +5025,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1800.0032, y: -1688.9246}
+  m_AnchoredPosition: {x: -1800.0032, y: -1698.7914}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -8843,8 +8843,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.5000017
-  m_Size: 0.49280867
+  m_Value: 0.5000018
+  m_Size: 0.5000474
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9956,7 +9956,6 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0.12156863, a: 0.5}
   - {r: 1, g: 0.79607844, b: 0, a: 0.75}
   - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 1, g: 0, b: 0.8117647, a: 0.8509804}
   shader: {fileID: 7200000, guid: dad65ca1ddb714e408b41386fefac2b7, type: 3}
   xRes: 1024
   yRes: 5120
