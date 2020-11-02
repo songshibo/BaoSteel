@@ -25,6 +25,20 @@ public static class Util
         }
     }
 
+    public static float ReadModelProperty(string propertyName)
+    {
+        string file = "property.txt";
+        string configs = Util.ReadConfigFile(file);
+        string[] lines = configs.Split('\n');
+        Dictionary<string, float> modelProperty = new Dictionary<string, float>();
+        foreach (string line in lines)
+        {
+            string[] temp = line.Split(':');
+            modelProperty[temp[0]] = float.Parse(temp[1]);
+        }
+
+        return modelProperty[propertyName];
+    }
 
     public static GameObject[] FindChildren(GameObject obj)
     {

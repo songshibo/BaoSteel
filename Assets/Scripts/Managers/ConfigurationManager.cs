@@ -19,7 +19,7 @@ public class ConfigurationManager : MonoBehaviour
         //InitilizeTuyere();
         CullingController.Instance.ResetMaterialProperties();
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
-        HeatmapUpdater.Instance.InitializeHeatMapGradient();
+        HeatmapUpdater.Instance.InitializeHeatMap();
     }
 
     private void InitilizeTuyere()

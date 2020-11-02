@@ -14,9 +14,9 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     [Space(20)]
     public int xRes, yRes; // yRes = yAxisScaleFactor * xRes
-    public float power;
-    public float smoothin;
-    public float yAxisScaleFactor;
+    public SliderManager powerUI;
+    public SliderManager smoothinUI;
+    public SliderManager yAxisScaleFactorUI;
     public CustomInputField miniTmp;
     public CustomInputField maxTmp;
     public Image gradientUI;
@@ -35,7 +35,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         targetMat.SetFloat("_RenderHeatMap", targetMat.GetFloat("_RenderHeatMap") == 0f ? 1 : 0);
     }
 
-    public void ResetTemperature()
+    public void ApplyHeatMapProperties()
     {
         Debug.Log("热力图手动更新");
         StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatmap));
@@ -57,6 +57,8 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     public bool UpdateHeatmap(string jsondata)
     {
+        // parameter setup
+        float yAxisScaleFactor = float.Parse(yAxisScaleFactorUI.valueText.text);
         List<Vector3> data = new List<Vector3>();
         Regex regex = new Regex(@"{""angle"":(?<angle>\d*\.*\d*),""height"":(?<height>\d*\.*\d*),""temperature"":(?<temperature>\d*\.*\d*)}", RegexOptions.IgnoreCase);
         if (regex.IsMatch(jsondata))
@@ -83,15 +85,16 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
             Debug.LogWarning("HeatMapData Not Matched");
         }
 
-        float yMax = 47.8f * yAxisScaleFactor;
+        // read max height from configurations
+        float yMax = Util.ReadModelProperty("max_height") * yAxisScaleFactor;
         buffer = new ComputeBuffer(data.Count, Marshal.SizeOf(typeof(Vector3)));
         buffer.SetData(data);
 
         kernel = shader.FindKernel("CSMain");
         shader.SetFloat("xRes", xRes);
         shader.SetFloat("yRes", yRes);
-        shader.SetFloat("power", power);
-        shader.SetFloat("smoothin", smoothin);
+        shader.SetFloat("power", float.Parse(powerUI.valueText.text));
+        shader.SetFloat("smoothin", float.Parse(smoothinUI.valueText.text));
         shader.SetInt("len", data.Count);
         shader.SetFloat("yHeight", yMax);
         shader.SetFloat("minTemperature", float.Parse(miniTmp.inputText.text));
@@ -105,8 +108,9 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         return true;
     }
 
-    public void InitializeHeatMapGradient()
+    public void InitializeHeatMap()
     {
+        //生成gradient
         if (keys.Length <= 0)
         {
             Debug.LogError("The number of keys for gradient texture can not be" + keys.Length.ToString());
