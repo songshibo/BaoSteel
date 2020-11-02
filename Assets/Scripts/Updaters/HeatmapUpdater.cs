@@ -3,6 +3,8 @@ using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using UnityEngine.UI;
+using Michsky.UI.ModernUIPack;
 
 public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 {
@@ -15,7 +17,9 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public float power;
     public float smoothin;
     public float yAxisScaleFactor;
-    public float maxTemp = 50;
+    public CustomInputField miniTmp;
+    public CustomInputField maxTmp;
+    public Image gradientUI;
     [Space]
     public Material targetMat;
 
@@ -29,6 +33,12 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public void SwitchHeatMap()
     {
         targetMat.SetFloat("_RenderHeatMap", targetMat.GetFloat("_RenderHeatMap") == 0f ? 1 : 0);
+    }
+
+    public void ResetTemperature()
+    {
+        Debug.Log("热力图手动更新");
+        StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatmap));
     }
 
     private void GenerateHeatMap()
@@ -47,7 +57,6 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     public bool UpdateHeatmap(string jsondata)
     {
-        Debug.Log("热力图更新");
         List<Vector3> data = new List<Vector3>();
         Regex regex = new Regex(@"{""angle"":(?<angle>\d*\.*\d*),""height"":(?<height>\d*\.*\d*),""temperature"":(?<temperature>\d*\.*\d*)}", RegexOptions.IgnoreCase);
         if (regex.IsMatch(jsondata))
@@ -85,7 +94,8 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         shader.SetFloat("smoothin", smoothin);
         shader.SetInt("len", data.Count);
         shader.SetFloat("yHeight", yMax);
-        shader.SetFloat("maxTemperture", maxTemp);
+        shader.SetFloat("minTemperature", float.Parse(miniTmp.inputText.text));
+        shader.SetFloat("maxTemperature", float.Parse(maxTmp.inputText.text));
 
         targetMat.SetFloat("yFactor", yAxisScaleFactor);
         targetMat.SetFloat("yHeight", yMax);
@@ -104,6 +114,8 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         }
         gradient = Util.GenerateGradient(keys);
         targetMat.SetTexture("_CustomGradient", gradient);
+        // 显示到UI上
+        gradientUI.sprite = Sprite.Create(gradient, new Rect(0, 0, gradient.width, gradient.height), new Vector2(0.5f, 0.5f));
     }
 
     private void OnDestroy()

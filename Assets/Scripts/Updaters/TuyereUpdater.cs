@@ -54,8 +54,6 @@ public class TuyereUpdater : MonoSingleton<TuyereUpdater>
             tuyere.transform.Find("tuyere_wind").Find("wind").localScale = new Vector3(width_scale, depth_scale, height_scale);
 
         }
-
-        print("tuyere数据更新");
         return true;
     }
 }

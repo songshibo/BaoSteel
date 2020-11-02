@@ -46,7 +46,6 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
                 }
             }
         }
-        print("热电偶温度更新");
         return true;
     }
 }
