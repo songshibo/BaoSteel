@@ -8,26 +8,27 @@ using Michsky.UI.ModernUIPack;
 
 public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 {
-    public Color[] keys;
     public ComputeShader shader;
     private ComputeBuffer buffer;
 
-    [Space(20)]
+
     public int xRes, yRes; // yRes = yAxisScaleFactor * xRes
+    [Space(20)]
     public SliderManager powerUI;
     public SliderManager smoothinUI;
     public SliderManager yAxisScaleFactorUI;
     public CustomInputField miniTmp;
     public CustomInputField maxTmp;
     public Image gradientUI;
+    public CustomGradient customGradient = new CustomGradient();
     [Space]
     public Material targetMat;
 
     [Space]
-    [SerializeField]
+    //[SerializeField]
     private RenderTexture texture;
-    [SerializeField]
-    private Texture2D gradient;
+    //[SerializeField]
+    private Texture2D gradientTex;
     private int kernel;
 
     public void SwitchHeatMap()
@@ -48,6 +49,16 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public void ApplyHeatMapProperties()
     {
         Debug.Log("热力图手动更新");
+        StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatmap));
+    }
+
+    //作为Listener添加给GradientMode的horizontal selector
+    public void SwitchGradientMode(int i)
+    {
+        customGradient.blendMode = (i == 0) ? CustomGradient.BlendMode.Linear : CustomGradient.BlendMode.Discrete;
+        gradientTex = customGradient.GetTexture(256, 3);
+        targetMat.SetTexture("_CustomGradient", gradientTex);
+        gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
         StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatmap));
     }
 
@@ -120,16 +131,9 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     public void InitializeHeatMap()
     {
-        //生成gradient
-        if (keys.Length <= 0)
-        {
-            Debug.LogError("The number of keys for gradient texture can not be" + keys.Length.ToString());
-            return;
-        }
-        gradient = Util.GenerateGradient(keys);
-        targetMat.SetTexture("_CustomGradient", gradient);
-        // 显示到UI上
-        gradientUI.sprite = Sprite.Create(gradient, new Rect(0, 0, gradient.width, gradient.height), new Vector2(0.5f, 0.5f));
+        gradientTex = customGradient.GetTexture(256, 3);
+        targetMat.SetTexture("_CustomGradient", gradientTex);
+        gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
     }
 
     private void OnDestroy()
