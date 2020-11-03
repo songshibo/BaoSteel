@@ -137,7 +137,7 @@ public static class Util
     /// </summary>
     /// <param name="colorKey">Gradient Color Keys(Array)</param>
     /// <param name="width">Width of gradient texture</param>
-    public static Texture2D GenerateGradient(Color[] colors, int width = 512, bool isLinear = false)
+    public static Texture2D GenerateGradient(Color[] colors, GradientMode mode = GradientMode.Blend, int innerNum = 2, int width = 512, bool isLinear = false)
     {
         Texture2D texture = new Texture2D(width, 1, TextureFormat.ARGB32, false, isLinear)
         {
@@ -149,17 +149,34 @@ public static class Util
 
         Gradient gradient = new Gradient();
         //alpha & Color key
-        GradientColorKey[] colorKey = new GradientColorKey[colors.Length];
-        GradientAlphaKey[] alphaKey = new GradientAlphaKey[colors.Length];
+        int len = colors.Length + (colors.Length - 1) * (innerNum - 1);
+        GradientColorKey[] colorKey = new GradientColorKey[len];
+        GradientAlphaKey[] alphaKey = new GradientAlphaKey[len];
+        int index = 0;
         for (int i = 0; i < colors.Length; i++)
         {
-            colorKey[i].color = colors[i];
-            colorKey[i].time = colors[i].a;
-            alphaKey[i].alpha = 1.0f;
-            alphaKey[i].time = colors[i].a;
+            colorKey[index].color = colors[i];
+            colorKey[index].time = colors[i].a;
+            alphaKey[index].alpha = 1.0f;
+            alphaKey[index].time = colors[i].a;
+            index++;
+            if (i < colors.Length - 1)
+            {
+                for (int j = 1; j < innerNum; j++)
+                {
+                    float lerpParam = j / (float)innerNum;
+                    Color innerColor = Color.Lerp(colors[i], colors[i + 1], lerpParam);
+                    colorKey[index].color = innerColor;
+                    colorKey[index].time = innerColor.a;
+                    alphaKey[index].alpha = 1.0f;
+                    alphaKey[index].time = innerColor.a;
+                    index++;
+                }
+            }
         }
         //Set up Gradient
         gradient.SetKeys(colorKey, alphaKey);
+        gradient.mode = mode;
         //Set up Texture
         for (int i = 0; i < width; i++)
         {
