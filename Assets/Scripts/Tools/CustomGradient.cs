@@ -115,9 +115,14 @@ public class CustomGradient
         return keys[i];
     }
 
-    public Texture2D GetTexture(int width, int segement)
+    public Texture2D GetTexture(int width, int segement, bool isLinear = false)
     {
-        Texture2D texture = new Texture2D(width, 1);
+        Texture2D texture = new Texture2D(width, 1, TextureFormat.ARGB32, false, false)
+        {
+            alphaIsTransparency = true,
+            wrapMode = TextureWrapMode.Clamp,
+            filterMode = FilterMode.Point
+        };
         Color[] colours = new Color[width];
         for (int i = 0; i < width; i++)
         {

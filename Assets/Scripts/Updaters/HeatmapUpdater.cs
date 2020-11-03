@@ -21,6 +21,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public CustomInputField maxTmp;
     public Image gradientUI;
     public CustomGradient customGradient = new CustomGradient();
+    public int gradientRes = 64;
     [Space]
     public Material targetMat;
 
@@ -29,6 +30,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     private RenderTexture texture;
     //[SerializeField]
     private Texture2D gradientTex;
+
     private int kernel;
 
     public void SwitchHeatMap()
@@ -56,7 +58,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public void SwitchGradientMode(int i)
     {
         customGradient.blendMode = (i == 0) ? CustomGradient.BlendMode.Linear : CustomGradient.BlendMode.Discrete;
-        gradientTex = customGradient.GetTexture(256, 3);
+        gradientTex = customGradient.GetTexture(gradientRes, 3);
         targetMat.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
         StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatmap));
@@ -131,7 +133,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     public void InitializeHeatMap()
     {
-        gradientTex = customGradient.GetTexture(256, 3);
+        gradientTex = customGradient.GetTexture(gradientRes, 3);
         targetMat.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
     }
