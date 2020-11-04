@@ -97,7 +97,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - yFactor: 20
-    - yHeight: 956
+    - yHeight: 47.8
     m_Colors:
     - BottomPlane: {r: 0, g: 0, b: 0, a: 0}
     - TopPlane: {r: 0, g: 200, b: 0, a: 0}

@@ -75,6 +75,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
 
     public bool UpdateHeatLoadData(string content)
     {
+        print(content);
         Dictionary<string, Dictionary<string, float>> heatload = new Dictionary<string, Dictionary<string, float>>(); // 用来保存content中的所有信息
 
         JToken items = JObject.Parse(content);

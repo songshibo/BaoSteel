@@ -117,7 +117,7 @@ public class CustomGradient
 
     public Texture2D GetTexture(int width, int segment, bool isLinear = false)
     {
-        Texture2D texture = new Texture2D(width, 1, TextureFormat.ARGB32, false, false)
+        Texture2D texture = new Texture2D(width, 1, TextureFormat.ARGB32, false, isLinear)
         {
             alphaIsTransparency = true,
             wrapMode = TextureWrapMode.Clamp,

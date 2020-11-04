@@ -20,7 +20,6 @@ public class ConfigurationManager : MonoBehaviour
         CullingController.Instance.ResetMaterialProperties();
         // 单独处理heatmap材质，将其设置为正常渲染模式
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
-
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         HeatmapUpdater.Instance.InitializeHeatMap();
     }
@@ -139,6 +138,7 @@ public class ConfigurationManager : MonoBehaviour
                 }
                 else if (item.Key.Equals("batch_timing"))
                 {
+                    // TODO
                     BatchLayerUpdater.Instance.NewLayer(item.Value[1]);
                 }
                 else if (item.Key.Equals("heatload_timing"))
