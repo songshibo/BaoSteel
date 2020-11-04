@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28502715, g: 0.371394, b: 0.49601093, a: 1}
+  m_IndirectSpecularColor: {r: 0.285027, g: 0.37139374, b: 0.4960103, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6867,8 +6867,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.5131122
-  m_Size: 0.26507923
+  m_Value: 0.5142272
+  m_Size: 0.23474666
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7683,7 +7683,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2619.8672, y: -1681.8003}
+  m_AnchoredPosition: {x: -2264.5972, y: -1685.9285}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -12413,8 +12413,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.9490236
-  m_Size: 0.4928087
+  m_Value: 0.78410935
+  m_Size: 0.5457567
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14489,14 +14489,14 @@ MonoBehaviour:
   gradientUI: {fileID: 1868497673}
   customGradient:
     blendMode: 0
-    randomizeColour: 0
+    randomizeColour: 1
     keys:
     - colour: {r: 0, g: 0.54588175, b: 1, a: 1}
       time: 0
     - colour: {r: 0, g: 1, b: 0.018793583, a: 1}
       time: 0.34219268
     - colour: {r: 1, g: 0.80423534, b: 0, a: 1}
-      time: 0.6744186
+      time: 0.6578073
     - colour: {r: 1, g: 0, b: 0, a: 1}
       time: 1
   gradientRes: 64
@@ -15075,7 +15075,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -30}
+  m_AnchoredPosition: {x: 0, y: -30.000153}
   m_SizeDelta: {x: -0.0000076293945, y: -60.000004}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2033040924
