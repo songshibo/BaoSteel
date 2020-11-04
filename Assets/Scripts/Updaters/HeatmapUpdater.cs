@@ -17,6 +17,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public SliderManager powerUI;
     public SliderManager smoothinUI;
     public SliderManager yAxisScaleFactorUI;
+    public SliderManager segmentUI;
     public CustomInputField miniTmp;
     public CustomInputField maxTmp;
     public Image gradientUI;
@@ -36,16 +37,8 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public void SwitchHeatMap()
     {
         ModalWindowManager windowManager = GameObject.Find("HeatMapWindow").GetComponent<ModalWindowManager>();
-        float finalValue = targetMat.GetFloat("_RenderHeatMap") == 0f ? 1 : 0;
-        targetMat.SetFloat("_RenderHeatMap", finalValue);
-        if (finalValue == 1f)
-        {
-            windowManager.OpenWindow();
-        }
-        else
-        {
-            windowManager.CloseWindow();
-        }
+        targetMat.SetFloat("_RenderType", 1);
+        windowManager.OpenWindow();
     }
 
     public void ApplyHeatMapProperties()
@@ -58,7 +51,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public void SwitchGradientMode(int i)
     {
         customGradient.blendMode = (i == 0) ? CustomGradient.BlendMode.Linear : CustomGradient.BlendMode.Discrete;
-        gradientTex = customGradient.GetTexture(gradientRes, 3);
+        gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
         targetMat.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
         StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatmap));
@@ -109,7 +102,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         }
 
         // read max height from configurations
-        float yMax = Util.ReadModelProperty("max_height") * yAxisScaleFactor;
+        float yMax = Util.ReadModelProperty("max_height");
         buffer = new ComputeBuffer(data.Count, Marshal.SizeOf(typeof(Vector3)));
         buffer.SetData(data);
 
@@ -119,11 +112,9 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         shader.SetFloat("power", float.Parse(powerUI.valueText.text));
         shader.SetFloat("smoothin", float.Parse(smoothinUI.valueText.text));
         shader.SetInt("len", data.Count);
-        shader.SetFloat("yHeight", yMax);
+        shader.SetFloat("yHeight", yMax * yAxisScaleFactor);
         shader.SetFloat("minTemperature", float.Parse(miniTmp.inputText.text));
         shader.SetFloat("maxTemperature", float.Parse(maxTmp.inputText.text));
-
-        targetMat.SetFloat("yFactor", yAxisScaleFactor);
         targetMat.SetFloat("yHeight", yMax);
 
         GenerateHeatMap();
@@ -133,7 +124,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     public void InitializeHeatMap()
     {
-        gradientTex = customGradient.GetTexture(gradientRes, 3);
+        gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
         targetMat.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
     }
