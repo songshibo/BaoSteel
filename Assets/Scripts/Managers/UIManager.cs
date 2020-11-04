@@ -11,6 +11,7 @@ public class UIManager : MonoSingleton<UIManager>
 {
     public CustomDropdown clipDropDown;
     public DropdownMultiSelect layerDropDown;
+    public CustomDropdown renderType;
     public HorizontalSelector heatMapGradientSelector;
     private GameObject EnterExitInfo;
     private Vector2 ThermocouplePanel_Width_Height;
@@ -77,6 +78,18 @@ public class UIManager : MonoSingleton<UIManager>
 
         //热力图gradient的mode设置
         heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapUpdater.Instance.SwitchGradientMode(value));
+
+        // RenderMode
+        renderType.CreateNewItem("normal", clipIcon);
+        renderType.CreateNewItem("heat load", clipIcon);
+        renderType.CreateNewItem("heat map", clipIcon);
+        renderType.dropdownEvent.AddListener(RenderTypeEvent);
+        renderType.SetupDropdown();
+    }
+
+    private void RenderTypeEvent(int i)
+    {
+        print(i);
     }
 
     /// <summary>
