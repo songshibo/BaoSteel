@@ -18,6 +18,10 @@ public class ConfigurationManager : MonoBehaviour
         InitilizeHeatLoad();
         //InitilizeTuyere();
         CullingController.Instance.ResetMaterialProperties();
+        // 单独处理heatmap材质，将其设置为正常渲染模式
+        Material heatmap = Resources.Load<Material>("ClippingMaterials/heatmap");
+        heatmap.SetFloat("_RenderHeatMap", 0);
+
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         HeatmapUpdater.Instance.InitializeHeatMap();
     }

@@ -17,6 +17,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public SliderManager powerUI;
     public SliderManager smoothinUI;
     public SliderManager yAxisScaleFactorUI;
+    public SliderManager segmentUI;
     public CustomInputField miniTmp;
     public CustomInputField maxTmp;
     public Image gradientUI;
@@ -58,7 +59,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public void SwitchGradientMode(int i)
     {
         customGradient.blendMode = (i == 0) ? CustomGradient.BlendMode.Linear : CustomGradient.BlendMode.Discrete;
-        gradientTex = customGradient.GetTexture(gradientRes, 3);
+        gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
         targetMat.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
         StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatmap));
@@ -133,7 +134,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     public void InitializeHeatMap()
     {
-        gradientTex = customGradient.GetTexture(gradientRes, 3);
+        gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
         targetMat.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
     }

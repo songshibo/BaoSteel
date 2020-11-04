@@ -28,8 +28,6 @@ public class CullingController : Singleton<CullingController>
             materials[i].SetVector("_TopPlane", new Vector4(0, 200, 0, 0));
             materials[i].SetVector("_BottomPlane", Vector4.zero);
         }
-        Material heatmap = Resources.Load<Material>("ClippingMaterials/heatmap");
-        heatmap.SetFloat("_RenderHeatMap", 0);
     }
 
     public void ClipMaterialsAtAngle(float angle)
