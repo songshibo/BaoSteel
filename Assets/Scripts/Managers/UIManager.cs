@@ -15,7 +15,7 @@ public class UIManager : MonoSingleton<UIManager>
     public HorizontalSelector heatMapGradientSelector;
     private GameObject EnterExitInfo;
     private Vector2 ThermocouplePanel_Width_Height;
-
+    private ModalWindowManager heatmapWindowManager;
 
     public void InitializeUI(string[] configClip, string[] configShowPart)
     {
@@ -80,9 +80,10 @@ public class UIManager : MonoSingleton<UIManager>
         heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapUpdater.Instance.SwitchGradientMode(value));
 
         // RenderMode
-        renderType.CreateNewItem("normal", clipIcon);
-        renderType.CreateNewItem("heat load", clipIcon);
-        renderType.CreateNewItem("heat map", clipIcon);
+        heatmapWindowManager = GameObject.Find("HeatMapWindow").GetComponent<ModalWindowManager>();
+        renderType.CreateNewItem("Standard", clipIcon);
+        renderType.CreateNewItem("Heat Map", clipIcon);
+        renderType.CreateNewItem("Heat Load", clipIcon);
         renderType.dropdownEvent.AddListener(RenderTypeEvent);
         renderType.SetupDropdown();
     }
@@ -90,6 +91,19 @@ public class UIManager : MonoSingleton<UIManager>
     private void RenderTypeEvent(int i)
     {
         print(i);
+        Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", i);
+        if (i == 0) // standard
+        {
+            heatmapWindowManager.CloseWindow();
+        }
+        else if (i == 1) // heat map
+        {
+            heatmapWindowManager.OpenWindow();
+        }
+        else // heat load
+        {
+            heatmapWindowManager.CloseWindow();
+        }
     }
 
     /// <summary>

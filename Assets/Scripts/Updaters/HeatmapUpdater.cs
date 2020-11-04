@@ -102,7 +102,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         }
 
         // read max height from configurations
-        float yMax = Util.ReadModelProperty("max_height") * yAxisScaleFactor;
+        float yMax = Util.ReadModelProperty("max_height");
         buffer = new ComputeBuffer(data.Count, Marshal.SizeOf(typeof(Vector3)));
         buffer.SetData(data);
 
@@ -112,11 +112,9 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         shader.SetFloat("power", float.Parse(powerUI.valueText.text));
         shader.SetFloat("smoothin", float.Parse(smoothinUI.valueText.text));
         shader.SetInt("len", data.Count);
-        shader.SetFloat("yHeight", yMax);
+        shader.SetFloat("yHeight", yMax * yAxisScaleFactor);
         shader.SetFloat("minTemperature", float.Parse(miniTmp.inputText.text));
         shader.SetFloat("maxTemperature", float.Parse(maxTmp.inputText.text));
-
-        targetMat.SetFloat("yFactor", yAxisScaleFactor);
         targetMat.SetFloat("yHeight", yMax);
 
         GenerateHeatMap();
