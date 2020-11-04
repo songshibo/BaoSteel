@@ -115,7 +115,7 @@ public class CustomGradient
         return keys[i];
     }
 
-    public Texture2D GetTexture(int width, int segement, bool isLinear = false)
+    public Texture2D GetTexture(int width, int segment, bool isLinear = false)
     {
         Texture2D texture = new Texture2D(width, 1, TextureFormat.ARGB32, false, false)
         {
@@ -126,7 +126,7 @@ public class CustomGradient
         Color[] colours = new Color[width];
         for (int i = 0; i < width; i++)
         {
-            colours[i] = Evaluate((float)i / (width - 1), segement);
+            colours[i] = Evaluate((float)i / (width - 1), segment);
         }
         texture.SetPixels(colours);
         texture.Apply();
