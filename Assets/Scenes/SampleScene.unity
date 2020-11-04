@@ -3438,6 +3438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clipDropDown: {fileID: 1550181274}
   layerDropDown: {fileID: 360746756}
+  renderType: {fileID: 2112209172}
   heatMapGradientSelector: {fileID: 2123123928}
 --- !u!4 &447419898
 Transform:
@@ -7655,8 +7656,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.5131123
-  m_Size: 0.26057696
+  m_Value: 0.5131112
+  m_Size: 0.2605131
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8545,7 +8546,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2608.1658, y: -1681.9952}
+  m_AnchoredPosition: {x: -2607.9973, y: -1681.9952}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -9383,7 +9384,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SELECTED ITEM
+  m_text: RenderType
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f, type: 2}
   m_sharedMaterial: {fileID: 21539420542967178, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
@@ -13990,8 +13991,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.94902354
-  m_Size: 0.5000474
+  m_Value: 0.9490234
+  m_Size: 0.5001515
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -17833,7 +17834,7 @@ GameObject:
   - component: {fileID: 2112209170}
   - component: {fileID: 2112209169}
   m_Layer: 5
-  m_Name: RenderMode
+  m_Name: RenderType
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
