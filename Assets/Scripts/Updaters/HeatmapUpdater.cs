@@ -27,7 +27,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     public Material targetMat;
 
     [Space]
-    //[SerializeField]
+    [SerializeField]
     private RenderTexture texture;
     //[SerializeField]
     private Texture2D gradientTex;

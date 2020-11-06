@@ -13,9 +13,11 @@ public class UIManager : MonoSingleton<UIManager>
     public DropdownMultiSelect layerDropDown;
     public CustomDropdown renderType;
     public HorizontalSelector heatMapGradientSelector;
+    public HorizontalSelector heatLoadGradientSelector;
     private GameObject EnterExitInfo;
     private Vector2 ThermocouplePanel_Width_Height;
     private ModalWindowManager heatmapWindowManager;
+    private ModalWindowManager heatloadWindowManager;
 
     public void InitializeUI(string[] configClip, string[] configShowPart)
     {
@@ -76,11 +78,13 @@ public class UIManager : MonoSingleton<UIManager>
         EnterExitInfo.SetActive(false);
         Invoke("GenerateThermoUI", 3);
 
-        //热力图gradient的mode设置
+        // 热力图gradient的mode设置
         heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapUpdater.Instance.SwitchGradientMode(value));
-
+        // 热负荷的gradient的mode设置
+        heatLoadGradientSelector.selectorEvent.AddListener((int value) => HeatLoadUpdater.Instance.SwitchGradientMode(value));
         // RenderMode
         heatmapWindowManager = GameObject.Find("HeatMapWindow").GetComponent<ModalWindowManager>();
+        heatloadWindowManager = GameObject.Find("HeatLoadWindow").GetComponent<ModalWindowManager>();
         renderType.CreateNewItem("Standard", clipIcon);
         renderType.CreateNewItem("Heat Map", clipIcon);
         renderType.CreateNewItem("Heat Load", clipIcon);
@@ -90,19 +94,24 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void RenderTypeEvent(int i)
     {
-        print(i);
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", i);
         if (i == 0) // standard
         {
             heatmapWindowManager.CloseWindow();
+            heatloadWindowManager.CloseWindow();
+            HeatLoadUpdater.Instance.ShowHeatLoad(false);
         }
         else if (i == 1) // heat map
         {
             heatmapWindowManager.OpenWindow();
+            heatloadWindowManager.CloseWindow();
+            HeatLoadUpdater.Instance.ShowHeatLoad(false);
         }
         else // heat load
         {
             heatmapWindowManager.CloseWindow();
+            heatloadWindowManager.OpenWindow();
+            HeatLoadUpdater.Instance.ShowHeatLoad(true);  // 鼠标进入某段高度，GUI 显示某段高度的热负荷值
         }
     }
 
@@ -215,7 +224,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void OnClick(GameObject thermo, GameObject UIobj)
     {
-        print("dianji");
+        print("点击热电偶温度按钮");
     }
 
     private void ShowInfoDetail(GameObject obj, bool flag)
