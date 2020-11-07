@@ -47,7 +47,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
     {
         customGradient.blendMode = (i == 0) ? CustomGradient.BlendMode.Linear : CustomGradient.BlendMode.Discrete;
         gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
-        targetMat.SetTexture("_CustomGradient", gradientTex);
+        targetMat.SetTexture("_HeatLoadGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
         StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatLoad));
     }
@@ -185,7 +185,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
     {
         yMax = Util.ReadModelProperty("max_height");
         gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
-        targetMat.SetTexture("_CustomGradient", gradientTex);
+        targetMat.SetTexture("_HeatLoadGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
     }
 }
