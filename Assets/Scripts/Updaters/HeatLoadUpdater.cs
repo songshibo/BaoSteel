@@ -142,39 +142,41 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
 
     public bool UpdateHeatLoad(string content)
     {
-        Dictionary<string, Dictionary<string, float>> heatload = new Dictionary<string, Dictionary<string, float>>(); // 用来保存content中的所有信息
+        //Dictionary<string, Dictionary<string, float>> heatload = new Dictionary<string, Dictionary<string, float>>(); // 用来保存content中的所有信息
 
-        JToken items = JObject.Parse(content);
-        foreach (JProperty item in items)  // 解析content，存放到heatload
-        {
-            heatload.Add(item.Name, new Dictionary<string, float>());
-            foreach (JProperty data in item.Value)
-            {
-                heatload[item.Name].Add(data.Name, float.Parse(data.Value.ToString()));
-            }
-        }
+        //JToken items = JObject.Parse(content);
+        //foreach (JProperty item in items)  // 解析content，存放到heatload
+        //{
+        //    heatload.Add(item.Name, new Dictionary<string, float>());
+        //    foreach (JProperty data in item.Value)
+        //    {
+        //        heatload[item.Name].Add(data.Name, float.Parse(data.Value.ToString()));
+        //    }
+        //}
 
-        foreach (var item in heatload) // 从heatload中取出一部分数据，最小高度、最大高度、总温度
-        {
-            float min_height = item.Value["min_height"];
-            float max_height = item.Value["max_height"];
-            float total = item.Value["total"];
-            
-            if (item.Key.StartsWith("CP"))
-            {
-                part_cooling_plate.Add(new Vector3(min_height, max_height, total));
-            }
-            else if (item.Key.StartsWith("small_cooling_stave"))
-            {
-                part_cooling_cross.Add(new Vector3(min_height, max_height, total));
-            }
-            else
-            {
-                part_cooling_plate.Add(new Vector3(min_height, max_height, total));
-                part_cooling_cross.Add(new Vector3(min_height, max_height, total));
-            }
-        }
+        //foreach (var item in heatload) // 从heatload中取出一部分数据，最小高度、最大高度、总温度
+        //{
+        //    float min_height = item.Value["min_height"];
+        //    float max_height = item.Value["max_height"];
+        //    float total = item.Value["total"];
 
+        //    if (item.Key.StartsWith("CP"))
+        //    {
+        //        part_cooling_plate.Add(new Vector3(min_height, max_height, total));
+        //    }
+        //    else if (item.Key.StartsWith("small_cooling_stave"))
+        //    {
+        //        part_cooling_cross.Add(new Vector3(min_height, max_height, total));
+        //    }
+        //    else
+        //    {
+        //        part_cooling_plate.Add(new Vector3(min_height, max_height, total));
+        //        part_cooling_cross.Add(new Vector3(min_height, max_height, total));
+        //    }
+        //}
+        part_cooling_plate.Add(new Vector3(5f, 10f, 50));
+        part_cooling_plate.Add(new Vector3(15f, 20f, 40));
+        part_cooling_plate.Add(new Vector3(35f, 40f, 30));
         GenerateHeatLoad();
         return true;
     }
