@@ -15,13 +15,14 @@ public class ConfigurationManager : MonoBehaviour
         InitializeCamera();
         InitializeModelManager();
         InitilizeUI();
-        InitilizeHeatLoad();
+
         //InitilizeTuyere();
         CullingController.Instance.ResetMaterialProperties();
         // 单独处理heatmap材质，将其设置为正常渲染模式
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         HeatmapUpdater.Instance.InitializeHeatMap();
+        HeatLoadUpdater.Instance.InitializeHeatLoad();
     }
 
     private void InitilizeTuyere()
@@ -97,12 +98,7 @@ public class ConfigurationManager : MonoBehaviour
 
         UIManager.Instance.InitializeUI(linesClip, linesShowPart);
     }
-
-    private void InitilizeHeatLoad()
-    {
-        //HeatLoadManager.Instance.InitializeHeadLoad();
-    }
-
+    
     private void InitilizeTiming()
     {
         string filetiming = "timing.txt";
@@ -144,7 +140,7 @@ public class ConfigurationManager : MonoBehaviour
                 else if (item.Key.Equals("heatload_timing"))
                 {
                     Debug.Log("热负荷图定时更新");
-                    StartCoroutine(DataServiceManager.Instance.GetHeatLoad(HeatLoadUpdater.Instance.UpdateHeatLoadData));
+                    StartCoroutine(DataServiceManager.Instance.GetHeatLoad(HeatLoadUpdater.Instance.UpdateHeatLoad));
                 }
                 else if (item.Key.Equals("heatmap_timing"))
                 {

@@ -10,7 +10,7 @@
 # top_tank:-top_tank -top_cloth
 # feed_box:-feed_box
 # shelf:-shelf -roof_pipeline -roof_riser
-hearth?0<16.6:-hearth -wind_pipeline -iron_outlet tuyere thermocouple cooling_wall
+hearth?0<16.6:-hearth -iron_outlet tuyere thermocouple cooling_wall
 bosh?16.6<21.1:-bosh thermocouple cooling_plate
 waist?21.1<23.2:-waist thermocouple cooling_plate cooling_cross
 body?23.2<41:-body thermocouple cooling_plate cooling_wall cooling_cross
@@ -18,4 +18,4 @@ throat?41<60:-throat -chute -cross_temperature_measurement thermocouple cooling_
 bottom_tank:-bottom_tank -bottom_cloth
 top_tank:-top_tank -top_cloth
 feed_box:-feed_box
-shelf:-shelf -roof_pipeline -roof_riser
+shelf:-shelf -roof_pipeline -roof_riser -wind_pipeline
