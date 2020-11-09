@@ -80,7 +80,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         texture.SetPixels(colours);
         texture.Apply();
 
-        targetMat.SetTexture("_HeatLoadGradient", texture);
+        targetMat.SetTexture("Heatload", texture);
     }
 
     private void Start()

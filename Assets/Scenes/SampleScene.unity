@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.285027, g: 0.37139374, b: 0.4960103, a: 1}
+  m_IndirectSpecularColor: {r: 0.28502715, g: 0.371394, b: 0.49601093, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1872,7 +1872,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 895423600}
   m_HandleRect: {fileID: 895423599}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7010,7 +7010,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2036700862}
   m_HandleRect: {fileID: 2036700861}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -11630,8 +11630,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.5204964
-  m_Size: 0.26067123
+  m_Value: 0.5204932
+  m_Size: 0.26055458
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -12379,7 +12379,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2442.3665, y: -1700.0068}
+  m_AnchoredPosition: {x: -2442.1274, y: -1700.0068}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -21089,8 +21089,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.85679454
-  m_Size: 0.49989387
+  m_Value: 0.8567974
+  m_Size: 0.500084
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -23111,8 +23111,8 @@ MonoBehaviour:
     keys:
     - colour: {r: 1, g: 1, b: 1, a: 1}
       time: 0
-    - colour: {r: 0.09531862, g: 0.9622642, b: 0.27871558, a: 1}
-      time: 0
+    - colour: {r: 0.27717468, g: 0.90588236, b: 0.02352942, a: 1}
+      time: 0.07641196
     - colour: {r: 0.9811321, g: 0.023139905, b: 0.023139905, a: 1}
       time: 1
   gradientRes: 64
