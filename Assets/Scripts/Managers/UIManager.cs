@@ -81,7 +81,7 @@ public class UIManager : MonoSingleton<UIManager>
         // 热力图gradient的mode设置
         heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapUpdater.Instance.SwitchGradientMode(value));
         // 热负荷的gradient的mode设置
-        heatLoadGradientSelector.selectorEvent.AddListener((int value) => HeatLoadUpdater.Instance.SwitchGradientMode(value));
+        heatLoadGradientSelector.selectorEvent.AddListener((int value) => HeatLoadUpdater.Instance.SwitchHeatLoad(value));
         // RenderMode
         heatmapWindowManager = GameObject.Find("HeatMapWindow").GetComponent<ModalWindowManager>();
         heatloadWindowManager = GameObject.Find("HeatLoadWindow").GetComponent<ModalWindowManager>();

@@ -36,27 +36,33 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
     private List<string> objs;  // 需要监听的物体，炉体的五个部分
     private List<Vector3> part_cooling_plate = new List<Vector3>(); // 最小高度、最大高度、总温度
     private List<Vector3> part_cooling_cross = new List<Vector3>(); // 最小高度、最大高度、总温度
+    private List<Vector3> part = new List<Vector3>(); // 最小高度、最大高度、总温度
 
     public void ApplyHeatLoadProperties()
     {
         Debug.Log("热负荷手动更新");
-        StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatLoad));
+        GenerateHeatLoad();
     }
 
-    public void SwitchGradientMode(int i)
+    public void SwitchHeatLoad(int i)
     {
-        customGradient.blendMode = (i == 0) ? CustomGradient.BlendMode.Linear : CustomGradient.BlendMode.Discrete;
-        gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
-        targetMat.SetTexture("_HeatLoadGradient", gradientTex);
-        gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
-        StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatLoad));
+        if (i == 0)
+        {
+            part = part_cooling_plate;
+        }
+        else if (i == 1)
+        {
+            part = part_cooling_cross;
+        }
+        GenerateHeatLoad();
+        
     }
 
     private Color GetColor(float position)
     {
         float realposition = position * yMax / xRes;
         float temp = 0;
-        foreach (Vector3 item in part_cooling_plate)
+        foreach (Vector3 item in part)
         {
             if (realposition >= item.x && realposition <= item.y)
             {
@@ -124,7 +130,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         if (openTemp)
         {
             float temp = 0;
-            foreach (Vector3 item in part_cooling_plate)
+            foreach (Vector3 item in part)
             {
                 if (item.x < height && item.y > height)
                 {
@@ -142,6 +148,8 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
 
     public bool UpdateHeatLoad(string content)
     {
+        part_cooling_plate.Clear();
+        part_cooling_cross.Clear();
         //Dictionary<string, Dictionary<string, float>> heatload = new Dictionary<string, Dictionary<string, float>>(); // 用来保存content中的所有信息
 
         //JToken items = JObject.Parse(content);
@@ -176,7 +184,13 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         //}
         part_cooling_plate.Add(new Vector3(5f, 10f, 50));
         part_cooling_plate.Add(new Vector3(15f, 20f, 40));
-        part_cooling_plate.Add(new Vector3(35f, 40f, 30));
+        part_cooling_plate.Add(new Vector3(25f, 30f, 30));
+        part_cooling_plate.Add(new Vector3(40f, 44f, 20));
+
+        part_cooling_cross.Add(new Vector3(5f, 10f, 50));
+        part_cooling_cross.Add(new Vector3(15f, 35f, 20));
+        part_cooling_cross.Add(new Vector3(40f, 44f, 20));
+
         GenerateHeatLoad();
         return true;
     }
@@ -187,5 +201,6 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
         targetMat.SetTexture("_HeatLoadGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
+        part = part_cooling_plate;
     }
 }
