@@ -21,22 +21,23 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
     public int gradientRes = 64;
     [Space]
     public Material targetMat;
-
+    public Camera c;
     [Space]
     [SerializeField]
     private Texture2D texture;
     //[SerializeField]
     private Texture2D gradientTex;
-    private float yMax;
+    public GameObject heat_load_detail;
 
-    private bool openHeatLoad = false;  // 是否打开了热负荷
-    private bool openTemp = false;  // 鼠标是否进入炉体，是否显示温度
-    private float height = 30f;  // 射线与物体的交点的高度
-    private int RayCastLayer { get; set; } = 1 << 9; // default layer: highlight
-    private List<string> objs;  // 需要监听的物体，炉体的五个部分
+    private Canvas canvas;
+    private Camera _camera;
+    private RectTransform canvasRectTransform;
+
+    private float yMax;
     private List<Vector3> part_cooling_plate = new List<Vector3>(); // 最小高度、最大高度、总温度
     private List<Vector3> part_cooling_cross = new List<Vector3>(); // 最小高度、最大高度、总温度
     private List<Vector3> part = new List<Vector3>(); // 最小高度、最大高度、总温度
+
 
     public void ApplyHeatLoadProperties()
     {
@@ -89,61 +90,43 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         targetMat.SetTexture("Heatload", texture);
     }
 
-    private void Start()
+    public void MoveDetail(float height, bool flag)
     {
-        objs = new List<string>();
-        objs.Add("hearth");
-        objs.Add("bosh");
-        objs.Add("waist");
-        objs.Add("body");
-        objs.Add("throat");
-    }
-
-    private void Update()
-    {
-        if (openHeatLoad)
+        if (RenderMode.ScreenSpaceOverlay == canvas.renderMode)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, RayCastLayer))
+            Vector2 pos;
+
+            float temp = GetTempByHeight(height);
+            // 没有碰撞的物体，要么碰撞的位置不是热负荷区域
+            if (flag && temp != 0)
             {
-                if (objs.Contains(hit.transform.gameObject.name))
-                {
-                    height = hit.point.y;
-                    openTemp = true;
-                }
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Input.mousePosition, _camera, out pos);
+                heat_load_detail.GetComponent<Text>().text = temp.ToString("0.#") + "°C";
             }
             else
             {
-                openTemp = false;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, new Vector3(0, 0, 0), _camera, out pos);
             }
+            heat_load_detail.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         }
-    }
-
-    // 热负荷开关
-    public void ShowHeatLoad(bool flag)
-    {
-        openHeatLoad = flag;
-    }
-
-    void OnGUI()
-    {
-        if (openTemp)
+        else
         {
-            float temp = 0;
-            foreach (Vector3 item in part)
-            {
-                if (item.x < height && item.y > height)
-                {
-                    temp = item.z;
-                    break;
-                }
-            }
-
-            GUIStyle style1 = new GUIStyle();
-            style1.fontSize = 30;
-            style1.normal.textColor = Color.black;
-            GUI.Label(new Rect(Input.mousePosition.x + 20, Screen.height - Input.mousePosition.y, 400, 50), temp.ToString("0.#") + "°C", style1);
+            Debug.Log("请选择正确的相机模式!");
         }
+    }
+
+    public float GetTempByHeight(float height)
+    {
+        float temp = 0;
+        foreach (Vector3 item in part)
+        {
+            if (item.x < height && item.y > height)
+            {
+                temp = item.z;
+                break;
+            }
+        }
+        return temp;
     }
 
     public bool UpdateHeatLoad(string content)
@@ -202,5 +185,12 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         targetMat.SetTexture("_HeatLoadGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
         part = part_cooling_plate;
+
+        string prefab = "heat_load_detail";
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        _camera = canvas.GetComponent<Camera>();
+        canvasRectTransform = canvas.transform as RectTransform;
+        heat_load_detail = Instantiate((GameObject)Resources.Load("Prefabs/" + prefab), GameObject.Find("Canvas").transform);
+        heat_load_detail.name = prefab;
     }
 }

@@ -99,19 +99,19 @@ public class UIManager : MonoSingleton<UIManager>
         {
             heatmapWindowManager.CloseWindow();
             heatloadWindowManager.CloseWindow();
-            HeatLoadUpdater.Instance.ShowHeatLoad(false);
+            SelectionManager.Instance.selectionType = SelectionManager.SelectionType.standard;
         }
         else if (i == 1) // heat map
         {
             heatmapWindowManager.OpenWindow();
             heatloadWindowManager.CloseWindow();
-            HeatLoadUpdater.Instance.ShowHeatLoad(false);
+            SelectionManager.Instance.selectionType = SelectionManager.SelectionType.heatmap;
         }
         else // heat load
         {
             heatmapWindowManager.CloseWindow();
             heatloadWindowManager.OpenWindow();
-            HeatLoadUpdater.Instance.ShowHeatLoad(true);  // 鼠标进入某段高度，GUI 显示某段高度的热负荷值
+            SelectionManager.Instance.selectionType = SelectionManager.SelectionType.heatload;  // 鼠标进入某段高度，GUI 显示某段高度的热负荷值
         }
     }
 
