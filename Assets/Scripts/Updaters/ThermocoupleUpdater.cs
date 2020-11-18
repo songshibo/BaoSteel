@@ -8,7 +8,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
     public Dictionary<string, GameObject> name_gameobject = new Dictionary<string, GameObject>();
 
     public bool UpdateThermocoupleData(string content)
-    {
+    { 
         content = content.Substring(1, content.Length - 2); // 去掉两边的大括号
         string[] str = content.Split(',');
         Dictionary<string, string> name_temperature = new Dictionary<string, string>();

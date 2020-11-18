@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
+using UnityEngine.UI;
 
 public class TuyereUpdater : MonoSingleton<TuyereUpdater>
 {
     private TuyereSize tuyeresize;
+    public List<GameObject> tuyereUISingles = new List<GameObject>();
+    public GameObject areaRatio;
+
     private struct TuyereSize
     {
         public float depth;
@@ -45,10 +49,17 @@ public class TuyereUpdater : MonoSingleton<TuyereUpdater>
 
         foreach (GameObject tuyere in tuyeres)
         {
-            List<float> data = number_data[tuyere.name.Split('_')[1]];
+            string number = tuyere.name.Split('_')[1];
+            List<float> data = number_data[number];
+
+
             float depth_scale = data[0] / tuyeresize.depth;
             float height_scale = data[1] / tuyeresize.height;
             float width_scale = data[2] / tuyeresize.width;
+
+            tuyereUISingles[int.Parse(number)-1].transform.Find("info").GetComponent<Text>().text = 
+                "编号：" + tuyere.name + "\n长：" + data[0] + "\n宽：" + data[2] + "\n高：" + data[1];
+            tuyereUISingles[int.Parse(number)-1].GetComponent<RectTransform>().localScale = new Vector3(depth_scale, width_scale, 1);
 
             tuyere.transform.Find("tuyere_wind").Find("shape").localScale = new Vector3(width_scale, height_scale, depth_scale);
             tuyere.transform.Find("tuyere_wind").Find("wind").localScale = new Vector3(width_scale, depth_scale, height_scale);
