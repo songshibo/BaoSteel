@@ -14,10 +14,13 @@ public class UIManager : MonoSingleton<UIManager>
     public CustomDropdown renderType;
     public HorizontalSelector heatMapGradientSelector;
     public HorizontalSelector heatLoadGradientSelector;
+    public GameObject tuyereUI;
+    private GameObject EnterExitTuyereInfo;
     private GameObject EnterExitInfo;
     private Vector2 ThermocouplePanel_Width_Height;
     private ModalWindowManager heatmapWindowManager;
     private ModalWindowManager heatloadWindowManager;
+    
 
     public void InitializeUI(string[] configClip, string[] configShowPart)
     {
@@ -78,6 +81,10 @@ public class UIManager : MonoSingleton<UIManager>
         EnterExitInfo.SetActive(false);
         Invoke("GenerateThermoUI", 3);
 
+        EnterExitTuyereInfo = GameObject.Find("EnterExitTuyereInfo");
+        EnterExitTuyereInfo.SetActive(false);
+        Invoke("GenerateTuyereUI", 3);
+
         // 热力图gradient的mode设置
         heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapUpdater.Instance.SwitchGradientMode(value));
         // 热负荷的gradient的mode设置
@@ -90,6 +97,11 @@ public class UIManager : MonoSingleton<UIManager>
         renderType.CreateNewItem("Heat Load", clipIcon);
         renderType.dropdownEvent.AddListener(RenderTypeEvent);
         renderType.SetupDropdown();
+    }
+
+    public void ShowTuyereUI()
+    {
+        tuyereUI.SetActive(!tuyereUI.activeSelf);
     }
 
     private void RenderTypeEvent(int i)
@@ -163,6 +175,45 @@ public class UIManager : MonoSingleton<UIManager>
         // dynamically change dropdown height
         ChangeDropDownHeight(clipDropDown.transform, clipDropDown.dropdownItems.Count * 53f + 15f);
         ChangeDropDownHeight(layerDropDown.transform, layerDropDown.dropdownItems.Count * 53f + 15f);
+    }
+
+    private void GenerateTuyereUI()
+    {
+        GameObject prefab = (GameObject)Resources.Load("Prefabs/TuyereUISingle");
+        GameObject root = GameObject.Find("TuyereUIBackground");
+        TuyereUpdater.Instance.areaRatio = root.transform.Find("ratio").gameObject;
+        float radius = root.GetComponent<RectTransform>().sizeDelta.x / 2;
+
+        GameObject[] tuyeres = GameObject.FindGameObjectsWithTag("tuyere");
+        foreach (GameObject tuyere in tuyeres)
+        {
+            string name = tuyere.name;
+            float angle = tuyere.transform.localEulerAngles.y;
+            float x = radius * Mathf.Cos(Mathf.Deg2Rad * angle);
+            float y = radius * Mathf.Sin(Mathf.Deg2Rad * angle);
+
+            GameObject UIobj = Instantiate(prefab, root.transform);
+            UIobj.name = name;
+            UIobj.transform.localEulerAngles = new Vector3(0, 0, angle);
+            UIobj.transform.localPosition = new Vector2(x, y);
+            TuyereUpdater.Instance.tuyereUISingles.Add(UIobj);
+
+            EventTrigger eventTrigger = UIobj.AddComponent<EventTrigger>();
+            // Point enter event
+            EventTrigger.Entry pointerEnter = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerEnter
+            };
+            pointerEnter.callback.AddListener((e) => ShowTuyereInfoDetail(UIobj, true));
+            eventTrigger.triggers.Add(pointerEnter);
+            // Point exit event
+            EventTrigger.Entry pointerExit = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerExit
+            };
+            pointerExit.callback.AddListener((e) => ShowTuyereInfoDetail(UIobj, false));
+            eventTrigger.triggers.Add(pointerExit);
+        }
     }
 
     private void GenerateThermoUI()
@@ -252,5 +303,17 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-
+    private void ShowTuyereInfoDetail(GameObject obj, bool flag)
+    {
+        if (flag)
+        {
+            EnterExitTuyereInfo.SetActive(true);
+            string content = obj.transform.Find("info").GetComponent<Text>().text;
+            EnterExitTuyereInfo.GetComponent<Text>().text = content;
+        }
+        else
+        {
+            EnterExitTuyereInfo.SetActive(false);
+        }
+    }
 }

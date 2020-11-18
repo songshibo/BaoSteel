@@ -32,13 +32,14 @@ public class SelectionManager : MonoSingleton<SelectionManager>
         return outlineBuilder;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (selectionModel)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, RayCastLayer))
             {
+                Debug.DrawLine(Camera.main.transform.position, hit.point, Color.red);
                 switch (selectionType)
                 {
                     case SelectionType.thermocouple:
@@ -58,6 +59,10 @@ public class SelectionManager : MonoSingleton<SelectionManager>
                         HeatLoadUpdater.Instance.MoveDetail(hit.point.y, true);
                         break;
                     case SelectionType.heatmap:
+                        if (Input.GetKeyDown(KeyCode.Mouse0))
+                        {
+                            HeatmapUpdater.Instance.InvertSamplingFromRayCast(hit.point);
+                        }
                         break;
                     default:
                         break;
@@ -81,6 +86,9 @@ public class SelectionManager : MonoSingleton<SelectionManager>
                 }
             }
         }
+
+        //no matter hit or not
+        HeatmapUpdater.Instance.UpdateUIPanel();
     }
 
     public void SetSelectionModel(bool value)
