@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
 using Michsky.UI.ModernUIPack;
+using TMPro;
 
 public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 {
@@ -28,11 +29,17 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     [Space]
     [SerializeField]
-    private RenderTexture texture;
+    private Texture2D texture;
     //[SerializeField]
     private Texture2D gradientTex;
 
     private int kernel;
+
+    //Mouse selection UI part
+    private GameObject temperaturePanel;
+    private Vector3 lastPos = new Vector3(0, -500, 0);
+    private TextMeshProUGUI temperatureText;
+    private TextMeshProUGUI positionText;
 
     public void SwitchHeatMap()
     {
@@ -47,6 +54,35 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatmap));
     }
 
+    public void InvertSamplingFromRayCast(Vector3 hitPoint)
+    {
+        float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(hitPoint.z, hitPoint.x), 2) + 180;
+        float height = (float)Math.Round(hitPoint.y, 2);
+        int x = Mathf.RoundToInt(angle / 360 * xRes);
+        int y = Mathf.RoundToInt(height / Util.ReadModelProperty("max_height") * yRes);
+
+        if (texture != null)
+        {
+            float temperature = texture.GetPixel(x, y).r;
+
+            float mint = float.Parse(miniTmp.inputText.text);
+            float maxt = float.Parse(maxTmp.inputText.text);
+
+            lastPos = hitPoint;
+            temperatureText.text = Math.Round(temperature * (maxt - mint) + mint, 2).ToString() + "°C";
+            positionText.text = "Angle:" + angle.ToString() + "\n" + "Height:" + height.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("Heat map has not been generated, pls wait auto-generation or press the apply button");
+        }
+    }
+
+    public void UpdateUIPanel()
+    {
+        temperaturePanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(lastPos));
+    }
+
     //作为Listener添加给GradientMode的horizontal selector
     public void SwitchGradientMode(int i)
     {
@@ -59,15 +95,17 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     private void GenerateHeatMap()
     {
-        texture = new RenderTexture(xRes, yRes, 24)
+        RenderTexture rTex = new RenderTexture(xRes, yRes, 24)
         {
             enableRandomWrite = true
         };
-        texture.Create();
+        rTex.Create();
 
-        shader.SetTexture(kernel, "Result", texture);
+        shader.SetTexture(kernel, "Result", rTex);
         shader.SetBuffer(kernel, "points", buffer);
         shader.Dispatch(kernel, xRes / 16, yRes / 16, 1);
+
+        texture = Util.RenderTextureToTexture2D(rTex);
         targetMat.SetTexture("Heatmap", texture);
     }
 
@@ -119,6 +157,9 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
         GenerateHeatMap();
         buffer.Release();
+
+        // Update selected point
+        InvertSamplingFromRayCast(lastPos);
         return true;
     }
 
@@ -127,6 +168,12 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
         targetMat.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
+
+        //初始化UI部分
+        temperaturePanel = Instantiate(Resources.Load<GameObject>("Prefabs/TemperaturePanel"), GameObject.Find("Canvas").transform);
+        temperaturePanel.transform.localPosition = Util.ComputeUIPosition(lastPos);
+        temperatureText = temperaturePanel.transform.Find("Temperature").GetComponent<TextMeshProUGUI>();
+        positionText = temperaturePanel.transform.Find("Position").GetComponent<TextMeshProUGUI>();
     }
 
     private void OnDestroy()

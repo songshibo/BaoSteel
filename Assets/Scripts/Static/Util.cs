@@ -196,4 +196,23 @@ public static class Util
         else
             return 0;
     }
+
+    public static Texture2D RenderTextureToTexture2D(RenderTexture rTex)
+    {
+        Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGB24, false);
+        RenderTexture.active = rTex;
+        tex.ReadPixels(new Rect(0, 0, rTex.width, rTex.height), 0, 0);
+        tex.Apply();
+        return tex;
+    }
+
+    public static Vector3 ComputeUIPosition(Vector2 coords)
+    {
+        Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        RectTransform canvasRectTransform = canvas.transform as RectTransform;
+
+        Vector2 pos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, coords, canvas.GetComponent<Camera>(), out pos);
+        return new Vector3(pos.x, pos.y, 0);
+    }
 }

@@ -92,7 +92,11 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RenderHeatMap: 0
+<<<<<<< HEAD
     - _RenderType: 0
+=======
+    - _RenderType: 1
+>>>>>>> bc59795f956c50a8732f2de00662f01c38fbbf3a
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
