@@ -32,7 +32,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
         // 目前是计算，可以考虑从数据库里读取
         float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(hittedThermocouple.transform.position.z, hittedThermocouple.transform.position.x), 2) + 180;
         float height = (float)Math.Round(hittedThermocouple.transform.position.y, 2);
-        infoText.text = "Temperature:" + 200.ToString() + "°C\n" + "Angle:" + angle.ToString() + "°\n" + "Height:" + height.ToString() + "m";
+        infoText.text = "Temperature:" + "?".ToString() + "°C\n" + "Angle:" + angle.ToString() + "°\n" + "Height:" + height.ToString() + "m";
 
         if (!SelectionManager.Instance.GetOutlineBuilder().OutlineLayers.GetOrAddLayer(0).Contains(hittedThermocouple))
         {
