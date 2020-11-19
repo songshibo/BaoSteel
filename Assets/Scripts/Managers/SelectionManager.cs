@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityFx.Outline;
 
 public class SelectionManager : MonoSingleton<SelectionManager>
@@ -7,18 +8,14 @@ public class SelectionManager : MonoSingleton<SelectionManager>
     public enum SelectionType
     {
         standard,
-        thermocouple,
         heatload,
         heatmap
     }
 
     public SelectionType selectionType;
-    [SerializeField]
-    private bool selectionModel = true;
     public int RayCastLayer { get; set; } = 1 << 9; // default layer: highlight
-    public string RayCastTag { get; set; } = "";
 
-    private OutlineBuilder GetOutlineBuilder()
+    public OutlineBuilder GetOutlineBuilder()
     {
         OutlineBuilder outlineBuilder = null;
         try
@@ -34,70 +31,51 @@ public class SelectionManager : MonoSingleton<SelectionManager>
 
     private void FixedUpdate()
     {
-        if (selectionModel)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, RayCastLayer) && !EventSystem.current.IsPointerOverGameObject())
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, RayCastLayer))
+            Debug.DrawLine(Camera.main.transform.position, hit.point, Color.red);
+            switch (selectionType)
             {
-                Debug.DrawLine(Camera.main.transform.position, hit.point, Color.red);
-                switch (selectionType)
-                {
-                    case SelectionType.thermocouple:
-                        if (hit.transform.gameObject.tag.Contains(RayCastTag) && Input.GetKeyDown(KeyCode.Mouse0)) // 鼠标左键按下
-                        {
-                            if (!GetOutlineBuilder().OutlineLayers.GetOrAddLayer(0).Contains(hit.transform.gameObject))
-                            {
-                                // Clear other selected object
-                                ClearCertainLayerContents(0);
-                                AddToOutlineList(hit.transform.gameObject);
-                            }
-                            else
-                                MoveFromOutlineList(hit.transform.gameObject);
-                        }
-                        break;
-                    case SelectionType.heatload:
-                        HeatLoadUpdater.Instance.MoveDetail(hit.point.y, true);
-                        break;
-                    case SelectionType.heatmap:
-                        if (Input.GetKeyDown(KeyCode.Mouse0))
-                        {
-                            HeatmapUpdater.Instance.InvertSamplingFromRayCast(hit.point);
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                case SelectionType.standard: // standard渲染下可以选择热点偶
+                    if (Input.GetKeyDown(KeyCode.Mouse0) && hit.transform.CompareTag("thermocouple")) // 鼠标左键按下
+                    {
+                        ThermocoupleUpdater.Instance.DisplayHittedThermocoupleInfo(hit.transform.gameObject);
+                    }
+                    break;
+                case SelectionType.heatload:
+                    HeatLoadUpdater.Instance.MoveDetail(hit.point.y, true);
+                    break;
+                case SelectionType.heatmap:
+                    if (Input.GetKeyDown(KeyCode.Mouse0))
+                    {
+                        HeatmapUpdater.Instance.InvertSamplingFromRayCast(hit.point);
+                    }
+                    break;
+                default:
+                    break;
             }
-            else
+        }
+        else
+        {
+            switch (selectionType)
             {
-                switch (selectionType)
-                {
-                    case SelectionType.standard:
-                        break;
-                    case SelectionType.thermocouple:
-                        break;
-                    case SelectionType.heatload:
-                        HeatLoadUpdater.Instance.MoveDetail(0, false);
-                        break;
-                    case SelectionType.heatmap:
-                        break;
-                    default:
-                        break;
-                }
+                case SelectionType.standard:
+                    break;
+                case SelectionType.heatload:
+                    HeatLoadUpdater.Instance.MoveDetail(0, false);
+                    break;
+                case SelectionType.heatmap:
+                    break;
+                default:
+                    break;
             }
         }
 
         //no matter hit or not
-        HeatmapUpdater.Instance.UpdateUIPanel();
-    }
-
-    public void SetSelectionModel(bool value)
-    {
-        selectionModel = value;
-        if (!selectionModel)
-        {
-            ClearCertainLayerContents(0);
-        }
+        ThermocoupleUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.standard);
+        // based on current selectionType to change the activity of the UI prefab
+        HeatmapUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatmap);
     }
 
     /// <summary>
