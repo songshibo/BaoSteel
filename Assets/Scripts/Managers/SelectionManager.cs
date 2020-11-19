@@ -32,7 +32,7 @@ public class SelectionManager : MonoSingleton<SelectionManager>
     private void FixedUpdate()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, RayCastLayer) && !EventSystem.current.IsPointerOverGameObject())
+        if (Physics.Raycast(ray, out RaycastHit hit, RayCastLayer) && !EventSystem.current.IsPointerOverGameObject()) // 如果在UI上，则不处理，避免和UI逻辑冲突
         {
             Debug.DrawLine(Camera.main.transform.position, hit.point, Color.red);
             switch (selectionType)
