@@ -48,15 +48,15 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
 
     public void UpdateUIPanel(bool reset = false)
     {
-        if (reset) //如果当前selectionType不是standard，则清除outline效果
-        {
-            SelectionManager.Instance.ClearCertainLayerContents(0);
-            lastHitted = null;
-        }
-        //当是SelectionType.Standard的时候且有选择热电偶(即OutlineLayers不为空)
-        thermocouplePanel.SetActive(!reset && (SelectionManager.Instance.GetOutlineBuilder().OutlineLayers.GetOrAddLayer(0).Count != 0));
-        if (lastHitted != null) // 当选中了热电偶时，才会计算对应的UI坐标
-            thermocouplePanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(lastHitted.transform.position));
+        //    if (reset) //如果当前selectionType不是standard，则清除outline效果
+        //    {
+        //        SelectionManager.Instance.ClearCertainLayerContents(0);
+        //        lastHitted = null;
+        //    }
+        //    //当是SelectionType.Standard的时候且有选择热电偶(即OutlineLayers不为空)
+        //    thermocouplePanel.SetActive(!reset && (SelectionManager.Instance.GetOutlineBuilder().OutlineLayers.GetOrAddLayer(0).Count != 0));
+        //    if (lastHitted != null) // 当选中了热电偶时，才会计算对应的UI坐标
+        //        thermocouplePanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(lastHitted.transform.position));
     }
 
     public bool UpdateThermocoupleData(string content)

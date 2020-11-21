@@ -101,7 +101,15 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void ShowTuyereUI()
     {
-        tuyereUI.SetActive(!tuyereUI.activeSelf);
+        print(tuyereUI.GetComponent<RectTransform>().position);
+        if (tuyereUI.GetComponent<RectTransform>().position.x == 0)
+        {
+            tuyereUI.GetComponent<RectTransform>().position = new Vector3(1070, 550, 0);
+        }
+        else
+        {
+            tuyereUI.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+        }
     }
 
     private void RenderTypeEvent(int i)
