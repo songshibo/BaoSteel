@@ -37,7 +37,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     //Mouse selection UI part
     private GameObject temperaturePanel;
-    private Vector3 lastPos = new Vector3(0, -500, 0);
+    private Vector3 lastPos;
     private TextMeshProUGUI temperatureText;
     private TextMeshProUGUI positionText;
 
@@ -69,8 +69,11 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
             float maxt = float.Parse(maxTmp.inputText.text);
 
             lastPos = hitPoint;
-            temperatureText.text = Math.Round(temperature * (maxt - mint) + mint, 2).ToString() + "°C";
-            positionText.text = "Angle:" + angle.ToString() + "\n" + "Height:" + height.ToString();
+            temperatureText.text = "";
+            if (temperature == 1f)
+                temperatureText.text += "≥";
+            temperatureText.text += Math.Round(temperature * (maxt - mint) + mint, 2).ToString() + "°C";
+            positionText.text = "Angle:" + angle.ToString() + "°\n" + "Height:" + height.ToString() + "m";
         }
         else
         {
@@ -78,9 +81,13 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         }
     }
 
-    public void UpdateUIPanel()
+    public void UpdateUIPanel(bool reset = false)
     {
-        temperaturePanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(lastPos));
+        if (lastPos.y > 0.0f) // lastPos初始值为0，0，0；所以当且仅当选中了炉体表面的点时(即位置信息有效)才会处理后续的ui显示。这里并没有清除lastPos，因为可以在下次打开heatmap时保留上次的位置
+        {
+            temperaturePanel.SetActive(!reset);
+            temperaturePanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(lastPos));
+        }
     }
 
     //作为Listener添加给GradientMode的horizontal selector
@@ -171,7 +178,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
         //初始化UI部分
         temperaturePanel = Instantiate(Resources.Load<GameObject>("Prefabs/TemperaturePanel"), GameObject.Find("Canvas").transform);
-        temperaturePanel.transform.localPosition = Util.ComputeUIPosition(lastPos);
+        temperaturePanel.SetActive(false);//hide the panel
         temperatureText = temperaturePanel.transform.Find("Temperature").GetComponent<TextMeshProUGUI>();
         positionText = temperaturePanel.transform.Find("Position").GetComponent<TextMeshProUGUI>();
     }

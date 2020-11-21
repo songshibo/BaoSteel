@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,8 +9,58 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
 {
     public Dictionary<string, GameObject> name_gameobject = new Dictionary<string, GameObject>();
 
+    //Mouse selection UI part
+    private GameObject thermocouplePanel;
+    private GameObject lastHitted;
+    private TextMeshProUGUI infoText;
+    private TextMeshProUGUI IDText;
+
+    public void InitializeThermocouple()
+    {
+        thermocouplePanel = Instantiate(Resources.Load<GameObject>("Prefabs/ThermocouplePanel"), GameObject.Find("Canvas").transform);
+        thermocouplePanel.SetActive(false);//hide the panel
+        infoText = thermocouplePanel.transform.Find("Info").GetComponent<TextMeshProUGUI>();
+        IDText = thermocouplePanel.transform.Find("ID").GetComponent<TextMeshProUGUI>();
+    }
+
+    public void DisplayHittedThermocoupleInfo(GameObject hittedThermocouple)
+    {
+        lastHitted = hittedThermocouple;
+
+        //TODO : 如何获取这些数据并展示
+        IDText.text = hittedThermocouple.name;
+        // 目前是计算，可以考虑从数据库里读取
+        float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(hittedThermocouple.transform.position.z, hittedThermocouple.transform.position.x), 2) + 180;
+        float height = (float)Math.Round(hittedThermocouple.transform.position.y, 2);
+        infoText.text = "Temperature:" + "?".ToString() + "°C\n" + "Angle:" + angle.ToString() + "°\n" + "Height:" + height.ToString() + "m";
+
+        if (!SelectionManager.Instance.GetOutlineBuilder().OutlineLayers.GetOrAddLayer(0).Contains(hittedThermocouple))
+        {
+            // Clear other selected object
+            SelectionManager.Instance.ClearCertainLayerContents(0);
+            SelectionManager.Instance.AddToOutlineList(hittedThermocouple);
+        }
+        else
+        {
+            SelectionManager.Instance.MoveFromOutlineList(hittedThermocouple);
+        }
+    }
+
+    public void UpdateUIPanel(bool reset = false)
+    {
+        //    if (reset) //如果当前selectionType不是standard，则清除outline效果
+        //    {
+        //        SelectionManager.Instance.ClearCertainLayerContents(0);
+        //        lastHitted = null;
+        //    }
+        //    //当是SelectionType.Standard的时候且有选择热电偶(即OutlineLayers不为空)
+        //    thermocouplePanel.SetActive(!reset && (SelectionManager.Instance.GetOutlineBuilder().OutlineLayers.GetOrAddLayer(0).Count != 0));
+        //    if (lastHitted != null) // 当选中了热电偶时，才会计算对应的UI坐标
+        //        thermocouplePanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(lastHitted.transform.position));
+    }
+
     public bool UpdateThermocoupleData(string content)
-    { 
+    {
         content = content.Substring(1, content.Length - 2); // 去掉两边的大括号
         string[] str = content.Split(',');
         Dictionary<string, string> name_temperature = new Dictionary<string, string>();

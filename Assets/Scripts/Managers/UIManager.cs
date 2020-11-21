@@ -20,7 +20,7 @@ public class UIManager : MonoSingleton<UIManager>
     private Vector2 ThermocouplePanel_Width_Height;
     private ModalWindowManager heatmapWindowManager;
     private ModalWindowManager heatloadWindowManager;
-    
+
 
     public void InitializeUI(string[] configClip, string[] configShowPart)
     {
@@ -101,29 +101,37 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void ShowTuyereUI()
     {
-        tuyereUI.SetActive(!tuyereUI.activeSelf);
+        print(tuyereUI.GetComponent<RectTransform>().position);
+        if (tuyereUI.GetComponent<RectTransform>().position.x == 0)
+        {
+            tuyereUI.GetComponent<RectTransform>().position = new Vector3(1070, 550, 0);
+        }
+        else
+        {
+            tuyereUI.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+        }
     }
 
     private void RenderTypeEvent(int i)
     {
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", i);
-        if (i == 0) // standard
-        {
-            heatmapWindowManager.CloseWindow();
-            heatloadWindowManager.CloseWindow();
-            SelectionManager.Instance.selectionType = SelectionManager.SelectionType.standard;
-        }
-        else if (i == 1) // heat map
+        if (i == 1) // heat map
         {
             heatmapWindowManager.OpenWindow();
             heatloadWindowManager.CloseWindow();
             SelectionManager.Instance.selectionType = SelectionManager.SelectionType.heatmap;
         }
-        else // heat load
+        else if (i == 2) // heat load
         {
             heatmapWindowManager.CloseWindow();
             heatloadWindowManager.OpenWindow();
             SelectionManager.Instance.selectionType = SelectionManager.SelectionType.heatload;  // 鼠标进入某段高度，GUI 显示某段高度的热负荷值
+        }
+        else //standard
+        {
+            heatmapWindowManager.CloseWindow();
+            heatloadWindowManager.CloseWindow();
+            SelectionManager.Instance.selectionType = SelectionManager.SelectionType.standard;
         }
     }
 

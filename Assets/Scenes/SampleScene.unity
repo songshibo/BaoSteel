@@ -728,7 +728,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 17}
   m_SizeDelta: {x: 230, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &70139739
@@ -763,7 +763,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u7F16\u53F7\uFF1Atuyere_30\n\u957F\uFF1A1m\n\u5BBD\uFF1A1m\n\u9AD8\uFF1A1m"
+  m_Text: 
 --- !u!222 &70139740
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4857,7 +4857,7 @@ MonoBehaviour:
   enableTrigger: 1
   enableScrollbar: 0
   setHighPriorty: 0
-  outOnPointerExit: 0
+  outOnPointerExit: 1
   isListItem: 0
   animationType: 0
   saveSelected: 0
@@ -12002,7 +12002,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.5173838
+  m_Value: 0.5025885
   m_Size: 0.26073685
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -12751,7 +12751,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1963.5293, y: -1692.409}
+  m_AnchoredPosition: {x: -1800.1768, y: -1656.315}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -16803,7 +16803,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 930, y: 0}
-  m_SizeDelta: {x: 300, y: 55}
+  m_SizeDelta: {x: 200, y: 55}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1268574742
 MonoBehaviour:
@@ -21361,8 +21361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6135429adb5a440e39a4dfaa7c262e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionType: 3
-  selectionModel: 1
+  selectionType: 0
 --- !u!1 &1638095907
 GameObject:
   m_ObjectHideFlags: 0
@@ -21706,7 +21705,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.59081084
+  m_Value: 0.5000981
   m_Size: 0.49978697
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -26051,7 +26050,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -30.000183}
+  m_AnchoredPosition: {x: 0, y: -30.000061}
   m_SizeDelta: {x: 0, y: -60.000004}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2033040924
@@ -26244,8 +26243,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -126.3}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: -108.3}
+  m_SizeDelta: {x: 279.9, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2057421191
 MonoBehaviour:
@@ -26279,7 +26278,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u9762\u79EF\u6BD4\uFF1A100"
+  m_Text: 
 --- !u!222 &2057421192
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27252,7 +27251,7 @@ MonoBehaviour:
   enableTrigger: 0
   enableScrollbar: 0
   setHighPriorty: 0
-  outOnPointerExit: 0
+  outOnPointerExit: 1
   isListItem: 0
   invokeAtStart: 0
   animationType: 0
@@ -27575,11 +27574,11 @@ RectTransform:
   m_Father: {fileID: 2033040923}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 612, y: 181}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 548, y: 548}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1 &2129076524
 GameObject:
   m_ObjectHideFlags: 0
@@ -27653,8 +27652,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 1240, y: 0}
-  m_SizeDelta: {x: 300, y: 55}
+  m_AnchoredPosition: {x: 1140, y: 0}
+  m_SizeDelta: {x: 200, y: 55}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2135512040
 MonoBehaviour:
@@ -27845,7 +27844,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 3.1947e-41, y: 1.04e-43, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 3.422e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

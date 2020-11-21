@@ -21,6 +21,7 @@ public class ConfigurationManager : MonoBehaviour
         // 单独处理heatmap材质，将其设置为正常渲染模式
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
+        ThermocoupleUpdater.Instance.InitializeThermocouple();
         HeatmapUpdater.Instance.InitializeHeatMap();
         HeatLoadUpdater.Instance.InitializeHeatLoad();
     }
@@ -98,7 +99,7 @@ public class ConfigurationManager : MonoBehaviour
 
         UIManager.Instance.InitializeUI(linesClip, linesShowPart);
     }
-    
+
     private void InitilizeTiming()
     {
         string filetiming = "timing.txt";
