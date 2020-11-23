@@ -7,6 +7,8 @@ using System;
 
 public static class Util
 {
+    public static char[] endChar = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+
     public static string ReadConfigFile(string filename)
     {
         string path = Application.dataPath + "/Config/" + filename;
@@ -114,21 +116,22 @@ public static class Util
     public static string MergeThermocoupleName(string name)
     {
         string[] names = name.Split('_')[0].Split('-');
-        char[] MyChar = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
         if (names.Length == 1)
         {
             return names[0];
         }
         else
         {
-            if (names[0].TrimEnd(MyChar).Length == names[0].Length)
+            string mergedName = "";
+            if (names[0].TrimEnd(endChar).Length == names[0].Length)
             {
-                return name.Split('_')[0];
+                mergedName = name.Split('_')[0];
             }
             else
             {
-                return names[0].TrimEnd(MyChar);
+                mergedName = names[0].TrimEnd(endChar);
             }
+            return mergedName;
         }
     }
 

@@ -27,12 +27,16 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
     {
         lastHitted = hittedThermocouple;
 
-        //TODO : 如何获取这些数据并展示
-        IDText.text = hittedThermocouple.name;
+        int count = hittedThermocouple.name.Split('_')[0].Split('-').Length;
+        string mergedName = Util.MergeThermocoupleName(hittedThermocouple.name);
+        IDText.text = mergedName;
+        // 根据几点热电偶显示(A:?)的后缀
+        IDText.text += count > 1 ? "(A:" + Util.endChar[count - 1] + ")" : "";
         // 目前是计算，可以考虑从数据库里读取
         float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(hittedThermocouple.transform.position.z, hittedThermocouple.transform.position.x), 2) + 180;
         float height = (float)Math.Round(hittedThermocouple.transform.position.y, 2);
-        infoText.text = "Temperature:" + "?".ToString() + "°C\n" + "Angle:" + angle.ToString() + "°\n" + "Height:" + height.ToString() + "m";
+        // 获取热电偶的温度
+        infoText.text = "Temperature:\n" + GetTempByName(mergedName) + "°C\n" + "Angle:" + angle.ToString() + "°\n" + "Height:" + height.ToString() + "m";
 
         if (!SelectionManager.Instance.GetOutlineBuilder().OutlineLayers.GetOrAddLayer(0).Contains(hittedThermocouple))
         {
@@ -49,7 +53,8 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
     public string GetTempByName(string name)
     {
         GameObject obj = name_gameobject[name.Split('-')[0]];
-        return obj.transform.Find("temperature").GetComponent<Text>().text;
+        string temperatures = obj.transform.Find("temperature").GetComponent<Text>().text.TrimEnd(' ');
+        return temperatures.Replace(" ", "°C-");
     }
 
     public void UpdateUIPanel(bool reset = false)
@@ -84,8 +89,6 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
             {
                 name_temperature.Add(name, temperature);
             }
-
-
         }
         foreach (var item in name_gameobject)
         {
