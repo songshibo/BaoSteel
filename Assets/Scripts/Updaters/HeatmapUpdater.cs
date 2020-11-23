@@ -41,13 +41,6 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     private TextMeshProUGUI temperatureText;
     private TextMeshProUGUI positionText;
 
-    public void SwitchHeatMap()
-    {
-        ModalWindowManager windowManager = GameObject.Find("HeatMapWindow").GetComponent<ModalWindowManager>();
-        targetMat.SetFloat("_RenderType", 1);
-        windowManager.OpenWindow();
-    }
-
     public void ApplyHeatMapProperties()
     {
         Debug.Log("热力图手动更新");

@@ -952,6 +952,7 @@ RectTransform:
   - {fileID: 1863351261}
   - {fileID: 1043990970}
   - {fileID: 880173029}
+  - {fileID: 2124843762}
   m_Father: {fileID: 2108115794}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12642,8 +12643,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.5024909
-  m_Size: 0.28348106
+  m_Value: 0.50254846
+  m_Size: 0.31092596
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13430,7 +13431,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1800.154, y: -1655.8898}
+  m_AnchoredPosition: {x: -772.0657, y: -1655.795}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -22760,8 +22761,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.50008
-  m_Size: 0.46515754
+  m_Value: 0.0000000593765
+  m_Size: 0.42892528
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -25899,7 +25900,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1894426616}
   m_Layer: 5
-  m_Name: LeftSideWindows
+  m_Name: TuyereWindows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25920,11 +25921,11 @@ RectTransform:
   m_Father: {fileID: 2033040923}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: 0}
-  m_SizeDelta: {x: 500, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 768, y: 1100}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &1917825351
 GameObject:
   m_ObjectHideFlags: 0
@@ -27290,7 +27291,6 @@ RectTransform:
   - {fileID: 620010258}
   - {fileID: 1894426616}
   - {fileID: 2068376609}
-  - {fileID: 2124843762}
   m_Father: {fileID: 85052487}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -27480,7 +27480,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057421189}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -28370,10 +28370,10 @@ RectTransform:
   m_Father: {fileID: 1894426616}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 10}
-  m_SizeDelta: {x: 500, y: 560}
+  m_SizeDelta: {x: 0, y: 730}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &2108115795
 MonoBehaviour:
@@ -28926,13 +28926,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 414154073}
-  m_Father: {fileID: 2033040923}
+  m_Father: {fileID: 76329188}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 548, y: 548}
+  m_SizeDelta: {x: 0, y: 668}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &2129076524
 GameObject:
@@ -29100,17 +29100,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 447419897}
         m_MethodName: ShowTuyereUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2108115795}
-        m_MethodName: OpenWindow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

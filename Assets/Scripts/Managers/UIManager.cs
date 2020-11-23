@@ -20,7 +20,7 @@ public class UIManager : MonoSingleton<UIManager>
     private Vector2 ThermocouplePanel_Width_Height;
     private ModalWindowManager heatmapWindowManager;
     private ModalWindowManager heatloadWindowManager;
-
+    private ModalWindowManager TuyereWindowManager;
 
     public void InitializeUI(string[] configClip, string[] configShowPart)
     {
@@ -92,6 +92,7 @@ public class UIManager : MonoSingleton<UIManager>
         // RenderMode
         heatmapWindowManager = GameObject.Find("HeatMapWindow").GetComponent<ModalWindowManager>();
         heatloadWindowManager = GameObject.Find("HeatLoadWindow").GetComponent<ModalWindowManager>();
+        TuyereWindowManager = GameObject.Find("TuyereWindow").GetComponent<ModalWindowManager>();
         renderType.CreateNewItem("Standard", clipIcon);
         renderType.CreateNewItem("Heat Map", clipIcon);
         renderType.CreateNewItem("Heat Load", clipIcon);
@@ -101,15 +102,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void ShowTuyereUI()
     {
-        print(tuyereUI.GetComponent<RectTransform>().position);
-        if (tuyereUI.GetComponent<RectTransform>().position.x == 0)
-        {
-            tuyereUI.GetComponent<RectTransform>().position = new Vector3(1070, 550, 0);
-        }
-        else
-        {
-            tuyereUI.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
-        }
+        TuyereWindowManager.OpenWindow();
     }
 
     private void RenderTypeEvent(int i)
