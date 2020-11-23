@@ -23,20 +23,26 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
         IDText = thermocouplePanel.transform.Find("ID").GetComponent<TextMeshProUGUI>();
     }
 
+    private string ComputeDisplayInfo()
+    {
+        string mergedName = Util.MergeThermocoupleName(lastHitted.name);
+        // 目前是计算，可以考虑从数据库里读取
+        float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(lastHitted.transform.position.z, lastHitted.transform.position.x), 2) + 180;
+        float height = (float)Math.Round(lastHitted.transform.position.y, 2);
+        // 获取热电偶的温度
+        infoText.text = "Temperature:\n" + GetTempByName(mergedName) + "°C\n" + "Angle:" + angle.ToString() + "°\n" + "Height:" + height.ToString() + "m";
+        return mergedName;
+    }
+
     public void DisplayHittedThermocoupleInfo(GameObject hittedThermocouple)
     {
         lastHitted = hittedThermocouple;
 
         int count = hittedThermocouple.name.Split('_')[0].Split('-').Length;
-        string mergedName = Util.MergeThermocoupleName(hittedThermocouple.name);
+        string mergedName = ComputeDisplayInfo();
         IDText.text = mergedName;
         // 根据几点热电偶显示(A:?)的后缀
         IDText.text += count > 1 ? "(A:" + Util.endChar[count - 1] + ")" : "";
-        // 目前是计算，可以考虑从数据库里读取
-        float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(hittedThermocouple.transform.position.z, hittedThermocouple.transform.position.x), 2) + 180;
-        float height = (float)Math.Round(hittedThermocouple.transform.position.y, 2);
-        // 获取热电偶的温度
-        infoText.text = "Temperature:\n" + GetTempByName(mergedName) + "°C\n" + "Angle:" + angle.ToString() + "°\n" + "Height:" + height.ToString() + "m";
 
         if (!SelectionManager.Instance.GetOutlineBuilder().OutlineLayers.GetOrAddLayer(0).Contains(hittedThermocouple))
         {
@@ -67,7 +73,9 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
         //当是SelectionType.Standard的时候且有选择热电偶(即OutlineLayers不为空)
         thermocouplePanel.SetActive(!reset && (SelectionManager.Instance.GetOutlineBuilder().OutlineLayers.GetOrAddLayer(0).Count != 0));
         if (lastHitted != null) // 当选中了热电偶时，才会计算对应的UI坐标
+        {
             thermocouplePanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(lastHitted.transform.position));
+        }
     }
 
     public bool UpdateThermocoupleData(string content)
@@ -106,6 +114,12 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
                     item.Value.GetComponent<Image>().color = Color.red;
                 }
             }
+        }
+        // update UI panel for the selected thermocouple
+        if (lastHitted != null)
+        {
+            string mergedName = Util.MergeThermocoupleName(lastHitted.name);
+            ComputeDisplayInfo();
         }
         return true;
     }
