@@ -44,7 +44,10 @@ public class SelectionManager : MonoSingleton<SelectionManager>
                     }
                     break;
                 case SelectionType.heatload:
-                    HeatLoadUpdater.Instance.MoveDetail(hit.point.y, true);
+                    if (Input.GetKeyDown(KeyCode.Mouse0))
+                    {
+                        HeatLoadUpdater.Instance.ClickAndShowHeatLoadDetail(hit.point);
+                    }
                     break;
                 case SelectionType.heatmap:
                     if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -63,7 +66,6 @@ public class SelectionManager : MonoSingleton<SelectionManager>
                 case SelectionType.standard:
                     break;
                 case SelectionType.heatload:
-                    HeatLoadUpdater.Instance.MoveDetail(0, false);
                     break;
                 case SelectionType.heatmap:
                     break;
@@ -76,6 +78,8 @@ public class SelectionManager : MonoSingleton<SelectionManager>
         ThermocoupleUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.standard);
         // based on current selectionType to change the activity of the UI prefab
         HeatmapUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatmap);
+
+        HeatLoadUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatload);
     }
 
     /// <summary>

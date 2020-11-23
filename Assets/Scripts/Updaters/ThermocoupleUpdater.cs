@@ -65,6 +65,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
 
     public void UpdateUIPanel(bool reset = false)
     {
+        // 不是标准模式，为true
         if (reset) //如果当前selectionType不是standard，则清除outline效果
         {
             SelectionManager.Instance.ClearCertainLayerContents(0);

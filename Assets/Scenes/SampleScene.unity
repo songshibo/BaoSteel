@@ -12643,7 +12643,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.50254846
+  m_Value: 0.5012807
   m_Size: 0.31092596
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -13431,7 +13431,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -772.0657, y: -1655.795}
+  m_AnchoredPosition: {x: -1527.4246, y: -1652.9122}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -22761,7 +22761,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.0000000593765
+  m_Value: 0.3674159
   m_Size: 0.42892528
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -24930,7 +24930,6 @@ MonoBehaviour:
   targetMat: {fileID: 2100000, guid: 572c1252219575d438cdbe7586d454da, type: 2}
   c: {fileID: 1687258584}
   texture: {fileID: 0}
-  heat_load_detail: {fileID: 0}
 --- !u!4 &1854156225
 Transform:
   m_ObjectHideFlags: 0

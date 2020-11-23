@@ -5,6 +5,8 @@ using Newtonsoft.Json.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Michsky.UI.ModernUIPack;
+using System;
+using TMPro;
 
 public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
 {
@@ -27,17 +29,15 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
     private Texture2D texture;
     //[SerializeField]
     private Texture2D gradientTex;
-    public GameObject heat_load_detail;
 
-    private Canvas canvas;
-    private Camera _camera;
-    private RectTransform canvasRectTransform;
-
+    private Vector3 hitpoint = new Vector3(0, 0, 0);
     private float yMax;
     private List<Vector3> part_cooling_plate = new List<Vector3>(); // 最小高度、最大高度、总温度
     private List<Vector3> part_cooling_cross = new List<Vector3>(); // 最小高度、最大高度、总温度
     private List<Vector3> part = new List<Vector3>(); // 最小高度、最大高度、总温度
-
+    private GameObject tuyerePanel;
+    private TextMeshProUGUI temperatureText;
+    private TextMeshProUGUI areaText;
 
     public void ApplyHeatLoadProperties()
     {
@@ -90,29 +90,37 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         targetMat.SetTexture("Heatload", texture);
     }
 
-    public void MoveDetail(float height, bool flag)
+    private string GetAreaByHeight(float height)
     {
-        if (RenderMode.ScreenSpaceOverlay == canvas.renderMode)
+        // TODO:获取实际区域名字，需要修改为字典 区域和其对应的范围
+        // 第一次打开热负荷 不应该显示 信息面板
+        // 非热负荷区域 不应该显示信息面板
+        string area = "";
+        foreach (var p in part)
         {
-            Vector2 pos;
+            if (p.x <= height && p.y >= height)
+            {
+                area = "area:cp10-30";
+                break;
+            }
+        }
+        return area;
+    }
 
-            float temp = GetTempByHeight(height);
-            // 没有碰撞的物体，要么碰撞的位置不是热负荷区域
-            if (flag && temp != 0)
-            {
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Input.mousePosition, _camera, out pos);
-                heat_load_detail.GetComponent<Text>().text = temp.ToString("0.#") + "°C";
-            }
-            else
-            {
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, new Vector3(0, 0, 0), _camera, out pos);
-            }
-            heat_load_detail.transform.localPosition = new Vector3(pos.x, pos.y, 0);
-        }
-        else
-        {
-            Debug.Log("请选择正确的相机模式!");
-        }
+    public void ClickAndShowHeatLoadDetail(Vector3 hit)
+    {
+        hitpoint = hit;
+        float temp = GetTempByHeight(hitpoint.y);
+        string area = GetAreaByHeight(hitpoint.y);
+        temperatureText.text = temp.ToString() + "°C";
+        areaText.text = area;
+        tuyerePanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(hitpoint));
+    }
+
+    internal void UpdateUIPanel(bool notHeatLoad)
+    {
+        tuyerePanel.SetActive(!notHeatLoad);
+        tuyerePanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(hitpoint));
     }
 
     public float GetTempByHeight(float height)
@@ -175,6 +183,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         part_cooling_cross.Add(new Vector3(40f, 44f, 20));
 
         GenerateHeatLoad();
+        ClickAndShowHeatLoadDetail(hitpoint);
         return true;
     }
 
@@ -186,11 +195,11 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
         part = part_cooling_plate;
 
-        string prefab = "heat_load_detail";
-        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        _camera = canvas.GetComponent<Camera>();
-        canvasRectTransform = canvas.transform as RectTransform;
-        heat_load_detail = Instantiate((GameObject)Resources.Load("Prefabs/" + prefab), GameObject.Find("Canvas").transform);
-        heat_load_detail.name = prefab;
+        string prefab = "TuyerePanel";
+        tuyerePanel = Instantiate((GameObject)Resources.Load("Prefabs/" + prefab), GameObject.Find("Canvas").transform);
+        tuyerePanel.name = prefab;
+        temperatureText = tuyerePanel.transform.Find("Temperature").GetComponent<TextMeshProUGUI>();
+        areaText = tuyerePanel.transform.Find("Position").GetComponent<TextMeshProUGUI>();
+        tuyerePanel.SetActive(false);
     }
 }
