@@ -254,8 +254,8 @@ public class UIManager : MonoSingleton<UIManager>
                 ThermocoupleUpdater.Instance.name_gameobject.Add(name, UIobj);
             }
 
-            UIobj.transform.Find("height").GetComponent<Text>().text = position.y.ToString("-.###") + "m";
-            UIobj.transform.Find("angle").GetComponent<Text>().text = angle.ToString("-") + "°";
+            UIobj.transform.Find("height").GetComponent<Text>().text = position.y.ToString("0.###") + "m";
+            UIobj.transform.Find("angle").GetComponent<Text>().text = angle.ToString("0") + "°";
             UIobj.transform.Find("temperature").GetComponent<Text>().text = "-";
             UIobj.GetComponent<Button>().onClick.AddListener(delegate () { OnClick(thermo, UIobj); });
 
