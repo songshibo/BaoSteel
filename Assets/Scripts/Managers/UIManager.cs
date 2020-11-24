@@ -181,7 +181,7 @@ public class UIManager : MonoSingleton<UIManager>
     private void GenerateTuyereUI()
     {
         GameObject prefab = (GameObject)Resources.Load("Prefabs/TuyereUISingle");
-        GameObject root = GameObject.Find("TuyereUIBackground");
+        GameObject root = GameObject.Find("TuyereUI/TuyereUIBackground");
         TuyereUpdater.Instance.areaRatio = root.transform.Find("ratio").gameObject;
         float radius = root.GetComponent<RectTransform>().sizeDelta.x / 2;
 
