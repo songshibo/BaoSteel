@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2969383349428436912}
   - component: {fileID: 2205222275377737749}
   - component: {fileID: 4142874808217748703}
-  m_Layer: 0
-  m_Name: connect_part_above_throat
+  m_Layer: 9
+  m_Name: throat_connect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
