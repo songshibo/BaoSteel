@@ -30,7 +30,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
     //[SerializeField]
     private Texture2D gradientTex;
 
-    private Vector3 hitpoint = new Vector3(0, 0, 0);
+    private Vector3 hitpoint;
     private float yMax;
     private List<Vector3> part_cooling_plate = new List<Vector3>(); // 最小高度、最大高度、总温度
     private List<Vector3> part_cooling_cross = new List<Vector3>(); // 最小高度、最大高度、总温度
@@ -90,31 +90,32 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         targetMat.SetTexture("Heatload", texture);
     }
 
-    private string GetAreaByHeight(float height)
+    private string[] GetAreaAndTempByHeight(float height)
     {
         // TODO:获取实际区域名字，需要修改为字典 区域和其对应的范围
-        // 第一次打开热负荷 不应该显示 信息面板
-        // 非热负荷区域 不应该显示信息面板
-        string area = "";
+        string[] info = new string[] { "", "" };
         foreach (var p in part)
         {
             if (p.x <= height && p.y >= height)
             {
-                area = "area:cp10-30";
+                info[0] = "area:cp10-30";
+                info[1] = p.z.ToString();
                 break;
             }
         }
-        return area;
+        return info;
     }
 
     public void ClickAndShowHeatLoadDetail(Vector3 hit)
     {
-        hitpoint = hit;
-        float temp = GetTempByHeight(hitpoint.y);
-        string area = GetAreaByHeight(hitpoint.y);
-        temperatureText.text = temp.ToString() + "°C";
-        areaText.text = area;
-        tuyerePanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(hitpoint));
+        string[] info = GetAreaAndTempByHeight(hit.y);
+        if (info[0] != "")
+        {
+            hitpoint = hit;
+            temperatureText.text = info[1] + "°C";
+            areaText.text = info[0];
+            tuyerePanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(hitpoint));
+        }
     }
 
     internal void UpdateUIPanel(bool notHeatLoad)
@@ -187,6 +188,12 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         return true;
     }
 
+    public void CancelPanel()
+    {
+        print('1');
+        hitpoint = new Vector3(-100, -100, 0);
+    }
+
     public void InitializeHeatLoad()
     {
         yMax = Util.ReadModelProperty("max_height");
@@ -195,10 +202,12 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
         part = part_cooling_plate;
 
+        hitpoint = new Vector3(-100, -100, 0);
         string prefab = "TuyerePanel";
         tuyerePanel = Instantiate((GameObject)Resources.Load("Prefabs/" + prefab), GameObject.Find("Canvas").transform);
+        tuyerePanel.transform.Find("TemperatureBackgroud/cancel").GetComponent<Button>().onClick.AddListener(CancelPanel);
         tuyerePanel.name = prefab;
-        temperatureText = tuyerePanel.transform.Find("Temperature").GetComponent<TextMeshProUGUI>();
+        temperatureText = tuyerePanel.transform.Find("TemperatureBackgroud/Temperature").GetComponent<TextMeshProUGUI>();
         areaText = tuyerePanel.transform.Find("Position").GetComponent<TextMeshProUGUI>();
         tuyerePanel.SetActive(false);
     }

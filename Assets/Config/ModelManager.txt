@@ -5,7 +5,7 @@
 # bosh?16.6<21.1:-bosh thermocouple cooling_plate
 # waist?21.1<23.2:-waist thermocouple cooling_plate cooling_cross1
 # body?23.2<41:-body thermocouple cooling_plate cooling_wall6 cooling_wall7 cooling_wall8 cooling_cross2 cooling_cross3 cooling_cross4 cooling_cross5 cooling_cross6 cooling_cross7 cooling_cross8 cooling_cross9 cooling_cross10
-# throat?41<60:-throat -chute -cross_temperature_measurement thermocouple cooling_wall9
+# throat?41<60:-throat -chute -cross_temperature_measurement thermocouple -throat_connect cooling_wall9
 # bottom_tank:-bottom_tank -bottom_cloth
 # top_tank:-top_tank -top_cloth
 # feed_box:-feed_box
@@ -14,7 +14,7 @@ hearth?0<16.6:-hearth -iron_outlet tuyere thermocouple cooling_wall
 bosh?16.6<21.1:-bosh thermocouple cooling_plate
 waist?21.1<23.2:-waist thermocouple cooling_plate cooling_cross
 body?23.2<41:-body thermocouple cooling_plate cooling_wall cooling_cross
-throat?41<60:-throat -chute -cross_temperature_measurement thermocouple cooling_wall
+throat?41<60:-throat -chute -cross_temperature_measurement -throat_connect thermocouple cooling_wall
 bottom_tank:-bottom_tank -bottom_cloth
 top_tank:-top_tank -top_cloth
 feed_box:-feed_box

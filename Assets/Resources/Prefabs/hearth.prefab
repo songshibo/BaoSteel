@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7825622528421282360}
   - component: {fileID: 6572416169294646685}
   - component: {fileID: 8994003907865196887}
+  - component: {fileID: 1949053303302002072}
   m_Layer: 9
   m_Name: hearth
   m_TagString: Untagged
@@ -80,3 +81,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &1949053303302002072
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7481009593442113666}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8778925301211594876, guid: a32a7474246e2ff479ba5197e647346f, type: 3}
