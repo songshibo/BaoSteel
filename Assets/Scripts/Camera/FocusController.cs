@@ -116,7 +116,8 @@ public class FocusController : MonoBehaviour
 
             verticalRotation *= Quaternion.AngleAxis(-mouseY, Vector3.right);
         }
-        else
+
+        if (!Input.GetKey(KeyCode.LeftShift))
         {
             float h = Input.GetAxis("Horizontal") * rotateSpeed;
 
@@ -143,6 +144,14 @@ public class FocusController : MonoBehaviour
             float mouseY = Input.GetAxis("Mouse Y") * dragSpeed;
 
             rigPosition += (-mouseX * cameraRig.right - mouseY * cameraRig.up) * Time.deltaTime * dragSpeed;
+        }
+
+        if (!lockCursor && Input.GetKey(KeyCode.LeftShift))
+        {
+            float mouseX = Input.GetAxis("Horizontal") * dragSpeed;
+            float mouseY = Input.GetAxis("Vertical") * dragSpeed;
+
+            rigPosition += (mouseX * cameraRig.right + mouseY * cameraRig.up) * Time.deltaTime * dragSpeed;
         }
 
         if (Input.GetKeyDown(KeyCode.F))

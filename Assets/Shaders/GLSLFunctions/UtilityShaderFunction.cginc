@@ -30,4 +30,20 @@
 		}
 	}
 
+	void RenderTypeBranch4_float(float type, float4 standard, float4 heatmap, float4 heatload, out float4 Out)
+	{
+		if(type == 0)
+		{
+			Out = standard;
+		}
+		else if(type == 1)
+		{
+			Out = heatmap;
+		}
+		else
+		{
+			Out = heatload;
+		}
+	}
+
 #endif
