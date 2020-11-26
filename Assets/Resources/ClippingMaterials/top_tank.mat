@@ -177,7 +177,7 @@ Material:
     - _ReceiveShadows: 1
     - _SPECULAR_IOR: 1.5
     - _SPECULAR_ROUGHNESS: 0
-    - _Smoothness: 0.25
+    - _Smoothness: 0.3
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -193,7 +193,7 @@ Material:
     - TopPlane: {r: 0, g: 200, b: 0, a: 0}
     - VerticalNormal: {r: 1, g: 0, b: 0, a: 0}
     - VerticalPlane: {r: 200, g: 0, b: 0, a: 0}
-    - _Albedo: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
+    - _Albedo: {r: 1, g: 1, b: 1, a: 1}
     - _BASE_COLOR: {r: 0, g: 0, b: 0, a: 0}
     - _BackFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _BaseColor: {r: 0.6037736, g: 0.40726238, b: 0.40726238, a: 1}
