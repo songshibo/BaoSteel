@@ -10,20 +10,25 @@ public class ConfigurationManager : MonoBehaviour
 
     private void Awake()
     {
+        // No-Async
         InitilizeTiming();
         InitializeDataServiceManager();
         InitializeCamera();
-        InitializeModelManager();
-        InitilizeUI();
-
-        //InitilizeTuyere();
-        CullingController.Instance.ResetMaterialProperties();
-        // 单独处理heatmap材质，将其设置为正常渲染模式
-        Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
         HeatmapUpdater.Instance.InitializeHeatMap();
         HeatLoadUpdater.Instance.InitializeHeatLoad();
+
+        // Async
+        InitializeModelManager();
+        InitilizeUI();
+
+        // Special Settings
+        //InitilizeTuyere();
+        CullingController.Instance.ResetMaterialProperties();
+        // 单独处理heatmap材质，将其设置为正常渲染模式
+        Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
+
     }
 
     private void InitilizeTuyere()
