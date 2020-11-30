@@ -32,9 +32,9 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
 
     private Vector3 hitpoint;
     private float yMax;
-    private List<Vector3> part_cooling_plate = new List<Vector3>(); // 最小高度、最大高度、总温度
-    private List<Vector3> part_cooling_cross = new List<Vector3>(); // 最小高度、最大高度、总温度
-    private List<Vector3> part = new List<Vector3>(); // 最小高度、最大高度、总温度
+    private Dictionary<string, Vector3> part_cooling_plate = new Dictionary<string, Vector3>(); // 最小高度、最大高度、总温度
+    private Dictionary<string, Vector3> part_cooling_cross = new Dictionary<string, Vector3>(); // 最小高度、最大高度、总温度
+    private Dictionary<string, Vector3> part = new Dictionary<string, Vector3>(); // 最小高度、最大高度、总温度
     private GameObject tuyerePanel;
     private TextMeshProUGUI temperatureText;
     private TextMeshProUGUI areaText;
@@ -55,6 +55,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         {
             part = part_cooling_cross;
         }
+        CancelPanel();
         GenerateHeatLoad();
         
     }
@@ -63,8 +64,9 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
     {
         float realposition = position * yMax / xRes;
         float temp = 0;
-        foreach (Vector3 item in part)
+        foreach (string key in part.Keys)
         {
+            Vector3 item = part[key];
             if (realposition >= item.x && realposition <= item.y)
             {
                 temp = item.z;
@@ -94,11 +96,12 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
     {
         // TODO:获取实际区域名字，需要修改为字典 区域和其对应的范围
         string[] info = new string[] { "", "" };
-        foreach (var p in part)
+        foreach (string key in part.Keys)
         {
+            Vector3 p = part[key];
             if (p.x <= height && p.y >= height)
             {
-                info[0] = "area:cp10-30";
+                info[0] = key;
                 info[1] = p.z.ToString();
                 break;
             }
@@ -127,8 +130,9 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
     public float GetTempByHeight(float height)
     {
         float temp = 0;
-        foreach (Vector3 item in part)
+        foreach (string key in part.Keys)
         {
+            Vector3 item = part[key];
             if (item.x < height && item.y > height)
             {
                 temp = item.z;
@@ -142,6 +146,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
     {
         part_cooling_plate.Clear();
         part_cooling_cross.Clear();
+
         //Dictionary<string, Dictionary<string, float>> heatload = new Dictionary<string, Dictionary<string, float>>(); // 用来保存content中的所有信息
 
         //JToken items = JObject.Parse(content);
@@ -162,26 +167,27 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
 
         //    if (item.Key.StartsWith("CP"))
         //    {
-        //        part_cooling_plate.Add(new Vector3(min_height, max_height, total));
+        //        part_cooling_plate.Add(item.Key, new Vector3(min_height, max_height, total));
         //    }
         //    else if (item.Key.StartsWith("small_cooling_stave"))
         //    {
-        //        part_cooling_cross.Add(new Vector3(min_height, max_height, total));
+        //        part_cooling_cross.Add(item.Key, new Vector3(min_height, max_height, total));
         //    }
         //    else
         //    {
-        //        part_cooling_plate.Add(new Vector3(min_height, max_height, total));
-        //        part_cooling_cross.Add(new Vector3(min_height, max_height, total));
+        //        part_cooling_plate.Add(item.Key, new Vector3(min_height, max_height, total));
+        //        part_cooling_cross.Add(item.Key, new Vector3(min_height, max_height, total));
         //    }
         //}
-        part_cooling_plate.Add(new Vector3(5f, 10f, 50));
-        part_cooling_plate.Add(new Vector3(15f, 20f, 40));
-        part_cooling_plate.Add(new Vector3(25f, 30f, 30));
-        part_cooling_plate.Add(new Vector3(40f, 44f, 20));
 
-        part_cooling_cross.Add(new Vector3(5f, 10f, 50));
-        part_cooling_cross.Add(new Vector3(15f, 35f, 20));
-        part_cooling_cross.Add(new Vector3(40f, 44f, 20));
+        part_cooling_plate.Add("area1", new Vector3(5f, 10f, 50));
+        part_cooling_plate.Add("area2", new Vector3(15f, 20f, 40));
+        part_cooling_plate.Add("area3", new Vector3(25f, 30f, 30));
+        part_cooling_plate.Add("area4", new Vector3(40f, 44f, 20));
+
+        part_cooling_cross.Add("area5", new Vector3(5f, 10f, 50));
+        part_cooling_cross.Add("area6", new Vector3(15f, 35f, 20));
+        part_cooling_cross.Add("area7", new Vector3(40f, 44f, 20));
 
         GenerateHeatLoad();
         ClickAndShowHeatLoadDetail(hitpoint);
@@ -190,7 +196,6 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
 
     public void CancelPanel()
     {
-        print('1');
         hitpoint = new Vector3(-100, -100, 0);
     }
 
