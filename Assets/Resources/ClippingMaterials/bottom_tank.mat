@@ -53,7 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpTex:
-        m_Texture: {fileID: 2800000, guid: 356bf2d3da45d8d4eb94c73a1247a32e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3cb76f9709658e54791359f71f073aa2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -81,11 +81,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 5f93ccb956fcf174caeb7c2510daae2a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2ae7c4542fd3a1647ab5710083b3599b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic:
-        m_Texture: {fileID: 2800000, guid: 5381391e0051df644a612b277c3a40d3, type: 3}
+        m_Texture: {fileID: 2800000, guid: f06f5412d35a3bc469b0a7698e648b00, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -207,8 +207,8 @@ Material:
     - _SPECULAR_COLOR: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TopPlane: {r: 0, g: 200, b: 0, a: 0}
-    - _VerticalNormal: {r: 1, g: 0, b: 0, a: 0}
-    - _VerticalPlane: {r: 200, g: 0, b: 0, a: 0}
+    - _VerticalNormal: {r: 1, g: 0, b: -0.00000004371139, a: 0}
+    - _VerticalPlane: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &3978281711144303530
 MonoBehaviour:
   m_ObjectHideFlags: 11
