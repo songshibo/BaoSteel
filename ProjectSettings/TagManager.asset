@@ -13,6 +13,7 @@ TagManager:
   - bottom_cloth
   - bottom_tank
   - cooling_wall9
+  - throat_connect
   - cross_temperature_measurement
   - chute
   - throat
