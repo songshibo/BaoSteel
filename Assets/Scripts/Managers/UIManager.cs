@@ -157,11 +157,15 @@ public class UIManager : MonoSingleton<UIManager>
             float angle = float.Parse(info[1]);
             CullingController.Instance.ClipMaterialsAtAngle(angle);
             FindObjectOfType<FocusController>().FaceClipSurface(angle);
+            // show inside-stove panel
+            InsideStoveManager.Instance.ControlPanel(true, angle);
         }
         else
         {
             CullingController.Instance.ResetMaterialProperties();
             FindObjectOfType<FocusController>().FaceClipSurface();
+            // hide inside-stove panel
+            InsideStoveManager.Instance.ControlPanel(false, 0);
         }
     }
 
