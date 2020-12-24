@@ -18,6 +18,7 @@ public class ConfigurationManager : MonoBehaviour
         ThermocoupleUpdater.Instance.InitializeThermocouple();
         HeatmapUpdater.Instance.InitializeHeatMap();
         HeatLoadUpdater.Instance.InitializeHeatLoad();
+        InsideStoveManager.Instance.Initialize();
 
         // Async
         InitializeModelManager();
