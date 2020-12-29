@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.2824743, g: 0.41884625, b: 0.59536684, a: 1}
+  m_IndirectSpecularColor: {r: 0.28247446, g: 0.4188465, b: 0.59536743, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12763,8 +12763,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.5009777
-  m_Size: 0.302909
+  m_Value: 0.50079733
+  m_Size: 0.14562045
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13486,7 +13486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: 20
-  height: 60
+  height: 50
 --- !u!1 &917905872
 GameObject:
   m_ObjectHideFlags: 0
@@ -13522,7 +13522,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2294.8953, y: -1652.2489}
+  m_AnchoredPosition: {x: -2007.164, y: -1652.2479}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -21981,7 +21981,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1975079280}
-        m_MethodName: InitializeHeatMap
+        m_MethodName: UpdateGradient
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -22853,8 +22853,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.7450256
-  m_Size: 0.43895277
+  m_Value: 0.7725737
+  m_Size: 0.7888808
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

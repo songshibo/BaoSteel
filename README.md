@@ -117,3 +117,9 @@ Resources/Prefabs为动态生成的模型的prefab
 - 料层图片的生成（qjl）
 - ~~根据温度采样颜色API（ssb）完成~~
 - 热负荷数据（ss）
+
+## DEBUG功能
+
+导出HeatMap热力图等
+
+在Unity的工具栏中选择```Tools/Export Texture```。在弹出的窗口中点击Export则会把贴图导出到指定目录下 (注意：需要在运行时使用，即有热力图生成后再导出)

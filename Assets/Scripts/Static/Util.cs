@@ -199,13 +199,22 @@ public static class Util
             return 0;
     }
 
-    public static Texture2D RenderTextureToTexture2D(RenderTexture rTex)
+    public static string GetParentPathOfProject()
     {
-        Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGB24, false);
-        RenderTexture.active = rTex;
-        tex.ReadPixels(new Rect(0, 0, rTex.width, rTex.height), 0, 0);
-        tex.Apply();
-        return tex;
+        string[] s = Application.dataPath.Split('/');
+        string projName = s[s.Length - 2];
+        return Application.dataPath.Replace(projName + "/Assets", "");
+    }
+
+    public static int ComputeFileIndex(string path, string name, string ext)
+    {
+        int index = 0;
+        while (File.Exists(path + name + ext))
+        {
+            index++;
+            name = name.Split('_')[0] + "_" + index.ToString();
+        }
+        return index;
     }
 
     public static Vector3 ComputeUIPosition(Vector2 coords)
