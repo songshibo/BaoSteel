@@ -206,17 +206,6 @@ public static class Util
         return Application.dataPath.Replace(projName + "/Assets", "");
     }
 
-    public static int ComputeFileIndex(string path, string name, string ext)
-    {
-        int index = 0;
-        while (File.Exists(path + name + ext))
-        {
-            index++;
-            name = name.Split('_')[0] + "_" + index.ToString();
-        }
-        return index;
-    }
-
     public static Vector3 ComputeUIPosition(Vector2 coords)
     {
         Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
