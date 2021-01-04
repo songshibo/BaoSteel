@@ -41,6 +41,14 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     private TextMeshProUGUI temperatureText;
     private TextMeshProUGUI positionText;
 
+    public Texture2D HeatMap
+    {
+        get
+        {
+            return texture;
+        }
+    }
+
     public void ApplyHeatMapProperties()
     {
         Debug.Log("热力图手动更新");
@@ -105,7 +113,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         shader.SetBuffer(kernel, "points", buffer);
         shader.Dispatch(kernel, xRes / 16, yRes / 16, 1);
 
-        texture = Util.RenderTextureToTexture2D(rTex);
+        texture = TextureProcessor.RTtoTex2D(rTex);
         targetMat.SetTexture("Heatmap", texture);
     }
 
@@ -163,11 +171,16 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         return true;
     }
 
-    public void InitializeHeatMap()
+    public void UpdateGradient()
     {
         gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
         targetMat.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
+    }
+
+    public void InitializeHeatMap()
+    {
+        UpdateGradient();
 
         //初始化UI部分
         temperaturePanel = Instantiate(Resources.Load<GameObject>("Prefabs/TemperaturePanel"), GameObject.Find("Canvas").transform);
