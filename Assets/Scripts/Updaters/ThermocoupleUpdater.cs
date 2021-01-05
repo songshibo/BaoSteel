@@ -99,6 +99,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
                 name_temperature.Add(name, temperature);
             }
         }
+
         foreach (var item in name_gameobject)
         {
             item.Value.transform.Find("temperature").GetComponent<Text>().text = "";
@@ -106,7 +107,17 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
         }
         foreach (var item in name_gameobject)
         {
-            item.Value.transform.Find("temperature").GetComponent<Text>().text += name_temperature[item.Key] + " ";
+            try
+            {
+                item.Value.transform.Find("temperature").GetComponent<Text>().text += name_temperature[item.Key] + " ";
+            }
+            catch (KeyNotFoundException)
+            {
+                Debug.LogError(item.Key + "没有找到");
+                Debug.Log(DicStringString(name_temperature));
+                Debug.Log(DicStringGameobject(name_gameobject));
+            }
+
             if (item.Value.name.StartsWith(item.Key))
             {
                 float temp = float.Parse(name_temperature[item.Key].Split(' ')[0]);
@@ -123,5 +134,25 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
             ComputeDisplayInfo();
         }
         return true;
+    }
+    private string DicStringString(Dictionary<string, string> dic)
+    {
+        string result = "";
+        foreach (var item in dic)
+        {
+            result += item.Key + ": " + item.Value + ", ";
+        }
+        
+        return result.Substring(0, result.Length - 2);
+    }
+    private string DicStringGameobject(Dictionary<string, GameObject> dic)
+    {
+        string result = "";
+        foreach (var item in dic)
+        {
+            result += item.Key + ": " + item.Value.name + ", ";
+        }
+
+        return result.Substring(0, result.Length - 2);
     }
 }
