@@ -145,7 +145,6 @@ public class DataServiceManager : Singleton<DataServiceManager>
     {
         if (initialized)
         {
-
             UnityWebRequest www = UnityWebRequest.Get(url + "/model?" + "type=" + type + "&&" + "min_h=" + min_h.ToString() + "&&" + "max_h=" + max_h.ToString());
             yield return www.SendWebRequest();
 
