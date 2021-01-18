@@ -27,7 +27,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
     {
         string mergedName = Util.MergeThermocoupleName(lastHitted.name);
         // 目前是计算，可以考虑从数据库里读取
-        float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(lastHitted.transform.position.z, lastHitted.transform.position.x), 2) + 180;
+        float angle = Util.ComputeThermocoupleAngle(lastHitted.transform.position);
         float height = (float)Math.Round(lastHitted.transform.position.y, 2);
         // 获取热电偶的温度
         infoText.text = "Temperature:\n" + GetTempByName(mergedName) + "°C\n" + "Angle:" + angle.ToString() + "° " + "Height:" + height.ToString() + "m";
@@ -142,7 +142,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
         {
             result += item.Key + ": " + item.Value + ", ";
         }
-        
+
         return result.Substring(0, result.Length - 2);
     }
     private string DicStringGameobject(Dictionary<string, GameObject> dic)

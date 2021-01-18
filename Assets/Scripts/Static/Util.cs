@@ -215,4 +215,40 @@ public static class Util
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, coords, canvas.GetComponent<Camera>(), out pos);
         return new Vector3(pos.x, pos.y, 0);
     }
+
+    public static float ComputeThermocoupleAngle(Vector3 coords)
+    {
+        float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(-coords.x, coords.z), 2) + 180;
+        return angle;
+    }
+
+    public static void HideModelsByTags(string[] tags, bool hide)
+    {
+        List<GameObject> objList = new List<GameObject>();
+        for (int i = 0; i < tags.Length; i++)
+        {
+            objList.AddRange(GameObject.FindGameObjectsWithTag(tags[i]));
+        }
+
+        if (hide)
+        {
+            LayerManager.Instance.MoveAllFromHighlight(objList.ToArray());
+            string info = "Hide models with tags:{";
+            foreach (string tag in tags)
+            {
+                info += tag + " ";
+            }
+            Debug.Log(info + "}.");
+        }
+        else
+        {
+            LayerManager.Instance.AddAllToHighlight(objList.ToArray());
+            string info = "Show models with tags:{";
+            foreach (string tag in tags)
+            {
+                info += tag + " ";
+            }
+            Debug.Log(info + "}.");
+        }
+    }
 }
