@@ -215,4 +215,11 @@ public static class Util
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, coords, canvas.GetComponent<Camera>(), out pos);
         return new Vector3(pos.x, pos.y, 0);
     }
+
+    public static float ComputeThermocoupleAngle(Vector3 coords)
+    {
+        float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(coords.x, coords.z), 2);
+        angle += angle < 0 ? 360 : 0;
+        return angle;
+    }
 }
