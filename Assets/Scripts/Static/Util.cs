@@ -218,8 +218,7 @@ public static class Util
 
     public static float ComputeThermocoupleAngle(Vector3 coords)
     {
-        float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(coords.x, coords.z), 2);
-        angle += angle < 0 ? 360 : 0;
+        float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(-coords.x, coords.z), 2) + 180;
         return angle;
     }
 

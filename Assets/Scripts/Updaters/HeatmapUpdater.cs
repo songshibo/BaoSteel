@@ -136,10 +136,6 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
                 float temperature = (float)Math.Round(temperaturef, 2);
                 Vector3 single_data = new Vector3(angle, height * yAxisScaleFactor, temperature);
                 data.Add(single_data);
-                if (angle == 0)
-                {
-                    data.Add(new Vector3(360, height * yAxisScaleFactor, temperature));
-                }
             }
         }
         else
