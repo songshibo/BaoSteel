@@ -10,6 +10,7 @@
     float4 _TopPlane;
     float4 _BottomPlane;
     float _FadeDistance;
+    float _DisplacementAmount; 
 
     struct Attributes
     {
@@ -120,6 +121,7 @@
         UNITY_TRANSFER_INSTANCE_ID(input, output);
 
         output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
+        output.positionWS += float3(output.positionWS.x , 0, output.positionWS.z) * _DisplacementAmount;
         output.normalWS = TransformObjectToWorldNormal(input.normalOS);
         #ifdef _NORMALMAP
             output.tangentWS.xyz = TransformObjectToWorldDir(input.tangentOS.xyz);

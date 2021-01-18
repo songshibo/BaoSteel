@@ -45,6 +45,7 @@
         _TopPlane ("Top Horizontal Clip Plane Pos(norm:(0,1,0))", Vector) = (0, 200, 0, 0)
         _BottomPlane ("Bottom Horizontal Clip Plane Pos(norma:(0,-1,0))", Vector) = (0, -200, 0, 0)
         _FadeDistance ("Stippling Fade Distance", Range(0.1, 5)) = 1
+        _DisplacementAmount("Displacment multiplier", Float) = 0.1
 
         // Blending state
         [HideInInspector] _Surface("__surface", Float) = 0.0

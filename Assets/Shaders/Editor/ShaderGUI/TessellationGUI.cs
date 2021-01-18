@@ -107,6 +107,7 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
             public MaterialProperty topPlane;
             public MaterialProperty bottomPlane;
             public MaterialProperty fadeDistance;
+            public MaterialProperty displacement;
 
             public ClippingProperties(MaterialProperty[] properties)
             {
@@ -115,6 +116,7 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
                 topPlane = BaseShaderGUI.FindProperty("_TopPlane", properties, false);
                 bottomPlane = BaseShaderGUI.FindProperty("_BottomPlane", properties, false);
                 fadeDistance = BaseShaderGUI.FindProperty("_FadeDistance", properties, false);
+                displacement = BaseShaderGUI.FindProperty("_DisplacementAmount", properties, false);
             }
         }
 
@@ -125,6 +127,8 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
             materialEditor.ShaderProperty(properties.verticalNormal, Styles.verticalNormal);
             materialEditor.ShaderProperty(properties.topPlane, Styles.topPlane);
             materialEditor.ShaderProperty(properties.bottomPlane, Styles.bottomPlane);
+
+            materialEditor.ShaderProperty(properties.displacement, new GUIContent("Displacment Amount", ""));
         }
 
     }
