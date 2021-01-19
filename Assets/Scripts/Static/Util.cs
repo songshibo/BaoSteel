@@ -219,7 +219,7 @@ public static class Util
     public static float ComputeThermocoupleAngle(Vector3 coords)
     {
         float angle = Mathf.Rad2Deg * Mathf.Atan2(coords.x, coords.z) + 360.0f;
-        return (float)Math.Round(angle % 360.0f, 2);
+        return angle % 360.0f;
     }
 
     public static void HideModelsByTags(string[] tags, bool hide)
