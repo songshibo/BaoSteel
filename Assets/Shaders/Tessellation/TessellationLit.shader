@@ -45,7 +45,12 @@
         _TopPlane ("Top Horizontal Clip Plane Pos(norm:(0,1,0))", Vector) = (0, 200, 0, 0)
         _BottomPlane ("Bottom Horizontal Clip Plane Pos(norma:(0,-1,0))", Vector) = (0, -200, 0, 0)
         _FadeDistance ("Stippling Fade Distance", Range(0.1, 5)) = 1
+        
+        _DisplacementMap("Displacement", 2D) = "black" {}
         _DisplacementAmount("Displacment multiplier", Float) = 0.1
+
+        _UVOffset("UV offset for normal computation", Float) = 0.01
+        _MaxHeight("Max height for hearth part", Float) = 30
 
         // Blending state
         [HideInInspector] _Surface("__surface", Float) = 0.0

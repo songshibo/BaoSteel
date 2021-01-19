@@ -20,11 +20,6 @@
     half _TessellationFactorMaxDistance;
     half _TessellationFactorTriangleSize;
     half _TessellationShapeFactor;
-    // half4 _VerticalPlane;
-    // half4 _VerticalNormal;
-    // half4 _TopPlane;
-    // half4 _BottomPlane;
-    // half _FadeDistance;
     CBUFFER_END
 
     TEXTURE2D(_OcclusionMap);       SAMPLER(sampler_OcclusionMap);

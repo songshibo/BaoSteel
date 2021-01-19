@@ -108,6 +108,9 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
             public MaterialProperty bottomPlane;
             public MaterialProperty fadeDistance;
             public MaterialProperty displacement;
+            public MaterialProperty displacementMap;
+            public MaterialProperty uvoffset;
+            public MaterialProperty maxheight;
 
             public ClippingProperties(MaterialProperty[] properties)
             {
@@ -117,18 +120,46 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
                 bottomPlane = BaseShaderGUI.FindProperty("_BottomPlane", properties, false);
                 fadeDistance = BaseShaderGUI.FindProperty("_FadeDistance", properties, false);
                 displacement = BaseShaderGUI.FindProperty("_DisplacementAmount", properties, false);
+                displacementMap = BaseShaderGUI.FindProperty("_DisplacementMap", properties, false);
+                uvoffset = BaseShaderGUI.FindProperty("_UVOffset", properties, false);
+                maxheight = BaseShaderGUI.FindProperty("_MaxHeight", properties, false);
             }
         }
 
         public static void DoClipping(ClippingProperties properties, MaterialEditor materialEditor)
         {
-            materialEditor.ShaderProperty(properties.fadeDistance, Styles.fadeDistance);
-            materialEditor.ShaderProperty(properties.verticalPlane, Styles.verticalPlane);
-            materialEditor.ShaderProperty(properties.verticalNormal, Styles.verticalNormal);
-            materialEditor.ShaderProperty(properties.topPlane, Styles.topPlane);
-            materialEditor.ShaderProperty(properties.bottomPlane, Styles.bottomPlane);
+            GUIStyle titleStyle = new GUIStyle(GUI.skin.label)
+            {
+                fontStyle = FontStyle.Bold
+            };
 
+            EditorGUILayout.Space(20);
+            EditorGUILayout.LabelField("Stippling", titleStyle, GUILayout.ExpandWidth(true));
+            EditorGUI.indentLevel++;
+            materialEditor.ShaderProperty(properties.fadeDistance, Styles.fadeDistance);
+            EditorGUI.indentLevel--;
+
+            EditorGUILayout.Space(20);
+            EditorGUILayout.LabelField("Clipping Properties", titleStyle, GUILayout.ExpandWidth(true));
+            EditorGUI.indentLevel++;
+            materialEditor.ShaderProperty(properties.verticalPlane, Styles.verticalPlane);
+            EditorGUILayout.Space(-20);
+            materialEditor.ShaderProperty(properties.verticalNormal, Styles.verticalNormal);
+            EditorGUILayout.Space(-20);
+            materialEditor.ShaderProperty(properties.topPlane, Styles.topPlane);
+            EditorGUILayout.Space(-20);
+            materialEditor.ShaderProperty(properties.bottomPlane, Styles.bottomPlane);
+            EditorGUI.indentLevel--;
+
+            EditorGUILayout.LabelField("Displacement properties", titleStyle, GUILayout.ExpandWidth(true));
+            EditorGUI.indentLevel++;
+            materialEditor.TextureProperty(properties.displacementMap, "Displacement Texture", true);
             materialEditor.ShaderProperty(properties.displacement, new GUIContent("Displacment Amount", ""));
+            materialEditor.ShaderProperty(properties.uvoffset, new GUIContent("UV offset for normal computation", ""));
+            materialEditor.ShaderProperty(properties.maxheight, new GUIContent("Max height for hearth part", ""));
+            EditorGUI.indentLevel--;
+
+            EditorGUILayout.Space(20);
         }
 
     }
