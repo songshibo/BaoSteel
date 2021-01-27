@@ -31,4 +31,4 @@ Material:
     - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _TopPlane: {r: 0, g: 200, b: 0, a: 0}
     - _VerticalNormal: {r: 1, g: 0, b: -0.00000004371139, a: 0}
-    - _VerticalPlane: {r: 200, g: 0, b: 0, a: 0}
+    - _VerticalPlane: {r: 0, g: 0, b: 0, a: 0}
