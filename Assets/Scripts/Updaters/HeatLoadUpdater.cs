@@ -39,6 +39,14 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
     private TextMeshProUGUI temperatureText;
     private TextMeshProUGUI areaText;
 
+    public Texture2D Heatload
+    {
+        get
+        {
+            return texture;
+        }
+    }
+
     public void ApplyHeatLoadProperties()
     {
         Debug.Log("热负荷手动更新");

@@ -45,10 +45,10 @@ public class TextureEditorWindow : EditorWindow
 
         if (GUILayout.Button("Export"))
         {
-            name += "_" + Util.ComputeFileIndex(path, name, ".png").ToString();
             switch (source)
             {
                 case SOURCE.HeatMap:
+                    name += "_Heatmap";
                     if (!TextureProcessor.SaveTextoPNG(HeatmapUpdater.Instance.HeatMap, name, path))
                     {
                         infoColor = Color.red;
@@ -56,18 +56,39 @@ public class TextureEditorWindow : EditorWindow
                     }
                     else
                     {
-                        infoColor = Color.white;
+                        infoColor = Color.green;
                         info = "Successfully exported to " + path;
+                        if (File.Exists(path + name + ".png"))
+                            info += "(Overwrite)";
                         EditorUtility.RevealInFinder(path + name + ".png");
                     }
                     break;
                 case SOURCE.HeatLoad:
-                    infoColor = Color.yellow;
-                    info = "Export HeatLoad is not supported yet";
+                    name += "_Heatload";
+                    if (!TextureProcessor.SaveTextoPNG(HeatLoadUpdater.Instance.Heatload, name, path))
+                    {
+                        infoColor = Color.red;
+                        info = "Fail to export HeatLoad texture! (Maybe it hasn't been generated)";
+                    }
+                    else
+                    {
+                        infoColor = Color.green;
+                        info = "Successfully exported to " + path;
+                        if (File.Exists(path + name + ".png"))
+                            info += "(Overwrite)";
+                        EditorUtility.RevealInFinder(path + name + ".png");
+                    }
                     break;
                 default:
                     break;
             }
+        }
+
+
+
+        if (GUILayout.Button("Reveal in folder"))
+        {
+            EditorUtility.RevealInFinder(path);
         }
 
         GUIStyle errorStyle = new GUIStyle()
@@ -77,6 +98,6 @@ public class TextureEditorWindow : EditorWindow
             wordWrap = true
         };
         errorStyle.normal.textColor = infoColor;
-        GUI.Box(new Rect(0, 110, position.width - 20, 50), info, errorStyle);
+        GUI.Box(new Rect(0, 130, position.width - 20, 50), info, errorStyle);
     }
 }

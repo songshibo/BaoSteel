@@ -13,6 +13,44 @@ using UnityEngine.UI;
 // 使用 Instantiate 需要继承 MonoBehavior，可以 GameObject.Instantiate
 public sealed class ModelManager : MonoSingleton<ModelManager>
 {
+    string[] parts_tags = {
+        "cooling_cross1",
+        "cooling_cross2",
+        "cooling_cross3",
+        "cooling_cross4",
+        "cooling_cross5",
+        "cooling_cross6",
+        "cooling_cross7",
+        "cooling_cross8",
+        "cooling_cross9",
+        "cooling_cross10",
+        "cooling_plate",
+        "cooling_wall1",
+        "cooling_wall2",
+        "cooling_wall3",
+        "cooling_wall4",
+        "cooling_wall5",
+        "cooling_wall6",
+        "cooling_wall7",
+        "cooling_wall8",
+        "cooling_wall9",
+        "iron_outlet"
+    };
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+            {
+                Util.HideModelsByTags(parts_tags, false);
+            }
+            else
+            {
+                Util.HideModelsByTags(parts_tags, true);
+            }
+        }
+    }
 
     public void GeneratePipeline(string[] models)
     {
@@ -283,5 +321,5 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         return dst.ToArray();
     }
 
-    
+
 }

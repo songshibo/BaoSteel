@@ -206,17 +206,6 @@ public static class Util
         return Application.dataPath.Replace(projName + "/Assets", "");
     }
 
-    public static int ComputeFileIndex(string path, string name, string ext)
-    {
-        int index = 0;
-        while (File.Exists(path + name + ext))
-        {
-            index++;
-            name = name.Split('_')[0] + "_" + index.ToString();
-        }
-        return index;
-    }
-
     public static Vector3 ComputeUIPosition(Vector2 coords)
     {
         Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
@@ -225,5 +214,41 @@ public static class Util
         Vector2 pos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, coords, canvas.GetComponent<Camera>(), out pos);
         return new Vector3(pos.x, pos.y, 0);
+    }
+
+    public static float ComputeThermocoupleAngle(Vector3 coords)
+    {
+        float angle = Mathf.Rad2Deg * Mathf.Atan2(coords.x, coords.z) + 360.0f;
+        return angle % 360.0f;
+    }
+
+    public static void HideModelsByTags(string[] tags, bool hide)
+    {
+        List<GameObject> objList = new List<GameObject>();
+        for (int i = 0; i < tags.Length; i++)
+        {
+            objList.AddRange(GameObject.FindGameObjectsWithTag(tags[i]));
+        }
+
+        if (hide)
+        {
+            LayerManager.Instance.MoveAllFromHighlight(objList.ToArray());
+            string info = "Hide models with tags:{";
+            foreach (string tag in tags)
+            {
+                info += tag + " ";
+            }
+            Debug.Log(info + "}.");
+        }
+        else
+        {
+            LayerManager.Instance.AddAllToHighlight(objList.ToArray());
+            string info = "Show models with tags:{";
+            foreach (string tag in tags)
+            {
+                info += tag + " ";
+            }
+            Debug.Log(info + "}.");
+        }
     }
 }

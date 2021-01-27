@@ -25,7 +25,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 	{
 		float xdiff = abs(xy.x - points[i].x);
 		if (xdiff > 180)
-		xdiff = 360 - xdiff;
+			xdiff = 360 - xdiff;
 		float ydiff = xy.y - points[i].y;
 		float dis = sqrt(xdiff * xdiff + ydiff * ydiff + smoothin * smoothin);
 		float pow_dis = pow(dis, power);

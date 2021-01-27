@@ -57,8 +57,8 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     public void InvertSamplingFromRayCast(Vector3 hitPoint)
     {
-        float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(hitPoint.z, hitPoint.x), 2) + 180;
-        float height = (float)Math.Round(hitPoint.y, 2);
+        float angle = Util.ComputeThermocoupleAngle(hitPoint);
+        float height = hitPoint.y;
         int x = Mathf.RoundToInt(angle / 360 * xRes);
         int y = Mathf.RoundToInt(height / Util.ReadModelProperty("max_height") * yRes);
 
@@ -105,7 +105,9 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     {
         RenderTexture rTex = new RenderTexture(xRes, yRes, 24)
         {
-            enableRandomWrite = true
+            enableRandomWrite = true,
+            wrapMode = TextureWrapMode.Repeat,
+            filterMode = FilterMode.Bilinear
         };
         rTex.Create();
 
@@ -136,10 +138,6 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
                 float temperature = (float)Math.Round(temperaturef, 2);
                 Vector3 single_data = new Vector3(angle, height * yAxisScaleFactor, temperature);
                 data.Add(single_data);
-                if (angle == 0)
-                {
-                    data.Add(new Vector3(360, height * yAxisScaleFactor, temperature));
-                }
             }
         }
         else

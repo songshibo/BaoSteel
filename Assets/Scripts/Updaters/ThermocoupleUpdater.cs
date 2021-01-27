@@ -27,7 +27,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
     {
         string mergedName = Util.MergeThermocoupleName(lastHitted.name);
         // 目前是计算，可以考虑从数据库里读取
-        float angle = (float)Math.Round(Mathf.Rad2Deg * Mathf.Atan2(lastHitted.transform.position.z, lastHitted.transform.position.x), 2) + 180;
+        float angle = Util.ComputeThermocoupleAngle(lastHitted.transform.position);
         float height = (float)Math.Round(lastHitted.transform.position.y, 2);
         // 获取热电偶的温度
         infoText.text = "Temperature:\n" + GetTempByName(mergedName) + "°C\n" + "Angle:" + angle.ToString() + "° " + "Height:" + height.ToString() + "m";
@@ -99,6 +99,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
                 name_temperature.Add(name, temperature);
             }
         }
+
         foreach (var item in name_gameobject)
         {
             item.Value.transform.Find("temperature").GetComponent<Text>().text = "";
@@ -106,7 +107,17 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
         }
         foreach (var item in name_gameobject)
         {
-            item.Value.transform.Find("temperature").GetComponent<Text>().text += name_temperature[item.Key] + " ";
+            try
+            {
+                item.Value.transform.Find("temperature").GetComponent<Text>().text += name_temperature[item.Key] + " ";
+            }
+            catch (KeyNotFoundException)
+            {
+                Debug.LogError(item.Key + "没有找到");
+                Debug.Log(DicStringString(name_temperature));
+                Debug.Log(DicStringGameobject(name_gameobject));
+            }
+
             if (item.Value.name.StartsWith(item.Key))
             {
                 float temp = float.Parse(name_temperature[item.Key].Split(' ')[0]);
@@ -123,5 +134,25 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
             ComputeDisplayInfo();
         }
         return true;
+    }
+    private string DicStringString(Dictionary<string, string> dic)
+    {
+        string result = "";
+        foreach (var item in dic)
+        {
+            result += item.Key + ": " + item.Value + ", ";
+        }
+
+        return result.Substring(0, result.Length - 2);
+    }
+    private string DicStringGameobject(Dictionary<string, GameObject> dic)
+    {
+        string result = "";
+        foreach (var item in dic)
+        {
+            result += item.Key + ": " + item.Value.name + ", ";
+        }
+
+        return result.Substring(0, result.Length - 2);
     }
 }
