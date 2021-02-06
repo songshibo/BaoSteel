@@ -154,6 +154,11 @@ public class ConfigurationManager : MonoBehaviour
                     Debug.Log("热力图定时更新");
                     StartCoroutine(DataServiceManager.Instance.GetHeatmap(HeatmapUpdater.Instance.UpdateHeatmap));
                 }
+                else if (item.Key.Equals("residual_timing"))
+                {
+                    Debug.Log("残厚定时更新");
+                    StartCoroutine(DataServiceManager.Instance.GetResidual(ResidualUpdater.Instance.UpdateResidual));
+                }
 
                 item.Value[0] = 0;
             }
