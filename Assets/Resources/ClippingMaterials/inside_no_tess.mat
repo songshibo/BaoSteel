@@ -214,7 +214,7 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TopPlane: {r: 0, g: 200, b: 0, a: 0}
     - _VerticalNormal: {r: 1, g: 0, b: -0.00000004371139, a: 0}
-    - _VerticalPlane: {r: 0, g: 0, b: 0, a: 0}
+    - _VerticalPlane: {r: 100, g: 0, b: 0, a: 0}
 --- !u!114 &3978281711144303530
 MonoBehaviour:
   m_ObjectHideFlags: 11

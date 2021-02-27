@@ -5,6 +5,7 @@ using System.IO;
 public class TextureBakerWindow : EditorWindow
 {
     GameObject objectToBake;
+    int subMeshIndex;
 
     [MenuItem("Tools/Baking Texture")]
     public static void Init()
@@ -46,31 +47,22 @@ public class TextureBakerWindow : EditorWindow
             // Choose which submesh to bake or all mesh
             Mesh selectedMesh = objectToBake.GetComponent<MeshFilter>().sharedMesh;
             int subMeshCount = selectedMesh.subMeshCount;
-            int[] value = new int[subMeshCount + 1];
-            string[] info = new string[subMeshCount + 1];
+            int[] value = new int[subMeshCount];
+            string[] info = new string[subMeshCount];
             for (int i = 0; i < subMeshCount; i++)
             {
                 info[i] = "Submesh index <" + i.ToString() + ">";
                 value[i] = i;
             }
-            value[subMeshCount] = subMeshCount;
-            info[subMeshCount] = "Full mesh";
             // Only display this selection when submesh count > 1;
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("SubMesh to Bake:");
-            int subMeshIndex = EditorGUILayout.IntPopup(0, info, value);
+            subMeshIndex = EditorGUILayout.IntPopup(subMeshIndex, info, value);
             EditorGUILayout.EndHorizontal();
 
             if (GUILayout.Button("Bake"))
             {
-                if (subMeshIndex == subMeshCount) // draw full mesh
-                {
-                    Bake(selectedMesh, subMeshCount, resolution, true);
-                }
-                else
-                {
-                    Bake(selectedMesh, subMeshIndex, resolution);
-                }
+                Bake(selectedMesh, subMeshIndex, resolution);
             }
         }
         else
@@ -83,7 +75,7 @@ public class TextureBakerWindow : EditorWindow
         GUI.Box(new Rect(0, position.height - 50, position.width - 20, 50), bakeInfo, errorStyle);
     }
 
-    private void Bake(Mesh mesh, int subMesh, int res, bool fullMesh = false)
+    private void Bake(Mesh mesh, int subMesh, int res)
     {
         EditorApplication.ExecuteMenuItem("Edit/Play");
 
@@ -92,14 +84,13 @@ public class TextureBakerWindow : EditorWindow
 
         if (baker.LoadMaterials())
         {
-            baker.resolution = res;
-            baker.mesh = mesh;
-            baker.subMeshIndex = subMesh;
-            baker.fullMesh = fullMesh;
-            baker.Bake();
+            //baker.resolution = res;
+            //baker.mesh = mesh;
+            //baker.subMeshIndex = subMesh;
+            //baker.Bake();
         }
 
-        Object.DestroyImmediate(obj);
+        DestroyImmediate(obj);
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
