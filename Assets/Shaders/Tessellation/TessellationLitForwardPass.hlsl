@@ -150,21 +150,19 @@
         TESSELLATION_INTERPOLATE_BARY(texcoord, baryCoords);
         TESSELLATION_INTERPOLATE_BARY(lightmapUV, baryCoords);
 
-        /*
         // vertex move direction
-        float3 dir = normalize(float3(output.positionWS.x, 0, output.positionWS.z));
+        // float3 dir = normalize(float3(output.positionWS.x, 0, output.positionWS.z));
         // sampling the texture
         // using angle & height
-        float angle = degrees(atan2(-dir.x, dir.z)) + 180;
+        // float angle = degrees(atan2(-dir.x, dir.z)) + 180;
         //计算uv，和热力图一样，u是角度，v是高度，并且都进行了归一化
-        float2 uv0 = float2(angle / 360, output.positionWS.y / _MaxHeight);
-        float2 uv1 = uv0 + float2(_UVOffset, 0);
-        float2 uv2 = uv0 + float2(0, _UVOffset);
+        // float2 uv0 = float2(angle / 360, output.positionWS.y / _MaxHeight);
+        // float2 uv1 = uv0 + float2(_UVOffset, 0);
+        // float2 uv2 = uv0 + float2(0, _UVOffset);
         
-        float3 v0 = dir * tex2Dlod(_DisplacementMap, float4(uv0.x, uv0.y, 0, 0)).r * _DisplacementAmount;
-        float3 v1 = dir * tex2Dlod(_DisplacementMap, float4(uv1.x, uv1.y, 0, 0)).r * _DisplacementAmount;
-        float3 v2 = dir * tex2Dlod(_DisplacementMap, float4(uv2.x, uv2.y, 0, 0)).r * _DisplacementAmount;
-        */
+        // float3 v0 = dir * tex2Dlod(_DisplacementMap, float4(uv0.x, uv0.y, 0, 0)).r * _DisplacementAmount;
+        // float3 v1 = dir * tex2Dlod(_DisplacementMap, float4(uv1.x, uv1.y, 0, 0)).r * _DisplacementAmount;
+        // float3 v2 = dir * tex2Dlod(_DisplacementMap, float4(uv2.x, uv2.y, 0, 0)).r * _DisplacementAmount;
 
         return output;
     }
@@ -177,6 +175,26 @@
         UNITY_SETUP_INSTANCE_ID(input);
         UNITY_TRANSFER_INSTANCE_ID(input, output);
         UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
+        
+        //Displacement
+        float3 dir = normalize(float3(input.positionWS.x, 0, input.positionWS.z));
+        float3 modifiedPos = input.positionWS;
+        modifiedPos += dir * sin(input.positionWS.y * _MaxHeight) * _DisplacementAmount;
+
+        float3 posTangent = input.positionWS + input.tangentWS.xyz * _UVOffset;
+        posTangent += dir * sin(posTangent.y * _MaxHeight) * _DisplacementAmount;
+
+        float3 bbitangentWS = normalize(cross(input.normalWS, input.tangentWS.xyz));
+        float3 posBiTangent = input.positionWS + bbitangentWS * _UVOffset;
+        posBiTangent += dir * sin(posBiTangent.y * _MaxHeight) * _DisplacementAmount;
+
+        float3 modifiedTangent = normalize(posTangent - modifiedPos);
+        float3 modifiedBitangent = normalize(posBiTangent - modifiedPos);
+
+        input.tangentWS = float4(modifiedTangent, input.tangentWS.w);
+        input.normalWS = normalize(cross(modifiedTangent, modifiedBitangent));
+        input.positionWS = modifiedPos;
+        //End Displacement
 
         float4 positionCS = TransformWorldToHClip(input.positionWS);
 
