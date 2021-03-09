@@ -45,6 +45,7 @@ public static class TextureProcessor
             cs.Dispatch(kernel, numThreadGroups, numThreadGroups, 1);
 
             slices[layer] = RTtoTex2D(slice);
+            slice.Release();
         }
 
         return slices;

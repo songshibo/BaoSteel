@@ -30,6 +30,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     [Space]
     [SerializeField]
     private Texture2D texture;
+    private RenderTexture rTex;
     //[SerializeField]
     private Texture2D gradientTex;
 
@@ -103,22 +104,14 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     private void GenerateHeatMap()
     {
-        RenderTexture rTex = new RenderTexture(xRes, yRes, 24)
-        {
-            enableRandomWrite = true,
-            wrapMode = TextureWrapMode.Repeat,
-            filterMode = FilterMode.Bilinear
-        };
-        rTex.Create();
-
         shader.SetTexture(kernel, "Result", rTex);
         shader.SetBuffer(kernel, "points", buffer);
         shader.Dispatch(kernel, xRes / 16, yRes / 16, 1);
 
-        texture = TextureProcessor.RTtoTex2D(rTex);
-        //Release the rendertexture
-        rTex.Release();
-        targetMat.SetTexture("Heatmap", texture);
+        RenderTexture.active = rTex;
+        texture.ReadPixels(new Rect(0, 0, xRes, yRes), 0, 0);
+        texture.Apply();
+        RenderTexture.active = null;
     }
 
     public bool UpdateHeatmap(string jsondata)
@@ -180,6 +173,22 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     public void InitializeHeatMap()
     {
+        // initialize
+        // put rendertexture/texture2D here to prevent memory leak
+        rTex = new RenderTexture(xRes, yRes, 0)
+        {
+            enableRandomWrite = true,
+            wrapMode = TextureWrapMode.Repeat,
+            filterMode = FilterMode.Bilinear
+        };
+        rTex.Create();
+        texture = new Texture2D(xRes, yRes)
+        {
+            wrapMode = TextureWrapMode.Repeat,
+            filterMode = FilterMode.Bilinear
+        };
+        targetMat.SetTexture("Heatmap", texture);
+
         UpdateGradient();
 
         //初始化UI部分
@@ -193,5 +202,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
     {
         if (buffer != null)
             buffer.Dispose();
+        if (rTex != null)
+            rTex.Release();
     }
 }

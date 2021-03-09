@@ -6,7 +6,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 {
     public bool UpdateResidual(string content)
     {
-        print(content);
+        // print(content);
         return true;
     }
 }
