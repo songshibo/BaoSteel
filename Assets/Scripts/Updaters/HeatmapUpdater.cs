@@ -116,6 +116,8 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         shader.Dispatch(kernel, xRes / 16, yRes / 16, 1);
 
         texture = TextureProcessor.RTtoTex2D(rTex);
+        //Release the rendertexture
+        rTex.Release();
         targetMat.SetTexture("Heatmap", texture);
     }
 
