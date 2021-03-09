@@ -2,12 +2,17 @@
 
 public class TextureBaker : MonoBehaviour
 {
-    bool bake = false;
-    Material source, dilate;
-    public int resolution;
-    public Mesh mesh;
+    public bool bake = false;
+    public int resolution = 1024;
+    public GameObject obj2bake;
     public int subMeshIndex;
-    public bool fullMesh;
+
+    Material source, dilate;
+
+    private void Start()
+    {
+        LoadMaterials();
+    }
 
     public bool LoadMaterials()
     {
@@ -38,6 +43,14 @@ public class TextureBaker : MonoBehaviour
         return true;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            bake = true;
+        }
+    }
+
     private void OnPostRender()
     {
         if (bake)
@@ -46,43 +59,25 @@ public class TextureBaker : MonoBehaviour
             rt.Create();
 
             Graphics.SetRenderTarget(rt);
-            GL.Clear(true, true, Color.black);
+            GL.Clear(true, true, new Color(0, 0, 0, 0));
             GL.PushMatrix();
             GL.LoadOrtho();
             source.SetPass(0);
-            if (fullMesh)
-            {
-                Graphics.DrawMeshNow(mesh, Matrix4x4.identity);
-            }
-            else
-            {
-                Graphics.DrawMeshNow(mesh, Matrix4x4.identity, subMeshIndex);
-            }
+            Mesh mesh = obj2bake.GetComponent<MeshFilter>().sharedMesh;
+            Graphics.DrawMeshNow(mesh, Matrix4x4.identity, subMeshIndex);
             Graphics.SetRenderTarget(null);
             RenderTexture rt2 = new RenderTexture(resolution, resolution, 16, RenderTextureFormat.ARGB64);
             rt2.Create();
             Graphics.Blit(rt, rt2, dilate);
-            TextureProcessor.SaveRenderTextureAsAsset(rt2, "Name", "Assets/");
+            Debug.Log(Application.dataPath + "/");
+            TextureProcessor.SaveTextoPNG(rt2, "BakedTexture", Application.dataPath + "/");
             RenderTexture.active = null;
             rt.Release();
             rt2.Release();
             GL.PopMatrix();
 
+            Debug.Log("Finished");
             bake = false;
         }
-    }
-
-    // private void Update()
-    // {
-    //     if (sourceMat != null)
-    //     {
-    //         Graphics.DrawMesh(mesh, Vector3.zero, Quaternion.identity, sourceMat, 0, Camera.main, 0);
-    //         Graphics.DrawMesh(mesh, Vector3.zero, Quaternion.identity, sourceMat, 0, Camera.main, 1);
-    //         Graphics.DrawMesh(mesh, Vector3.zero, Quaternion.identity, sourceMat, 0, Camera.main, 2);
-    //     }
-    // }
-    public void Bake()
-    {
-        bake = true;
     }
 }
