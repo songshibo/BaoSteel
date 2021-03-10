@@ -87,8 +87,6 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
 
     private void GenerateHeatLoad()
     {
-        texture = new Texture2D(xRes, yRes);
-
         Color[] colours = new Color[xRes];
         for (int i = 0; i < xRes; i++)
         {
@@ -223,5 +221,6 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         temperatureText = tuyerePanel.transform.Find("TemperatureBackgroud/Temperature").GetComponent<TextMeshProUGUI>();
         areaText = tuyerePanel.transform.Find("Position").GetComponent<TextMeshProUGUI>();
         tuyerePanel.SetActive(false);
+        texture = new Texture2D(xRes, yRes);
     }
 }
