@@ -132,6 +132,17 @@ public class CustomGradient
         return texture;
     }
 
+    public void UpdateTexture(ref Texture2D texture, int width, int segment, bool isLinear = false)
+    {
+        Color[] colours = new Color[width];
+        for (int i = 0; i < width; i++)
+        {
+            colours[i] = Evaluate((float)i / (width - 1), segment);
+        }
+        texture.SetPixels(colours);
+        texture.Apply();
+    }
+
     [System.Serializable]
     public struct ColourKey
     {

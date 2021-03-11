@@ -166,8 +166,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
 
     public void UpdateGradient()
     {
-        gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
-        targetMat.SetTexture("_CustomGradient", gradientTex);
+        customGradient.UpdateTexture(ref gradientTex, gradientRes, (int)float.Parse(segmentUI.valueText.text));
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
     }
 
@@ -188,6 +187,9 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
             filterMode = FilterMode.Bilinear
         };
         targetMat.SetTexture("Heatmap", texture);
+        //Gradient Texture
+        gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
+        targetMat.SetTexture("_CustomGradient", gradientTex);
 
         UpdateGradient();
 
