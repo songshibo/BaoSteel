@@ -4,19 +4,13 @@
     #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
     #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/GeometricTools.hlsl"
     #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Tessellation.hlsl"
+    #include "./CustomFunction.hlsl"
 
     float4 _VerticalPlane;
     float4 _VerticalNormal; 
     float4 _TopPlane;
     float4 _BottomPlane;
     float _FadeDistance;
-
-    sampler2D _DisplacementMap;
-    float4 _DisplacementMap_ST;
-    float _DisplacementAmount;
-
-    float _UVOffset; // 重新计算法线的uv偏移量
-    float _MaxHeight;// 炉缸残厚部分的最大高度
 
     struct Attributes
     {
@@ -150,20 +144,6 @@
         TESSELLATION_INTERPOLATE_BARY(texcoord, baryCoords);
         TESSELLATION_INTERPOLATE_BARY(lightmapUV, baryCoords);
 
-        // vertex move direction
-        // float3 dir = normalize(float3(output.positionWS.x, 0, output.positionWS.z));
-        // sampling the texture
-        // using angle & height
-        // float angle = degrees(atan2(-dir.x, dir.z)) + 180;
-        //计算uv，和热力图一样，u是角度，v是高度，并且都进行了归一化
-        // float2 uv0 = float2(angle / 360, output.positionWS.y / _MaxHeight);
-        // float2 uv1 = uv0 + float2(_UVOffset, 0);
-        // float2 uv2 = uv0 + float2(0, _UVOffset);
-        
-        // float3 v0 = dir * tex2Dlod(_DisplacementMap, float4(uv0.x, uv0.y, 0, 0)).r * _DisplacementAmount;
-        // float3 v1 = dir * tex2Dlod(_DisplacementMap, float4(uv1.x, uv1.y, 0, 0)).r * _DisplacementAmount;
-        // float3 v2 = dir * tex2Dlod(_DisplacementMap, float4(uv2.x, uv2.y, 0, 0)).r * _DisplacementAmount;
-
         return output;
     }
 
@@ -177,23 +157,10 @@
         UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
         
         //Displacement
-        float3 dir = normalize(float3(input.positionWS.x, 0, input.positionWS.z));
-        float3 modifiedPos = input.positionWS;
-        modifiedPos += dir * sin(input.positionWS.y * _MaxHeight) * _DisplacementAmount;
-
-        float3 posTangent = input.positionWS + input.tangentWS.xyz * _UVOffset;
-        posTangent += dir * sin(posTangent.y * _MaxHeight) * _DisplacementAmount;
-
-        float3 bbitangentWS = normalize(cross(input.normalWS, input.tangentWS.xyz));
-        float3 posBiTangent = input.positionWS + bbitangentWS * _UVOffset;
-        posBiTangent += dir * sin(posBiTangent.y * _MaxHeight) * _DisplacementAmount;
-
-        float3 modifiedTangent = normalize(posTangent - modifiedPos);
-        float3 modifiedBitangent = normalize(posBiTangent - modifiedPos);
-
-        input.tangentWS = float4(modifiedTangent, input.tangentWS.w);
-        input.normalWS = normalize(cross(modifiedTangent, modifiedBitangent));
-        input.positionWS = modifiedPos;
+        #ifdef _NORMALMAP
+            //SimpleDisplcaement(input.positionWS);
+            FullDisplacement(input.positionWS, input.normalWS, input.tangentWS);
+        #endif
         //End Displacement
 
         float4 positionCS = TransformWorldToHClip(input.positionWS);
@@ -293,6 +260,7 @@
 
         color.rgb = MixFog(color.rgb, inputData.fogCoord);
         return color;
+        return float4(input.normalWS.x, input.normalWS.y, input.normalWS.z, 1.0);
     }
 
 #endif

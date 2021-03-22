@@ -15,12 +15,14 @@ public class UIManager : MonoSingleton<UIManager>
     public HorizontalSelector heatMapGradientSelector;
     public HorizontalSelector heatLoadGradientSelector;
     public GameObject tuyereUI;
+    
     private GameObject EnterExitTuyereInfo;
     private GameObject EnterExitInfo;
     private Vector2 ThermocouplePanel_Width_Height;
     private ModalWindowManager heatmapWindowManager;
     private ModalWindowManager heatloadWindowManager;
     private ModalWindowManager TuyereWindowManager;
+    private ModalWindowManager optionWindowManager;
 
     public void InitializeUI(string[] configClip, string[] configShowPart)
     {
@@ -89,7 +91,7 @@ public class UIManager : MonoSingleton<UIManager>
         heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapUpdater.Instance.SwitchGradientMode(value));
         // 热负荷的gradient的mode设置
         heatLoadGradientSelector.selectorEvent.AddListener((int value) => HeatLoadUpdater.Instance.SwitchHeatLoad(value));
-        // RenderMode
+        // RenderType
         heatmapWindowManager = GameObject.Find("HeatMapWindow").GetComponent<ModalWindowManager>();
         heatloadWindowManager = GameObject.Find("HeatLoadWindow").GetComponent<ModalWindowManager>();
         TuyereWindowManager = GameObject.Find("TuyereWindow").GetComponent<ModalWindowManager>();
@@ -98,6 +100,9 @@ public class UIManager : MonoSingleton<UIManager>
         renderType.CreateNewItem("Heat Load", clipIcon);
         renderType.dropdownEvent.AddListener(RenderTypeEvent);
         renderType.SetupDropdown();
+        // Options
+        optionWindowManager = GameObject.Find("OptionWindow").GetComponent<ModalWindowManager>();
+
     }
 
     public void ShowTuyereUI()

@@ -4,24 +4,30 @@ using UnityEngine;
 
 public class InsideStoveManager : MonoSingleton<InsideStoveManager>
 {
-    public int width, height;
+    public Texture2D tex2d;
     private MeshFilter filter;
     private MeshRenderer meshRenderer;
 
-    private Mesh GeneratePanel(int w, int h)
+    private Mesh GeneratePanel()
     {
         Mesh mesh = new Mesh();
 
         Vector3[] vertices = new Vector3[4];
-        // center: (0,0,0) -> middle bottom of the panel
-        // compute vertex positions
-        vertices[0] = Vector3.up * h - 0.5f * w * Vector3.right;
-        vertices[1] = Vector3.up * h + 0.5f * w * Vector3.right;
-        vertices[2] = -0.5f * w * Vector3.right;
-        vertices[3] = 0.5f * w * Vector3.right;
+        Vector2[] uvs = new Vector2[4];
+        // vertex positions
+        vertices[0] = new Vector3(0.5f, 0.5f, 0.0f);
+        uvs[0] = new Vector2(1f, 1f);
+        vertices[1] = new Vector3(0.5f, -0.5f, 0.0f);
+        uvs[1] = new Vector2(1f, 0f);
+        vertices[2] = new Vector3(-0.5f, -0.5f, 0.0f);
+        uvs[2] = new Vector2(0f, 0f);
+        vertices[3] = new Vector3(-0.5f, 0.5f, 0.0f);
+        uvs[3] = new Vector2(0f, 1f);
+
         mesh.vertices = vertices;
         //assign triangle indices
-        mesh.triangles = new int[6] { 0, 1, 2, 1, 3, 2 };
+        mesh.triangles = new int[6] { 0, 1, 3, 1, 2, 3 };
+        mesh.uv = uvs;
 
         mesh.RecalculateNormals();
         mesh.Optimize();
@@ -39,10 +45,23 @@ public class InsideStoveManager : MonoSingleton<InsideStoveManager>
             meshRenderer = gameObject.AddComponent<MeshRenderer>();
         }
         meshRenderer.sharedMaterial = Resources.Load<Material>("InsideStovePanel");
+        if (tex2d != null)
+        {
+            meshRenderer.sharedMaterial.SetTexture("_MainTex", tex2d);
+        }
+        else
+        {
+            Debug.LogError("Inisde Stove texture 2D has not been found!");
+        }
         meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         meshRenderer.receiveShadows = false;
-        filter.mesh = GeneratePanel(width, height);
+        filter.mesh = GeneratePanel();
         meshRenderer.enabled = false;
+    }
+
+    public void ControlPanelFromUI(bool isOn)
+    {
+        meshRenderer.enabled = isOn;
     }
 
     public void ControlPanel(bool isOn, float angle)

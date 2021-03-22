@@ -43,13 +43,18 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         {
             if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
             {
-                Util.HideModelsByTags(parts_tags, false);
+                HideUselessModels(false);
             }
             else
             {
-                Util.HideModelsByTags(parts_tags, true);
+                HideUselessModels(true);
             }
         }
+    }
+
+    public void HideUselessModels(bool value)
+    {
+        Util.HideModelsByTags(parts_tags, value);
     }
 
     public void GeneratePipeline(string[] models)

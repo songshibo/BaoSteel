@@ -5,11 +5,9 @@
     #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
     #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/GeometricTools.hlsl"
     #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Tessellation.hlsl"
+    #include "./CustomFunction.hlsl"
 
     float3 _LightDirection;
-    float _UVOffset; // 重新计算法线的uv偏移量
-    float _MaxHeight;// 炉缸残厚部分的最大高度
-    float _DisplacementAmount;
 
     struct Attributes
     {
@@ -83,11 +81,7 @@
         UNITY_SETUP_INSTANCE_ID(input);
 
         //Displacement
-        float3 dir = normalize(float3(input.positionWS.x, 0, input.positionWS.z));
-        float3 modifiedPos = input.positionWS;
-        modifiedPos += dir * sin(input.positionWS.y * _MaxHeight) * _DisplacementAmount;
-
-        input.positionWS = modifiedPos;
+        SimpleDisplcaement(input.positionWS, input.normalWS);
         //End Displacement
 
         output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
