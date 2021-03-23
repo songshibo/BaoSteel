@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.2824743, g: 0.41884625, b: 0.59536684, a: 1}
+  m_IndirectSpecularColor: {r: 0.28247446, g: 0.4188465, b: 0.59536743, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13814,6 +13814,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e9aa771fa97954499001522f8189c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yHeight: 25
+  stoveInsideColoredMat: {fileID: 2100000, guid: ab88cedaa6611fc4094bec5497ad4832,
+    type: 2}
+  displacement: -0.7
+  stoveInsideTessMat: {fileID: 2100000, guid: 945c3601516e32a44ac2fdd0c75ee660, type: 2}
+  residualThicknessTex: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+  customGradient:
+    blendMode: 0
+    randomizeColour: 0
+    keys:
+    - colour: {r: 0, g: 0.9811321, b: 0.05328607, a: 0}
+      time: 0
+    - colour: {r: 1, g: 0, b: 0, a: 1}
+      time: 1
 --- !u!4 &813348597
 Transform:
   m_ObjectHideFlags: 0
@@ -14622,8 +14636,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.9141487
-  m_Size: 0.28251734
+  m_Value: 0.9242138
+  m_Size: 0.25332433
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15380,7 +15394,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2442.8015, y: -2630.5771}
+  m_AnchoredPosition: {x: -2359.6284, y: -2695.2754}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -25917,8 +25931,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.83470875
-  m_Size: 0.4665333
+  m_Value: 0.81863904
+  m_Size: 0.5121366
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

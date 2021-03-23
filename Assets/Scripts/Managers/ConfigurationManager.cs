@@ -19,6 +19,7 @@ public class ConfigurationManager : MonoBehaviour
         HeatmapUpdater.Instance.InitializeHeatMap();
         HeatLoadUpdater.Instance.InitializeHeatLoad();
         InsideStoveManager.Instance.Initialize();
+        ResidualUpdater.Instance.Initialize();
 
         // Async
         InitializeModelManager();
