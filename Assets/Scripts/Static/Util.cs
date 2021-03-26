@@ -222,6 +222,30 @@ public static class Util
         return angle % 360.0f;
     }
 
+    public static void DisableModelsByTags(string[] tags, bool hide)
+    {
+        List<GameObject> objList = new List<GameObject>();
+        for (int i = 0; i < tags.Length; i++)
+        {
+            objList.AddRange(GameObject.FindGameObjectsWithTag(tags[i]));
+        }
+
+        if (hide)
+        {
+            foreach (GameObject obj in objList)
+            {
+                obj.GetComponent<MeshRenderer>().enabled = false;
+            }
+        }
+        else
+        {
+            foreach (GameObject obj in objList)
+            {
+                obj.GetComponent<MeshRenderer>().enabled = true;
+            }
+        }
+    }
+
     public static void HideModelsByTags(string[] tags, bool hide)
     {
         List<GameObject> objList = new List<GameObject>();

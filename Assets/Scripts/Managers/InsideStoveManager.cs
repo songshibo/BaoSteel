@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Michsky.UI.ModernUIPack;
 
 public class InsideStoveManager : MonoSingleton<InsideStoveManager>
 {
     public Texture2D tex2d;
     private MeshFilter filter;
     private MeshRenderer meshRenderer;
+    private SwitchManager swtichUI;
 
     private Mesh GeneratePanel()
     {
@@ -57,6 +59,8 @@ public class InsideStoveManager : MonoSingleton<InsideStoveManager>
         meshRenderer.receiveShadows = false;
         filter.mesh = GeneratePanel();
         meshRenderer.enabled = false;
+
+        swtichUI = GameObject.Find("InsidePanelSwitch").transform.Find("Switch").GetComponent<SwitchManager>();
     }
 
     public void ControlPanelFromUI(bool isOn)
@@ -68,6 +72,9 @@ public class InsideStoveManager : MonoSingleton<InsideStoveManager>
     {
         transform.rotation = Quaternion.Euler(0, 180 + angle, 0);
         meshRenderer.enabled = isOn;
+        // Auto Change combine UI value;
+        if (swtichUI.isOn != meshRenderer.enabled)
+            swtichUI.AnimateSwitch();
         Debug.Log("Turn " + (meshRenderer.enabled ? "On" : "Off") +
             " the inside-stove panel");
     }

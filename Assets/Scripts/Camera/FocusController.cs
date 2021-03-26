@@ -25,6 +25,13 @@ public class FocusController : MonoBehaviour
     private Quaternion vertOriginRot; // 记录Vertical Rig的初始旋转
     private Vector3 camOriginPos; // 记录camera group的位置
 
+    //self rotation when no user input
+    private float sleepTime;
+    [SerializeField]
+    private float sleepThreshold = 10f;
+    [SerializeField]
+    private float autoRotateSpeed = 1f;
+
     protected void Awake()
     {
         cameraRig = transform.parent.transform.parent.transform;
@@ -42,14 +49,46 @@ public class FocusController : MonoBehaviour
         rigOriginRot = cameraRig.rotation;
         vertOriginRot = verticalRotation;
         camOriginPos = camPosition;
+
+        sleepTime = sleepThreshold;
     }
 
     protected void Update()
     {
-        Zoom();
-        Drag();
-        Rotate();
-        cameraRig.position = Vector3.Lerp(cameraRig.position, rigPosition, Time.deltaTime * zoomSpeed);
+        if (sleepTime > sleepThreshold)
+        {
+            AutoRotateRig();
+        }
+
+        //如果有任何输入，或者之前的旋转和位移还没有到达指定位置，则不会开始计时sleepTime
+        if (Input.anyKey || Input.GetAxisRaw("Mouse ScrollWheel") != 0 || !IsRotationMatched() || !IsPostionMatched())
+        {
+            sleepTime = 0f;
+            Zoom();
+            Drag();
+            Rotate();
+            cameraRig.position = Vector3.Lerp(cameraRig.position, rigPosition, Time.deltaTime * zoomSpeed);
+        }
+        else
+        {
+            sleepTime += Time.deltaTime;
+        }
+    }
+
+    private bool IsRotationMatched()
+    {
+        return (Quaternion.Angle(cameraRig.rotation, rigRotation) <= 0.01f && Quaternion.Angle(verticalRig.localRotation, verticalRotation) <= 0.01f);
+    }
+
+    private bool IsPostionMatched()
+    {
+        return ((transform.localPosition - camPosition).magnitude < 0.001f && (cameraRig.position - rigPosition).magnitude < 0.001f);
+    }
+
+    private void AutoRotateRig()
+    {
+        cameraRig.rotation *= Quaternion.AngleAxis(autoRotateSpeed, Vector3.up);
+        rigRotation = cameraRig.rotation;
     }
 
     public void SetCameraParameters(float _zoomSpeed, float _rotateSpeed, float _dragSpeed, float _limitDistance)

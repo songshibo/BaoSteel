@@ -37,24 +37,10 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         "iron_outlet"
     };
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
-            {
-                HideUselessModels(false);
-            }
-            else
-            {
-                HideUselessModels(true);
-            }
-        }
-    }
-
     public void HideUselessModels(bool value)
     {
-        Util.HideModelsByTags(parts_tags, value);
+        // Util.HideModelsByTags(parts_tags, value);
+        Util.DisableModelsByTags(parts_tags, value);
     }
 
     public void GeneratePipeline(string[] models)
