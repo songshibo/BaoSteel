@@ -7,10 +7,10 @@ TagManager:
   - roof_riser
   - roof_pipeline
   - shelf
-  - feed_box
-  - top_cloth
+  - "feed_box\r"
+  - "top_cloth\r"
   - top_tank
-  - bottom_cloth
+  - "bottom_cloth\r"
   - bottom_tank
   - cooling_wall9
   - throat_connect

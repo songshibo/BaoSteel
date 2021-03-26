@@ -35,7 +35,7 @@ Shader "Custom/Particle"
 				 #pragma multi_compile_particles
 
 				 #include "UnityCG.cginc"
-				 #include "GLSLFunctions/UtilityShaderFunction.cginc"
+				 #include "../GLSLFunctions/UtilityShaderFunction.cginc"
 
 				 sampler2D _MainTex;
 				 fixed4 _TintColor;

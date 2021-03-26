@@ -10,6 +10,7 @@ public class ConfigurationManager : MonoBehaviour
 
     private void Awake()
     {
+        
         // No-Async
         InitilizeTiming();
         InitializeDataServiceManager();
@@ -29,6 +30,19 @@ public class ConfigurationManager : MonoBehaviour
         CullingController.Instance.ResetMaterialProperties();
         // 单独处理heatmap材质，将其设置为正常渲染模式
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
+
+    }
+
+    private void Update()
+    {
+        DrawCenterLine();
+    }
+
+    private void DrawCenterLine()
+    {
+        Vector3 start = new Vector3(0, 0, 0);
+        Vector3 end = new Vector3(0, 50, 0);
+        
 
     }
 
