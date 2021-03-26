@@ -17,8 +17,8 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     public Material stoveInsideColoredMat;
     public float displacement = -0.7f;
     public Material stoveInsideTessMat;
-    [SerializeField]
-    Texture2D residualThicknessTex;
+    // [SerializeField]
+    // Texture2D residualThicknessTex;
     [SerializeField]
     CustomGradient customGradient = new CustomGradient();
     Texture2D gradientTex;
@@ -28,7 +28,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         if (stoveInsideColoredMat != null)
         {
             gradientTex = customGradient.GetTexture(64, 2);
-            stoveInsideColoredMat.SetTexture("_ResidualThickness", residualThicknessTex);
+            // stoveInsideColoredMat.SetTexture("_ResidualThickness", residualThicknessTex);
             stoveInsideColoredMat.SetTexture("_CustomGradient", gradientTex);
             stoveInsideColoredMat.SetFloat("yHeight", yHeight);
         }

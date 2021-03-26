@@ -59,7 +59,7 @@
         [HideInInspector] _SrcBlend("__src", Float) = 1.0
         [HideInInspector] _DstBlend("__dst", Float) = 0.0
         [HideInInspector] _ZWrite("__zw", Float) = 1.0
-        [HideInInspector] _Cull("__cull", Float) = 2.0
+        [HideInInspector] _Cull("__cull", Float) = 1.0
 
         _ReceiveShadows("Receive Shadows", Float) = 1.0
         // Editmode props

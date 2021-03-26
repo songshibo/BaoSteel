@@ -1565,9 +1565,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2051223940}
   m_Direction: 0
   m_MinValue: 10
-  m_MaxValue: 35
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 20
+  m_Value: 40
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2728,6 +2728,8 @@ MonoBehaviour:
   dragSpeed: 10
   limitDistance: 5
   lockCursor: 0
+  sleepThreshold: 10
+  autoRotateSpeed: -0.2
 --- !u!1 &185686924
 GameObject:
   m_ObjectHideFlags: 0
@@ -13819,7 +13821,6 @@ MonoBehaviour:
     type: 2}
   displacement: -0.7
   stoveInsideTessMat: {fileID: 2100000, guid: 945c3601516e32a44ac2fdd0c75ee660, type: 2}
-  residualThicknessTex: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
   customGradient:
     blendMode: 0
     randomizeColour: 0
@@ -14636,8 +14637,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.9242138
-  m_Size: 0.25332433
+  m_Value: 0.8803351
+  m_Size: 0.3184187
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15394,7 +15395,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2359.6284, y: -2695.2754}
+  m_AnchoredPosition: {x: -1433.8318, y: -2505.4565}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -25931,8 +25932,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.81863904
-  m_Size: 0.5121366
+  m_Value: 0.32465303
+  m_Size: 0.41993093
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -30614,7 +30615,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -30.000061}
+  m_AnchoredPosition: {x: 0, y: -29.999939}
   m_SizeDelta: {x: 0, y: -60.000004}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2033040924

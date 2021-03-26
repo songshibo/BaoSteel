@@ -260,7 +260,6 @@
 
         color.rgb = MixFog(color.rgb, inputData.fogCoord);
         return color;
-        return float4(input.normalWS.x, input.normalWS.y, input.normalWS.z, 1.0);
     }
 
 #endif
