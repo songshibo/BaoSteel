@@ -250,16 +250,27 @@
             clip(stippling(input.positionWS, input.screenPos.xy));
         #endif
 
+        // back face
+        bool isBackface = dot(input.normalWS, _WorldSpaceCameraPos.xyz - input.positionWS) <= 0;
+
         SurfaceData surfaceData;
         InitializeStandardLitSurfaceData(input.uv, surfaceData);
 
         InputData inputData;
-        InitializeInputData(input, surfaceData.normalTS, inputData);
+        InitializeInputData(input, isBackface? float3(0,0,0) : surfaceData.normalTS, inputData);
+
+        if(isBackface)
+        {
+            surfaceData.albedo = float3(0.15,0.15,0.15);
+            surfaceData.metallic = 0;
+            surfaceData.smoothness = 0;
+            surfaceData.occlusion = 1;
+        }
 
         half4 color = UniversalFragmentPBR(inputData, surfaceData.albedo, surfaceData.metallic, surfaceData.specular, surfaceData.smoothness, surfaceData.occlusion, surfaceData.emission, surfaceData.alpha);
-
         color.rgb = MixFog(color.rgb, inputData.fogCoord);
         return color;
+        
     }
 
 #endif

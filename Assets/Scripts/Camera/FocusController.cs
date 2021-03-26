@@ -60,6 +60,7 @@ public class FocusController : MonoBehaviour
             AutoRotateRig();
         }
 
+        //如果有任何输入，或者之前的旋转和位移还没有到达指定位置，则不会开始计时sleepTime
         if (Input.anyKey || Input.GetAxisRaw("Mouse ScrollWheel") != 0 || !IsRotationMatched() || !IsPostionMatched())
         {
             sleepTime = 0f;
@@ -73,6 +74,7 @@ public class FocusController : MonoBehaviour
             sleepTime += Time.deltaTime;
         }
     }
+
     private bool IsRotationMatched()
     {
         return (Quaternion.Angle(cameraRig.rotation, rigRotation) <= 0.01f && Quaternion.Angle(verticalRig.localRotation, verticalRotation) <= 0.01f);
