@@ -24,8 +24,14 @@ public class UIManager : MonoSingleton<UIManager>
     private ModalWindowManager TuyereWindowManager;
     private ModalWindowManager optionWindowManager;
 
+    private FocusController focus; // 控制相机的跳转
+    private float offset = 8.0f; // 相机与热电偶的距离
+
     public void InitializeUI(string[] configClip, string[] configShowPart)
     {
+        // 获取控制相机跳转的组件
+        focus = GameObject.FindObjectOfType(typeof(FocusController)) as FocusController;
+        
         // first line : clip dropdown
         string[] clipConfig = configClip[0].Split(' ');
         // Initialize clip dropdown list
@@ -285,7 +291,12 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void OnClick(GameObject thermo, GameObject UIobj)
     {
-        print("点击热电偶温度按钮");
+        // 相机跳转
+        focus.LocateThermoCouple(thermo.transform.position, offset);
+
+        // 之前高亮的热电偶取消高亮，选中的热电偶高亮
+        SelectionManager.Instance.ClearCertainLayerContents(0);
+        ThermocoupleUpdater.Instance.DisplayHittedThermocoupleInfo(thermo);
     }
 
     private void ShowInfoDetail(GameObject obj, bool flag)

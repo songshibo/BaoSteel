@@ -157,7 +157,7 @@ public class ConfigurationManager : MonoBehaviour
                 else if (item.Key.Equals("batch_timing"))
                 {
                     // TODO
-                    BatchLayerUpdater.Instance.NewLayer(item.Value[1]);
+                    //BatchLayerUpdater.Instance.NewLayer(item.Value[1]);
                 }
                 else if (item.Key.Equals("heatload_timing"))
                 {
