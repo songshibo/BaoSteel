@@ -251,7 +251,12 @@
         #endif
 
         // back face
-        bool isBackface = dot(input.normalWS, _WorldSpaceCameraPos.xyz - input.positionWS) <= 0;
+        bool isBackface;
+        #ifdef _NORMALMAP
+            isBackface = dot(input.normalWS.xyz, _WorldSpaceCameraPos.xyz - input.positionWS) <= 0;
+        #else
+            isBackface = dot(input.normalWS, _WorldSpaceCameraPos.xyz - input.positionWS) <= 0;
+        #endif
 
         SurfaceData surfaceData;
         InitializeStandardLitSurfaceData(input.uv, surfaceData);
