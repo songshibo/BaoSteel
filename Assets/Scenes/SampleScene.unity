@@ -2729,7 +2729,7 @@ MonoBehaviour:
   limitDistance: 5
   lockCursor: 0
   sleepThreshold: 10
-  autoRotateSpeed: -0.2
+  autoRotateSpeed: -0.1
 --- !u!1 &185686924
 GameObject:
   m_ObjectHideFlags: 0
@@ -12764,14 +12764,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727182393}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 181942897}
   m_Father: {fileID: 1854325530}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!1 &727459009
 GameObject:
   m_ObjectHideFlags: 0
@@ -15174,8 +15174,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334896890}
   m_HandleRect: {fileID: 1334896889}
   m_Direction: 2
-  m_Value: 0.9802473
-  m_Size: 0.26060608
+  m_Value: 1.0000004
+  m_Size: 0.39114505
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15932,7 +15932,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1805.1697, y: -2821.8035}
+  m_AnchoredPosition: {x: -1803.4498, y: -2654.6113}
   m_SizeDelta: {x: 3600, y: 3300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &917905874
@@ -26701,8 +26701,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306508124}
   m_HandleRect: {fileID: 306508123}
   m_Direction: 0
-  m_Value: 0.50287193
-  m_Size: 0.49999997
+  m_Value: 0.5014697
+  m_Size: 0.34792706
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -31416,7 +31416,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -29.999878}
+  m_AnchoredPosition: {x: 0, y: -30.000122}
   m_SizeDelta: {x: 0, y: -60.000004}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2033040924
@@ -33536,7 +33536,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 4.3244e-41, z: 0, w: 3.796875}
+  m_BoundingSphereOverride: {x: 0, y: 1.6681e-41, z: 0, w: 29.375}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -33657,7 +33657,7 @@ MonoBehaviour:
   arrowPivot: {fileID: 412788229}
   angle: {fileID: 457570298}
   minScale: 0.35
-  maxScale: 1
+  maxScale: 0.9
 --- !u!1 &919132149578269261
 GameObject:
   m_ObjectHideFlags: 0
