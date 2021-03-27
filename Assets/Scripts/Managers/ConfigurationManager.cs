@@ -34,19 +34,6 @@ public class ConfigurationManager : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        DrawCenterLine();
-    }
-
-    private void DrawCenterLine()
-    {
-        Vector3 start = new Vector3(0, 0, 0);
-        Vector3 end = new Vector3(0, 50, 0);
-        
-
-    }
-
     private void InitilizeTuyere()
     {
         // 风口更新器里需要初始化风口的大小，包括长宽高

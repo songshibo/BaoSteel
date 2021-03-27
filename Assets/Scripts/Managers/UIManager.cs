@@ -212,6 +212,7 @@ public class UIManager : MonoSingleton<UIManager>
             UIobj.name = name;
             UIobj.transform.localEulerAngles = new Vector3(0, 0, angle);
             UIobj.transform.localPosition = new Vector2(x, y);
+            UIobj.GetComponent<Button>().onClick.AddListener(delegate () { TuyereUIOnClick(tuyere, UIobj); });
             TuyereUpdater.Instance.tuyereUISingles.Add(UIobj);
 
             EventTrigger eventTrigger = UIobj.AddComponent<EventTrigger>();
@@ -230,6 +231,13 @@ public class UIManager : MonoSingleton<UIManager>
             pointerExit.callback.AddListener((e) => ShowTuyereInfoDetail(UIobj, false));
             eventTrigger.triggers.Add(pointerExit);
         }
+    }
+
+    private void TuyereUIOnClick(GameObject tuyere, GameObject uIobj)
+    {
+        // 相机跳转
+        focus.LocateThermoCouple(tuyere.transform.position, offset);
+
     }
 
     private void GenerateThermoUI()
@@ -265,7 +273,7 @@ public class UIManager : MonoSingleton<UIManager>
             UIobj.transform.Find("height").GetComponent<Text>().text = position.y.ToString("0.###") + "m";
             UIobj.transform.Find("angle").GetComponent<Text>().text = angle.ToString("0") + "°";
             UIobj.transform.Find("temperature").GetComponent<Text>().text = "-";
-            UIobj.GetComponent<Button>().onClick.AddListener(delegate () { OnClick(thermo, UIobj); });
+            UIobj.GetComponent<Button>().onClick.AddListener(delegate () { ThermoUIOnClick(thermo, UIobj); });
 
             EventTrigger eventTrigger = UIobj.AddComponent<EventTrigger>();
             // Point enter event
@@ -289,7 +297,7 @@ public class UIManager : MonoSingleton<UIManager>
         print(ThermocoupleUpdater.Instance.name_gameobject.Count + "实际热电偶个数，但是同一位置只生成了一个，所以会出现多对一，多个编号对应一个热电偶按钮");
     }
 
-    private void OnClick(GameObject thermo, GameObject UIobj)
+    private void ThermoUIOnClick(GameObject thermo, GameObject UIobj)
     {
         // 相机跳转
         focus.LocateThermoCouple(thermo.transform.position, offset);
