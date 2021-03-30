@@ -1,3 +1,5 @@
+#define INIT_FROM_DATABASE
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,14 +8,22 @@ using System;
 
 public class ConfigurationManager : MonoBehaviour
 {
+    [SerializeField]
+    private string ip = "";
+    [SerializeField]
+    private string port = "";
     private Dictionary<string, float[]> times;
 
     private void Awake()
     {
-        
+#if (INIT_FROM_DATABASE)
+        Debug.Log("Initialized from data base");
+#else
+        Debug.Log("Intialized from local configurations");
+#endif
         // No-Async
-        InitilizeTiming();
         InitializeDataServiceManager();
+        InitilizeTiming();
         InitializeCamera();
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
@@ -40,6 +50,17 @@ public class ConfigurationManager : MonoBehaviour
         // 但是不确定风口什么时候生成，所以此处代码写在 ModelManager 里
         // 待风口生成好后，由 ModelManager 调用风口更新器里的 GetTuyereSize
 
+    }
+
+    public void ChangeIP(string newIP)
+    {
+        //Call database manager to reintialize
+        print(newIP);
+    }
+
+    public void ChangePort(string newPort)
+    {
+        print(newPort);
     }
 
     private void InitializeCamera()
@@ -71,8 +92,13 @@ public class ConfigurationManager : MonoBehaviour
 
     private void InitializeDataServiceManager()
     {
+#if (INIT_FROM_DATABASE)
+        string configString = "ip:" + ip + "\n" + "port:" + port;
+#else
         string filename = "DataServiceManagerConfig.txt";
         string configString = Util.ReadConfigFile(filename);
+#endif
+
         Dictionary<string, string> config = new Dictionary<string, string>();
         Regex regex = new Regex(@"(?<key>\S+)\s*:\s*(?<item>\S+)", RegexOptions.IgnoreCase);
         if (regex.IsMatch(configString))
