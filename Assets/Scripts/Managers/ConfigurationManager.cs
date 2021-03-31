@@ -31,7 +31,8 @@ public class ConfigurationManager : MonoBehaviour
         // InitializeModelManager();
         StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeModelManager, "ModelManager"));
         // InitilizeUI();
-        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeUI, "ui"));
+        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeUI1, "ui"));
+        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeUI2, "ModelManager"));
 
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
@@ -128,17 +129,21 @@ public class ConfigurationManager : MonoBehaviour
         Debug.Log(log);
     }
 
-    private bool InitilizeUI(string configClip)
+    private bool InitilizeUI1(string configClip)
     {
-        // string filenameClip = "ui.txt";
-        // string configClip = Util.ReadConfigFile(filenameClip);
+
         string[] linesClip = configClip.Split('\n');
 
-        string filenameShowPart = "ModelManager.txt";
-        string configShowPart = Util.ReadConfigFile(filenameShowPart);
-        string[] linesShowPart = Util.RemoveComments(configShowPart.Split('\n'));
+        UIManager.Instance.InitializeUI1(linesClip);
 
-        UIManager.Instance.InitializeUI(linesClip, linesShowPart);
+        return true;
+    }
+
+    private bool InitilizeUI2(string configClip)
+    {
+        string[] linesShowPart = Util.RemoveComments(configClip.Split('\n'));
+
+        UIManager.Instance.InitializeUI2(linesShowPart);
 
         return true;
     }

@@ -27,14 +27,13 @@ public class UIManager : MonoSingleton<UIManager>
     private FocusController focus; // 控制相机的跳转
     private float offset = 8.0f; // 相机与热电偶的距离
 
-    public void InitializeUI(string[] configClip, string[] configShowPart)
+    public void InitializeUI1(string[] configClip)
     {
         // 获取控制相机跳转的组件
         focus = GameObject.FindObjectOfType(typeof(FocusController)) as FocusController;
         
         // first line : clip dropdown
         string[] clipConfig = configClip[0].Split(' ');
-        // Initialize clip dropdown list
         string spritePath = "Textures/Border/Circles/";
         Sprite clipIcon = Resources.Load<Sprite>(spritePath + "Circle Outline - Stroke 20px");
         for (int i = 0; i < clipConfig.Length; i++)
@@ -43,8 +42,13 @@ public class UIManager : MonoSingleton<UIManager>
         }
         clipDropDown.dropdownEvent.AddListener(ClipItemEvent);
         clipDropDown.SetupDropdown();
+    }
 
-
+    public void InitializeUI2(string[] configShowPart)
+    {
+        // Initialize clip dropdown list
+        string spritePath = "Textures/Border/Circles/";
+        Sprite clipIcon = Resources.Load<Sprite>(spritePath + "Circle Outline - Stroke 20px");
         // layer dropdown initialize
         foreach (string row in configShowPart)
         {
