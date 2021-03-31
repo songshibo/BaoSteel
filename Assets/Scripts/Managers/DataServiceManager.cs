@@ -117,6 +117,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
             }
             else
             {
+                Debug.Log(url);
                 UnityWebRequest www = UnityWebRequest.Get(url + "/unityconfig?config_file=" + config_file);
                 yield return www.SendWebRequest();
 
@@ -130,7 +131,6 @@ public class DataServiceManager : Singleton<DataServiceManager>
                     string data = www.downloadHandler.text;
 
                     DataArrangement(data);
-
                     // Or retrieve results as binary data
 
                 }
