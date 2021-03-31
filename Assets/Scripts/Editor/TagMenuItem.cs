@@ -17,7 +17,7 @@ public class TagMenuItem
             foreach (string m in ms)
             {
                 if (m.StartsWith("-")) // 以 ‘-’ 开头为本地模型，先生成 tag，再生成模型，要去掉开头的 ‘-’
-                    GenerateTag(m.Trim('-'));
+                    GenerateTag(m.Trim('-').Trim());
                 else
                     GenerateTag(m.Trim());
             }

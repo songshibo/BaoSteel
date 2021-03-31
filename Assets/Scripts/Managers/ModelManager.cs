@@ -52,7 +52,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         {
             root = new GameObject("Model");
         }
-
+        
         foreach (string item in models)
         {
             string[] name_model = item.Split(':'); // 所在分组的名字，以及该分组拥有的模型
@@ -70,6 +70,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
             parent.transform.SetParent(root.transform);
 
             string[] ms = name_model[1].Split(' '); // 该分组拥有的模型
+            
             foreach (string m in ms)
             {
                 if (m.StartsWith("-")) // 以 ‘-’ 开头为本地模型，先生成 tag，再生成模型，要去掉开头的 ‘-’，这里 tag 统一由 editor-tools 生成
@@ -257,17 +258,11 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
 
     private void GenerateLocalModel(string name, GameObject parent)
     {
-        try
-        {
-            GameObject obj = Instantiate(Resources.Load<GameObject>(("Prefabs/" + name).Trim()), parent.transform);
-            obj.tag = name;
-            obj.name = name;
-
-        }
-        catch (Exception)
-        {
-            print("Prefabs/" + name + "本地模型生成失败，添加 trim 试试");
-        }
+        
+        GameObject obj = Instantiate(Resources.Load<GameObject>(("Prefabs/" + name).Trim()), parent.transform);
+        obj.tag = name.Trim();
+            
+        obj.name = name;
     }
 
     // 根据高度找冷却板或者热电偶
