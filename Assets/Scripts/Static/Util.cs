@@ -29,17 +29,30 @@ public static class Util
 
     public static float ReadModelProperty(string propertyName)
     {
-        string file = "property.txt";
-        string configs = Util.ReadConfigFile(file);
-        string[] lines = configs.Split('\n');
-        Dictionary<string, float> modelProperty = new Dictionary<string, float>();
-        foreach (string line in lines)
+        if (propertyName == "min_height")
         {
-            string[] temp = line.Split(':');
-            modelProperty[temp[0]] = float.Parse(temp[1]);
+            return 0;
         }
+        else if (propertyName == "max_height")
+        {
+            return 47.8f;
+        }
+        else
+        {
+            Debug.LogError("No such model Property");
+            return -1;
+        }
+        // string file = "property.txt";
+        // string configs = Util.ReadConfigFile(file);
+        // string[] lines = configs.Split('\n');
+        // Dictionary<string, float> modelProperty = new Dictionary<string, float>();
+        // foreach (string line in lines)
+        // {
+        //     string[] temp = line.Split(':');
+        //     modelProperty[temp[0]] = float.Parse(temp[1]);
+        // }
 
-        return modelProperty[propertyName];
+        // return modelProperty[propertyName];
     }
 
     public static GameObject[] FindChildren(GameObject obj)
