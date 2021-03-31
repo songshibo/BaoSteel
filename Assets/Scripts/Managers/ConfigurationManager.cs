@@ -27,6 +27,12 @@ public class ConfigurationManager : MonoBehaviour
         StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeTiming, "timing"));
         // InitializeCamera();
         StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeCamera, "camera"));
+        // Async
+        // InitializeModelManager();
+        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeModelManager, "ModelManager"));
+        // InitilizeUI();
+        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeUI, "ui"));
+
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
         HeatmapUpdater.Instance.InitializeHeatMap();
@@ -34,11 +40,6 @@ public class ConfigurationManager : MonoBehaviour
         InsideStoveManager.Instance.Initialize();
         ResidualUpdater.Instance.Initialize();
 
-        // Async
-        // InitializeModelManager();
-        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeModelManager, "ModelManager"));
-        // InitilizeUI();
-        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeUI, "ui"));
 
         // Special Settings
         //InitilizeTuyere();
