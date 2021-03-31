@@ -66,7 +66,6 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
             }
 
 
-
             GameObject parent = new GameObject(name + "_parent");
             parent.transform.SetParent(root.transform);
 

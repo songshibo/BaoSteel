@@ -1,3 +1,5 @@
+#define INIT_FROM_DATABASE
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,15 +8,25 @@ using System;
 
 public class ConfigurationManager : MonoBehaviour
 {
+    [SerializeField]
+    private string ip = "";
+    [SerializeField]
+    private string port = "";
     private Dictionary<string, float[]> times;
 
     private void Awake()
     {
-        
+#if (INIT_FROM_DATABASE)
+        Debug.Log("Initialized from data base");
+#else
+        Debug.Log("Intialized from local configurations");
+#endif
         // No-Async
-        InitilizeTiming();
         InitializeDataServiceManager();
-        InitializeCamera();
+        // InitilizeTiming();
+        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeTiming, "timing"));
+        // InitializeCamera();
+        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeCamera, "camera"));
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
         HeatmapUpdater.Instance.InitializeHeatMap();
@@ -23,8 +35,10 @@ public class ConfigurationManager : MonoBehaviour
         ResidualUpdater.Instance.Initialize();
 
         // Async
-        InitializeModelManager();
-        InitilizeUI();
+        // InitializeModelManager();
+        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeModelManager, "ModelManager"));
+        // InitilizeUI();
+        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeUI, "ui"));
 
         // Special Settings
         //InitilizeTuyere();
@@ -42,10 +56,21 @@ public class ConfigurationManager : MonoBehaviour
 
     }
 
-    private void InitializeCamera()
+    public void ChangeIP(string newIP)
     {
-        string filename = "camera.txt";
-        string config = Util.ReadConfigFile(filename);
+        //Call database manager to reintialize
+        print(newIP);
+    }
+
+    public void ChangePort(string newPort)
+    {
+        print(newPort);
+    }
+
+    private bool InitializeCamera(string config)
+    {
+        // string filename = "camera.txt";
+        // string config = Util.ReadConfigFile(filename);
 
         string[] lines = config.Split('\n');
         Debug.Log("Camera parameters:\n" +
@@ -56,23 +81,30 @@ public class ConfigurationManager : MonoBehaviour
                   );
 
         FindObjectOfType<FocusController>().SetCameraParameters(float.Parse(lines[0]), float.Parse(lines[1]), float.Parse(lines[2]), float.Parse(lines[3]));
+        return true;
     }
 
-    private void InitializeModelManager()
+    private bool InitializeModelManager(string config)
     {
-        string filename = "ModelManager.txt";
-        string config = Util.ReadConfigFile(filename);
+        // string filename = "ModelManager.txt";
+        // string config = Util.ReadConfigFile(filename);
 
         string[] lines = Util.RemoveComments(config.Split('\n'));
 
         // GeneratePipeline: add tags, then generate models.
         ModelManager.Instance.GeneratePipeline(lines);
+        return true;
     }
 
     private void InitializeDataServiceManager()
     {
+#if (INIT_FROM_DATABASE)
+        string configString = "ip:" + ip + "\n" + "port:" + port;
+#else
         string filename = "DataServiceManagerConfig.txt";
         string configString = Util.ReadConfigFile(filename);
+#endif
+
         Dictionary<string, string> config = new Dictionary<string, string>();
         Regex regex = new Regex(@"(?<key>\S+)\s*:\s*(?<item>\S+)", RegexOptions.IgnoreCase);
         if (regex.IsMatch(configString))
@@ -95,10 +127,10 @@ public class ConfigurationManager : MonoBehaviour
         Debug.Log(log);
     }
 
-    private void InitilizeUI()
+    private bool InitilizeUI(string configClip)
     {
-        string filenameClip = "ui.txt";
-        string configClip = Util.ReadConfigFile(filenameClip);
+        // string filenameClip = "ui.txt";
+        // string configClip = Util.ReadConfigFile(filenameClip);
         string[] linesClip = configClip.Split('\n');
 
         string filenameShowPart = "ModelManager.txt";
@@ -106,12 +138,14 @@ public class ConfigurationManager : MonoBehaviour
         string[] linesShowPart = Util.RemoveComments(configShowPart.Split('\n'));
 
         UIManager.Instance.InitializeUI(linesClip, linesShowPart);
+
+        return true;
     }
 
-    private void InitilizeTiming()
+    private bool InitilizeTiming(string configTiming)
     {
-        string filetiming = "timing.txt";
-        string configTiming = Util.ReadConfigFile(filetiming);
+        // string filetiming = "timing.txt";
+        // string configTiming = Util.ReadConfigFile(filetiming);
         string[] linesTiming = configTiming.Split('\n');
 
         times = new Dictionary<string, float[]>();
@@ -120,6 +154,8 @@ public class ConfigurationManager : MonoBehaviour
             string[] temp = line.Split(':');
             times[temp[0]] = new float[] { 0, float.Parse(temp[1]) };
         }
+
+        return true;
     }
 
     // 添加计时器需要做两步

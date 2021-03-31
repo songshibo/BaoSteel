@@ -106,7 +106,37 @@ public class DataServiceManager : Singleton<DataServiceManager>
 
     }
 
+    public IEnumerator GetUnityConfig(Func<string, bool> DataArrangement, string config_file)
+    {
 
+        if (initialized)
+        {
+            if (config_file == null)
+            {
+                Debug.Log("one config file should specified!");
+            }
+            else
+            {
+                UnityWebRequest www = UnityWebRequest.Get(url + "/unityconfig?config_file=" + config_file);
+                yield return www.SendWebRequest();
+
+                if (www.isNetworkError || www.isHttpError)
+                {
+                    Debug.Log(www.error);
+                }
+                else
+                {
+                    // Show results as text
+                    string data = www.downloadHandler.text;
+
+                    DataArrangement(data);
+
+                    // Or retrieve results as binary data
+
+                }
+            }
+        }
+    }
 
     public IEnumerator GetTemperature(Func<string, bool> DataArrangement, string layer = "0")
     {
