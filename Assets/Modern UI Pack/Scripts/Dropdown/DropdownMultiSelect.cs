@@ -43,7 +43,7 @@ namespace Michsky.UI.ModernUIPack
         string textHelper;
         string newItemTitle;
         Sprite newItemIcon;
-        bool isOn;
+        public bool isOn;
         public int iHelper = 0;
         public int siblingIndex = 0;
 

@@ -16,7 +16,7 @@ public class UIManager : MonoSingleton<UIManager>
     public HorizontalSelector heatMapGradientSelector;
     public HorizontalSelector heatLoadGradientSelector;
     public GameObject tuyereUI;
-    
+
     private GameObject EnterExitTuyereInfo;
     private GameObject EnterExitInfo;
     private Vector2 ThermocouplePanel_Width_Height;
@@ -32,7 +32,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         // 获取控制相机跳转的组件
         focus = GameObject.FindObjectOfType(typeof(FocusController)) as FocusController;
-        
+
         // first line : clip dropdown
         string[] clipConfig = configClip[0].Split(' ');
         string spritePath = "Textures/Border/Circles/";
