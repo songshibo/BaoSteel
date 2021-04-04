@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEditor;
 using System;
+using XCharts;
 
 public class UIManager : MonoSingleton<UIManager>
 {

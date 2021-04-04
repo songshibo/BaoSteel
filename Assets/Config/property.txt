@@ -1,2 +1,0 @@
-min_height:0
-max_height:47.8

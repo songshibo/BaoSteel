@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using UnityEngine.UI;
+using XCharts;
+using System;
+using UnityEngine.EventSystems;
 
 public class TuyereUpdater : MonoSingleton<TuyereUpdater>
 {
@@ -28,6 +31,12 @@ public class TuyereUpdater : MonoSingleton<TuyereUpdater>
 
     public bool UpdateTuyereData(string content)
     {
+        var chart = GameObject.Find("DepthBarChart").GetComponent<BarChart>();
+        chart.RemoveData();
+        chart.AddSerie(SerieType.Bar);
+        chart.AnimationEnable(false);
+        
+
         JToken items = JObject.Parse(content);
         Dictionary<string, List<float>> number_data = new Dictionary<string, List<float>>();
         foreach (JProperty item in items)
@@ -46,6 +55,9 @@ public class TuyereUpdater : MonoSingleton<TuyereUpdater>
         {
             string number = tuyere.name.Split('_')[1];
             List<float> data = number_data[number];
+
+            chart.AddXAxisData(number);
+            chart.AddData(0, data[1]);
 
             total_area += data[0];
             float depth_scale = data[1] / tuyeresize.depth;
