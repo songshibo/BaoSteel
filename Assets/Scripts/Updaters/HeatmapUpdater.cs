@@ -207,11 +207,4 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         if (rTex != null)
             rTex.Release();
     }
-
-    #region NEW_HEATMAP
-
-    // public: update heat map
-    // public: initialize heat map
-    
-    #endregion
 }
