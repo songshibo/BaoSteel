@@ -16,7 +16,7 @@ MonoBehaviour:
   enableExtendedColorPicker: 1
   editorHints: 1
   animatedIconColor: {r: 1, g: 1, b: 1, a: 1}
-  contextBackgroundColor: {r: 255, g: 255, b: 255, a: 255}
+  contextBackgroundColor: {r: 255, g: 255, b: 255, a: 1}
   buttonThemeType: 0
   buttonFont: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
   buttonFontSize: 22.5
@@ -32,7 +32,7 @@ MonoBehaviour:
   dropdownItemFontSize: 22.5
   dropdownThemeType: 0
   dropdownAnimationType: 0
-  dropdownFont: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f, type: 2}
+  dropdownFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   dropdownFontSize: 22.5
   dropdownColor: {r: 0.3254902, g: 0.3529412, b: 0.38431373, a: 1}
   dropdownTextColor: {r: 1, g: 1, b: 1, a: 1}
@@ -49,9 +49,9 @@ MonoBehaviour:
   inputFieldFont: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f, type: 2}
   inputFieldFontSize: 28
   inputFieldColor: {r: 1, g: 1, b: 1, a: 1}
-  modalWindowTitleFont: {fileID: 11400000, guid: fa328c1ae3ffb6b4583cf371153b0be6,
+  modalWindowTitleFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05,
     type: 2}
-  modalWindowContentFont: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+  modalWindowContentFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05,
     type: 2}
   modalThemeType: 0
   modalWindowTitleColor: {r: 1, g: 1, b: 1, a: 1}

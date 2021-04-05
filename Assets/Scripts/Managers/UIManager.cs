@@ -39,7 +39,7 @@ public class UIManager : MonoSingleton<UIManager>
         Sprite clipIcon = Resources.Load<Sprite>(spritePath + "Circle Outline - Stroke 20px");
         for (int i = 0; i < clipConfig.Length; i++)
         {
-            clipDropDown.CreateNewItem("Clip Angle:" + clipConfig[i], clipIcon);
+            clipDropDown.CreateNewItem("剖面角度:" + clipConfig[i], clipIcon);
         }
         clipDropDown.dropdownEvent.AddListener(ClipItemEvent);
         clipDropDown.SetupDropdown();
@@ -106,9 +106,9 @@ public class UIManager : MonoSingleton<UIManager>
         heatmapWindowManager = GameObject.Find("HeatMapWindow").GetComponent<ModalWindowManager>();
         heatloadWindowManager = GameObject.Find("HeatLoadWindow").GetComponent<ModalWindowManager>();
         TuyereWindowManager = GameObject.Find("TuyereWindow").GetComponent<ModalWindowManager>();
-        renderType.CreateNewItem("Standard", clipIcon);
-        renderType.CreateNewItem("Heat Map", clipIcon);
-        renderType.CreateNewItem("Heat Load", clipIcon);
+        renderType.CreateNewItem("标准模式", clipIcon);
+        renderType.CreateNewItem("热力图模式", clipIcon);
+        renderType.CreateNewItem("热负荷模式", clipIcon);
         renderType.dropdownEvent.AddListener(RenderTypeEvent);
         renderType.SetupDropdown();
         // Options
