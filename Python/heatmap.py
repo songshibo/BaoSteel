@@ -10,21 +10,26 @@ class Heatmap:
     # raw_data: 从数据库获得的数据 [[angle, height, temperature], [], [] ...]
     # yFactor: 高度缩放系数
     # minT,maxT: 温度上下限
-    def __init__(self, xRes, yRes, raw_data, yFactor):
+    def __init__(self, xRes, yRes, size):
         self.w = xRes
         self.h = yRes
-        self.size = raw_data.shape[0]
-        self.yFactor = yFactor
+        self.size = size
         self.pixels = ti.field(ti.f32, (self.w, self.h))
         # parameter: 每个向量中分量的数目，数据类型，向量的形状
         self.data = ti.Vector.field(
-            raw_data.shape[1], ti.f32, raw_data.shape[0])
+            3, ti.f32, size)
+        # self.data.from_numpy(raw_data)
+        print("resolution:[", self.w, ",", self.h, "]")
+        print("thermocouple Number:", self.size)
+
+    def assign(self, raw_data, yFactor, power, smoothin, max_height, minT, maxT):
+        print("assigned thermocouple data")
+        self.yFactor = yFactor
+        assert (raw_data.shape[0] == self.size), "data size mismatched"
         for i in range(raw_data.shape[0]):
             raw_data[i][1] *= yFactor
         self.data.from_numpy(raw_data)
-        print("resolution:[", self.w, ",", self.h, "]")
-        print("thermocouple Number:", self.size)
-        print("height scale factor:", self.yFactor)
+        self.generate(power, smoothin, max_height * yFactor, minT, maxT)
 
     # power/smoothin : IDW插值的参数
     # scaledHeight: 最大的实际高度 * 缩放系数

@@ -21,9 +21,10 @@ for i in range(seeds.shape[0]):
     seeds[i][2] = (maxt - mint) * seeds[i][2] + mint  # 温度从0-1变换到minT到maxT
 
 # 这里乘以yh * yfactor是由于随机生成的seeds值都在0-1之间，数据库中的数据则是在0-yh之间，因此只要乘以yfactor就行
-ht = Heatmap(w, h, seeds, yh * yfactor)
+ht = Heatmap(w, h, seeds.shape[0])
+ht.assign(seeds, yh * yfactor, p, s, 1, mint, maxt)
 # yh * yfactor 同理
-ht.generate(p, s, yh * yfactor, mint, maxt)
+# ht.generate()
 ti.kernel_profiler_print()
 
 # 可视化结果，实际运行直接调用ht.save(${path})即可
