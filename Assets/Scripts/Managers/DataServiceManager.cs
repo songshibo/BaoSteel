@@ -105,8 +105,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
         }
 
     }
-
-    public IEnumerator GetUnityConfig(Func<string, bool> DataArrangement, string config_file)
+        public IEnumerator GetUnityConfig(Func<string, bool> DataArrangement, string config_file)
     {
 
         if (initialized)
@@ -137,6 +136,35 @@ public class DataServiceManager : Singleton<DataServiceManager>
             }
         }
     }
+
+    public IEnumerator GetHeatMapPic(Func<Texture2D, bool> DataArrangement, string config_file)
+    {
+
+        if (initialized)
+        {
+            UnityWebRequest uwr = UnityWebRequest.Get(url + "/heatmap"); //创建UnityWebRequest对象
+            DownloadHandlerTexture texDl = new DownloadHandlerTexture(true);
+            uwr.downloadHandler = texDl;
+            yield return uwr.SendWebRequest();                                 //等待返回请求的信息
+            // int width = 1920;
+            // int high = 1080;
+            if (www.isNetworkError || www.isHttpError)
+                {
+                    Debug.Log(www.error);
+                }
+                else
+                {
+                //    Texture2D tex = new Texture2D(width, high);
+                //    tex = texDl.texture;
+
+                    DataArrangement(texDl.texture);
+                    // Or retrieve results as binary data
+
+                }
+        
+            }
+        }
+    
 
     public IEnumerator GetTemperature(Func<string, bool> DataArrangement, string layer = "0")
     {
