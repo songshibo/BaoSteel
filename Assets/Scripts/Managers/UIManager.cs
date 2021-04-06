@@ -39,7 +39,7 @@ public class UIManager : MonoSingleton<UIManager>
         Sprite clipIcon = Resources.Load<Sprite>(spritePath + "Circle Outline - Stroke 20px");
         for (int i = 0; i < clipConfig.Length; i++)
         {
-            clipDropDown.CreateNewItem("剖面角度:" + clipConfig[i], clipIcon);
+            clipDropDown.CreateNewItem("剖角:" + clipConfig[i], clipIcon);
         }
         clipDropDown.dropdownEvent.AddListener(ClipItemEvent);
         clipDropDown.SetupDropdown();

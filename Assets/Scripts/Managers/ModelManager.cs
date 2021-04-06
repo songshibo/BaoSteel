@@ -57,7 +57,6 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         {
             string[] name_model = item.Split(':'); // 所在分组的名字，以及该分组拥有的模型
             string name = name_model[0].Split('?')[0].Split('*')[0]; // 分组的名字
-            print(name);
             float min_height = 0;
             float max_height = 0;
             if (name_model[0].Split('?').Length > 1)
