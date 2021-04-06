@@ -39,7 +39,7 @@ public class UIManager : MonoSingleton<UIManager>
         Sprite clipIcon = Resources.Load<Sprite>(spritePath + "Circle Outline - Stroke 20px");
         for (int i = 0; i < clipConfig.Length; i++)
         {
-            clipDropDown.CreateNewItem("剖面角度:" + clipConfig[i], clipIcon);
+            clipDropDown.CreateNewItem("剖角:" + clipConfig[i], clipIcon);
         }
         clipDropDown.dropdownEvent.AddListener(ClipItemEvent);
         clipDropDown.SetupDropdown();
@@ -50,11 +50,13 @@ public class UIManager : MonoSingleton<UIManager>
         // Initialize clip dropdown list
         string spritePath = "Textures/Border/Circles/";
         Sprite clipIcon = Resources.Load<Sprite>(spritePath + "Circle Outline - Stroke 20px");
+        List<string> englishName = new List<string>();
         // layer dropdown initialize
         foreach (string row in configShowPart)
         {
             string[] config = row.Split(':');
             DropdownMultiSelect.Item item = new DropdownMultiSelect.Item();
+            englishName.Add(config[0].Split('?')[0].Split('*')[0]);
             item.itemName = config[0].Split('?')[0].Split('*')[1];
             layerDropDown.dropdownItems.Add(item);
             //layerDropDown.SetItemTitle(config[0]);
@@ -67,7 +69,7 @@ public class UIManager : MonoSingleton<UIManager>
             string[] config = configShowPart[i].Split(':');
             GameObject obj = layerDropDown.transform.Find("Content/Item List/Scroll Area/List/dropdown" + i.ToString()).gameObject;
 
-            GameObject target = GameObject.Find(layerDropDown.dropdownItems[i].itemName + "_parent");
+            GameObject target = GameObject.Find(englishName[i] + "_parent");
             obj.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => ShowPartItemEvent(target, value));
             EventTrigger eventTrigger = obj.AddComponent<EventTrigger>();
 
@@ -209,9 +211,9 @@ public class UIManager : MonoSingleton<UIManager>
         foreach (GameObject tuyere in tuyeres)
         {
             string name = tuyere.name;
-            float angle = tuyere.transform.localEulerAngles.y;
+            float angle = (-1) * tuyere.transform.localEulerAngles.y; // 这里的负号是保证风口生成顺序与炉缸俯视图一致。
             float x = radius * Mathf.Cos(Mathf.Deg2Rad * angle);
-            float y = radius * Mathf.Sin(Mathf.Deg2Rad * angle) * (-1);
+            float y = radius * Mathf.Sin(Mathf.Deg2Rad * angle);
 
             GameObject UIobj = Instantiate(prefab, root.transform);
             UIobj.name = name;
