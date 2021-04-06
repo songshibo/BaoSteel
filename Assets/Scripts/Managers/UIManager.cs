@@ -55,7 +55,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             string[] config = row.Split(':');
             DropdownMultiSelect.Item item = new DropdownMultiSelect.Item();
-            item.itemName = config[0].Split('?')[0];
+            item.itemName = config[0].Split('?')[0].Split('*')[1];
             layerDropDown.dropdownItems.Add(item);
             //layerDropDown.SetItemTitle(config[0]);
             //layerDropDown.CreateNewItem();
