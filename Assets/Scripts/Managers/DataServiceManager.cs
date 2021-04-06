@@ -137,7 +137,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
         }
     }
 
-    public IEnumerator GetHeatMapPic(Func<Texture2D, bool> DataArrangement, string config_file)
+    public IEnumerator GetHeatMapPic(Func<Texture2D, bool> DataArrangement)
     {
 
         if (initialized)
