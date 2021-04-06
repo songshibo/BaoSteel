@@ -211,7 +211,7 @@ public class UIManager : MonoSingleton<UIManager>
             string name = tuyere.name;
             float angle = tuyere.transform.localEulerAngles.y;
             float x = radius * Mathf.Cos(Mathf.Deg2Rad * angle);
-            float y = radius * Mathf.Sin(Mathf.Deg2Rad * angle);
+            float y = radius * Mathf.Sin(Mathf.Deg2Rad * angle) * (-1);
 
             GameObject UIobj = Instantiate(prefab, root.transform);
             UIobj.name = name;
