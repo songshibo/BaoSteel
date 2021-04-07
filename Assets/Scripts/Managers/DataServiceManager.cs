@@ -142,10 +142,10 @@ public class DataServiceManager : Singleton<DataServiceManager>
 
         if (initialized)
         {
-            UnityWebRequest uwr = UnityWebRequest.Get(url + "/heatmap"); //创建UnityWebRequest对象
+            UnityWebRequest www = UnityWebRequest.Get(url + "/heatmap"); //创建UnityWebRequest对象
             DownloadHandlerTexture texDl = new DownloadHandlerTexture(true);
-            uwr.downloadHandler = texDl;
-            yield return uwr.SendWebRequest();                                 //等待返回请求的信息
+            www.downloadHandler = texDl;
+            yield return www.SendWebRequest();                                 //等待返回请求的信息
             // int width = 1920;
             // int high = 1080;
             if (uwr.isNetworkError || uwr.isHttpError)

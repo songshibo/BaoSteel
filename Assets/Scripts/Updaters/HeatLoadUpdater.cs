@@ -202,7 +202,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
 
     public void CancelPanel()
     {
-        hitpoint = new Vector3(-100, -100, 0);
+        hitpoint = new Vector3(8.8f, 8.8f, 0);
     }
 
     public void InitializeHeatLoad()
@@ -213,7 +213,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
         part = part_cooling_plate;
 
-        hitpoint = new Vector3(-100, -100, 0);
+        hitpoint = new Vector3(8.8f, 8.8f, 0);
         string prefab = "TuyerePanel";
         tuyerePanel = Instantiate((GameObject)Resources.Load("Prefabs/" + prefab), GameObject.Find("Canvas").transform);
         tuyerePanel.transform.Find("TemperatureBackgroud/cancel").GetComponent<Button>().onClick.AddListener(CancelPanel);

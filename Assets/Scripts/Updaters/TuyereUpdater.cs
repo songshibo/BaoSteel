@@ -35,7 +35,7 @@ public class TuyereUpdater : MonoSingleton<TuyereUpdater>
         chart.RemoveData();
         chart.AddSerie(SerieType.Bar);
         chart.AnimationEnable(false);
-        
+        chart.onPointerClickBar = onPointerClickBar;
 
         JToken items = JObject.Parse(content);
         Dictionary<string, List<float>> number_data = new Dictionary<string, List<float>>();
@@ -75,4 +75,10 @@ public class TuyereUpdater : MonoSingleton<TuyereUpdater>
         areaRatio.GetComponent<Text>().text = "面积比：" + (total_area / 147.196 * 100).ToString("0.##") + "%";
         return true;
     }
+
+    private void onPointerClickBar(PointerEventData arg1, int index)
+    {
+        UIManager.Instance.TuyereUIOnClick(GameObject.FindGameObjectsWithTag("tuyere")[index]);
+    }
+
 }

@@ -97,7 +97,7 @@ public class UIManager : MonoSingleton<UIManager>
         Invoke("GenerateThermoUI", 3);
 
         EnterExitTuyereInfo = GameObject.Find("EnterExitTuyereInfo");
-        EnterExitTuyereInfo.SetActive(false);
+        //EnterExitTuyereInfo.SetActive(false);
         Invoke("GenerateTuyereUI", 3);
 
         // 热力图gradient的mode设置
@@ -219,7 +219,7 @@ public class UIManager : MonoSingleton<UIManager>
             UIobj.name = name;
             UIobj.transform.localEulerAngles = new Vector3(0, 0, angle);
             UIobj.transform.localPosition = new Vector2(x, y);
-            UIobj.GetComponent<Button>().onClick.AddListener(delegate () { TuyereUIOnClick(tuyere, UIobj); });
+            UIobj.GetComponent<Button>().onClick.AddListener(delegate () { TuyereUIOnClick(tuyere); });
             TuyereUpdater.Instance.tuyereUISingles.Add(UIobj);
 
             EventTrigger eventTrigger = UIobj.AddComponent<EventTrigger>();
@@ -240,7 +240,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    private void TuyereUIOnClick(GameObject tuyere, GameObject uIobj)
+    public void TuyereUIOnClick(GameObject tuyere)
     {
         // 相机跳转
         focus.LocateThermoCouple(tuyere.transform.position, offset);
@@ -343,13 +343,14 @@ public class UIManager : MonoSingleton<UIManager>
     {
         if (flag)
         {
-            EnterExitTuyereInfo.SetActive(true);
+            //EnterExitTuyereInfo.SetActive(true);
             string content = obj.transform.Find("info").GetComponent<Text>().text;
             EnterExitTuyereInfo.GetComponent<Text>().text = content;
         }
         else
         {
-            EnterExitTuyereInfo.SetActive(false);
+            //EnterExitTuyereInfo.SetActive(false);
+            EnterExitTuyereInfo.GetComponent<Text>().text = "";
         }
     }
 }
