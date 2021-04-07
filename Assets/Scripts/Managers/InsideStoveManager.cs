@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Michsky.UI.ModernUIPack;
+using System;
 
 public class InsideStoveManager : MonoSingleton<InsideStoveManager>
 {
@@ -78,4 +79,5 @@ public class InsideStoveManager : MonoSingleton<InsideStoveManager>
         Debug.Log("Turn " + (meshRenderer.enabled ? "On" : "Off") +
             " the inside-stove panel");
     }
+
 }
