@@ -8,6 +8,7 @@ using System;
 public static class Util
 {
     public static char[] endChar = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+    public static float MAX_HEIGHT = 47.8f;
 
     public static string ReadConfigFile(string filename)
     {
@@ -25,34 +26,6 @@ public static class Util
             Debug.LogError(ex);
             return null;
         }
-    }
-
-    public static float ReadModelProperty(string propertyName)
-    {
-        if (propertyName == "min_height")
-        {
-            return 0;
-        }
-        else if (propertyName == "max_height")
-        {
-            return 47.8f;
-        }
-        else
-        {
-            Debug.LogError("No such model Property");
-            return -1;
-        }
-        // string file = "property.txt";
-        // string configs = Util.ReadConfigFile(file);
-        // string[] lines = configs.Split('\n');
-        // Dictionary<string, float> modelProperty = new Dictionary<string, float>();
-        // foreach (string line in lines)
-        // {
-        //     string[] temp = line.Split(':');
-        //     modelProperty[temp[0]] = float.Parse(temp[1]);
-        // }
-
-        // return modelProperty[propertyName];
     }
 
     public static GameObject[] FindChildren(GameObject obj)

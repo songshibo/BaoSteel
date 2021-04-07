@@ -52,7 +52,8 @@ public class SelectionManager : MonoSingleton<SelectionManager>
                 case SelectionType.heatmap:
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
-                        HeatmapUpdater.Instance.InvertSamplingFromRayCast(hit.point);
+                        // HeatmapUpdater.Instance.InvertSamplingFromRayCast(hit.point);
+                        HeatmapDatabaseUpdater.Instance.InvertSamplingFromRayCast(hit.point);
                     }
                     break;
                 default:

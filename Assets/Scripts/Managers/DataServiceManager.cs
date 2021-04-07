@@ -156,7 +156,6 @@ public class DataServiceManager : Singleton<DataServiceManager>
             {
                 //    Texture2D tex = new Texture2D(width, high);
                 //    tex = texDl.texture;
-
                 DataArrangement(texDl.texture);
                 // Or retrieve results as binary data
 

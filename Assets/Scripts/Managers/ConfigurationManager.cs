@@ -36,7 +36,8 @@ public class ConfigurationManager : MonoBehaviour
 
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
-        HeatmapUpdater.Instance.InitializeHeatMap();
+        // HeatmapUpdater.Instance.InitializeHeatMap();
+        HeatmapDatabaseUpdater.Instance.InitializeHeatmap();
         HeatLoadUpdater.Instance.InitializeHeatLoad();
         InsideStoveManager.Instance.Initialize();
         ResidualUpdater.Instance.Initialize();
@@ -196,7 +197,8 @@ public class ConfigurationManager : MonoBehaviour
                 else if (item.Key.Equals("heatmap_timing"))
                 {
                     Debug.Log("热力图定时更新");
-                    StartCoroutine(DataServiceManager.Instance.GetHeatmap(HeatmapUpdater.Instance.UpdateHeatmap));
+                    // StartCoroutine(DataServiceManager.Instance.GetHeatmap(HeatmapUpdater.Instance.UpdateHeatmap));
+                    HeatmapDatabaseUpdater.Instance.UpdateHeatmap();
                 }
                 else if (item.Key.Equals("residual_timing"))
                 {
