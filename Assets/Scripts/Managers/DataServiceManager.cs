@@ -105,7 +105,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
         }
 
     }
-        public IEnumerator GetUnityConfig(Func<string, bool> DataArrangement, string config_file)
+    public IEnumerator GetUnityConfig(Func<string, bool> DataArrangement, string config_file)
     {
 
         if (initialized)
@@ -148,23 +148,23 @@ public class DataServiceManager : Singleton<DataServiceManager>
             yield return uwr.SendWebRequest();                                 //等待返回请求的信息
             // int width = 1920;
             // int high = 1080;
-            if (www.isNetworkError || www.isHttpError)
-                {
-                    Debug.Log(www.error);
-                }
-                else
-                {
+            if (uwr.isNetworkError || uwr.isHttpError)
+            {
+                Debug.Log(uwr.error);
+            }
+            else
+            {
                 //    Texture2D tex = new Texture2D(width, high);
                 //    tex = texDl.texture;
 
-                    DataArrangement(texDl.texture);
-                    // Or retrieve results as binary data
+                DataArrangement(texDl.texture);
+                // Or retrieve results as binary data
 
-                }
-        
             }
+
         }
-    
+    }
+
 
     public IEnumerator GetTemperature(Func<string, bool> DataArrangement, string layer = "0")
     {
