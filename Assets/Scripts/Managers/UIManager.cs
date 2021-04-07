@@ -101,7 +101,8 @@ public class UIManager : MonoSingleton<UIManager>
         Invoke("GenerateTuyereUI", 3);
 
         // 热力图gradient的mode设置
-        heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapUpdater.Instance.SwitchGradientMode(value));
+        heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapDatabaseUpdater.Instance.SwitchGradientMode(value));
+        // heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapUpdater.Instance.SwitchGradientMode(value));
         // 热负荷的gradient的mode设置
         heatLoadGradientSelector.selectorEvent.AddListener((int value) => HeatLoadUpdater.Instance.SwitchHeatLoad(value));
         // RenderType

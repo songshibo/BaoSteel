@@ -105,6 +105,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
         }
 
     }
+
     public IEnumerator GetUnityConfig(Func<string, bool> DataArrangement, string config_file)
     {
 
@@ -137,6 +138,31 @@ public class DataServiceManager : Singleton<DataServiceManager>
         }
     }
 
+    public IEnumerator GetInternalDataPic(Func<Texture2D, bool> DataArrangement, string targetData)
+    {
+
+        if (initialized)
+        {
+            UnityWebRequest www = UnityWebRequest.Get(url + "/internal?target_data=" + targetData); //创建UnityWebRequest对象
+            DownloadHandlerTexture texDl = new DownloadHandlerTexture(true);
+            www.downloadHandler = texDl;
+            yield return www.SendWebRequest();                                 //等待返回请求的信息
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+
+                DataArrangement(texDl.texture);
+                // Or retrieve results as binary data
+
+            }
+
+        }
+    }
+
     public IEnumerator GetHeatMapPic(Func<Texture2D, bool> DataArrangement)
     {
 
@@ -146,16 +172,13 @@ public class DataServiceManager : Singleton<DataServiceManager>
             DownloadHandlerTexture texDl = new DownloadHandlerTexture(true);
             www.downloadHandler = texDl;
             yield return www.SendWebRequest();                                 //等待返回请求的信息
-            // int width = 1920;
-            // int high = 1080;
+
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
             else
             {
-                //    Texture2D tex = new Texture2D(width, high);
-                //    tex = texDl.texture;
                 DataArrangement(texDl.texture);
                 // Or retrieve results as binary data
 
@@ -163,7 +186,6 @@ public class DataServiceManager : Singleton<DataServiceManager>
 
         }
     }
-
 
     public IEnumerator GetTemperature(Func<string, bool> DataArrangement, string layer = "0")
     {
@@ -195,7 +217,6 @@ public class DataServiceManager : Singleton<DataServiceManager>
             }
         }
     }
-
 
     // 类型不对，会引起 HTTP/1.1 500 Internal Server Error
     public IEnumerator GetModel(Func<string, string, GameObject, bool> DataArrangement, string type, GameObject parent, float min_h = 0, float max_h = 0)
@@ -300,7 +321,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
         if (initialized)
         {
 
-            UnityWebRequest www = UnityWebRequest.Get(url + "/heatmap");
+            UnityWebRequest www = UnityWebRequest.Get(url + "/heatmap_test");
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
@@ -318,6 +339,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
             }
         }
     }
+
     public IEnumerator GetResidual(Func<string, bool> DataArrangement)
     {
         if (initialized)

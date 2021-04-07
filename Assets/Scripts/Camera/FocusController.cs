@@ -1,7 +1,8 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class FocusController : MonoBehaviour
+public class FocusController : MonoSingleton<FocusController>
 {
     //public Text angle;
     private Transform cameraRig;

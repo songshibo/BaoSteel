@@ -27,7 +27,6 @@ public class ConfigurationManager : MonoBehaviour
         StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeTiming, "timing"));
         // InitializeCamera();
         StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeCamera, "camera"));
-        // Async
         // InitializeModelManager();
         StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeModelManager, "ModelManager"));
         // InitilizeUI();
@@ -36,7 +35,8 @@ public class ConfigurationManager : MonoBehaviour
 
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
-        // HeatmapUpdater.Instance.InitializeHeatMap();
+        HeatmapUpdater.Instance.InitializeHeatMap();
+        // StartCoroutine(DataServiceManager.Instance.GetHeatmap(HeatmapUpdater.Instance.UpdateHeatmap));
         HeatmapDatabaseUpdater.Instance.InitializeHeatmap();
         HeatLoadUpdater.Instance.InitializeHeatLoad();
         InsideStoveManager.Instance.Initialize();
@@ -166,7 +166,7 @@ public class ConfigurationManager : MonoBehaviour
     }
 
     // 添加计时器需要做两步
-    // 第一，在 times.txt 中添加计时器
+    // 第一，在 timing.txt 中添加计时器
     // 第二，在 Update() 中添加该调用的方法
     private void LateUpdate()
     {
@@ -204,6 +204,11 @@ public class ConfigurationManager : MonoBehaviour
                 {
                     Debug.Log("残厚定时更新");
                     StartCoroutine(DataServiceManager.Instance.GetResidual(ResidualUpdater.Instance.UpdateResidual));
+                }
+                else if (item.Key.Equals("liaoceng_timing"))
+                {
+                    Debug.Log("料层定时更新");
+                    StartCoroutine(DataServiceManager.Instance.GetInternalDataPic(LiaoCengUpdater.Instance.UpdateLiaoCeng, "liaoceng"));
                 }
 
                 item.Value[0] = 0;

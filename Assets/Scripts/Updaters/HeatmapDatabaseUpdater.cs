@@ -77,7 +77,7 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
         gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
         material.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
-        UpdateHeatmap();
+        UpdateGradient();
     }
 
     #region UI
@@ -85,7 +85,7 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
     {
         float angle = Util.ComputeThermocoupleAngle(hitPoint);
         float height = hitPoint.y;
-        int x = Mathf.RoundToInt(angle / 360 * width);
+        int x = Mathf.RoundToInt(angle / 360f * width);
         int y = Mathf.RoundToInt(height / Util.MAX_HEIGHT * width);
 
         if (heatmap != null)
