@@ -148,9 +148,9 @@ public class DataServiceManager : Singleton<DataServiceManager>
             yield return www.SendWebRequest();                                 //等待返回请求的信息
             // int width = 1920;
             // int high = 1080;
-            if (uwr.isNetworkError || uwr.isHttpError)
+            if (www.isNetworkError || www.isHttpError)
             {
-                Debug.Log(uwr.error);
+                Debug.Log(www.error);
             }
             else
             {
