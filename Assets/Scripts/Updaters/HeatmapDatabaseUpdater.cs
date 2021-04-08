@@ -25,7 +25,7 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
     [Space]
     [SerializeField]
     private Texture2D heatmap;
-    private int width, height; //这些参数从数据库中读取
+    private int w, h; //这些参数从数据库中读取
 
     // Mouse selection UI part
     private GameObject temperaturePanel; // 温度面板
@@ -58,8 +58,8 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
 
     private bool FetchHeatmap(Texture2D tex)
     {
-        width = tex.width;
-        height = tex.height;
+        w = tex.width;
+        h = tex.height;
         heatmap = tex;
         material.SetTexture("Heatmap", heatmap);
         return true;
@@ -85,8 +85,8 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
     {
         float angle = Util.ComputeThermocoupleAngle(hitPoint);
         float height = hitPoint.y;
-        int x = Mathf.RoundToInt(angle / 360f * width);
-        int y = Mathf.RoundToInt(height / Util.MAX_HEIGHT * width);
+        int x = Mathf.RoundToInt(angle / 360f * w);
+        int y = Mathf.RoundToInt(height / Util.MAX_HEIGHT * h);
 
         if (heatmap != null)
         {
