@@ -247,6 +247,7 @@ public class UIManager : MonoSingleton<UIManager>
     private void GenerateThermoUI()
     {
         GameObject prefab = (GameObject)Resources.Load("Prefabs/thermocoupleButton");
+        float translate = prefab.GetComponent<RectTransform>().sizeDelta.x / 2;  // 热电偶的平移量
         GameObject root = GameObject.Find("ThermoTemperaturePanel");
         ThermocouplePanel_Width_Height = root.GetComponent<RectTransform>().sizeDelta;
 
@@ -264,8 +265,8 @@ public class UIManager : MonoSingleton<UIManager>
             {
                 angle += 360;
             }
-            float x = angle * xRatio + 10;
-            float y = position.y * yRatio;
+            float x = angle * xRatio + translate - ThermocouplePanel_Width_Height.x / 2;
+            float y = position.y * yRatio - ThermocouplePanel_Width_Height.y / 2;
             UIobj.GetComponent<RectTransform>().localPosition = new Vector2(x, y);
             UIobj.name = Util.MergeThermocoupleName(thermo.name);
             string[] names = UIobj.name.Split('-');

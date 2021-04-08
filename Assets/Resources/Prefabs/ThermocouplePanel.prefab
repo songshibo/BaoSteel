@@ -423,8 +423,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Temperature: \n200\xB0C\nAngle: 180\xB0 Height: 47.2m"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fa328c1ae3ffb6b4583cf371153b0be6, type: 2}
-  m_sharedMaterial: {fileID: 21918420405216288, guid: fa328c1ae3ffb6b4583cf371153b0be6,
+  m_fontAsset: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
+  m_sharedMaterial: {fileID: 4808845907771783858, guid: 84403340998c62b4aa786792b57b5a05,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
