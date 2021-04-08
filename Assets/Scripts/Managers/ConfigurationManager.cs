@@ -25,22 +25,6 @@ public class ConfigurationManager : MonoBehaviour
         InitializeDataServiceManager();
         // Initialize all in one Coroutine
         StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeAll, "all"));
-    }
-
-    private bool InitializeAll(string input)
-    {
-        string[] separators = new string[] { "@@@" };
-        // timing/camera/model/ui
-        string[] configs = input.Split(separators, StringSplitOptions.None);
-        foreach (string s in configs)
-        {
-            Debug.LogError(s);
-        }
-
-        InitilizeTiming(configs[0]);
-        InitializeCamera(configs[1]);
-        InitializeModelManager(configs[2]);
-        InitilizeUI(configs[3], configs[2]);
 
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
@@ -55,6 +39,18 @@ public class ConfigurationManager : MonoBehaviour
         CullingController.Instance.ResetMaterialProperties();
         // 单独处理heatmap材质，将其设置为正常渲染模式
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
+    }
+
+    private bool InitializeAll(string input)
+    {
+        string[] separators = new string[] { "@@@" };
+        // timing/camera/model/ui
+        string[] configs = input.Split(separators, StringSplitOptions.None);
+
+        InitilizeTiming(configs[0]);
+        InitializeCamera(configs[1]);
+        InitializeModelManager(configs[2]);
+        InitilizeUI(configs[3], configs[2]);
 
         return true;
     }
@@ -139,7 +135,7 @@ public class ConfigurationManager : MonoBehaviour
     private void InitilizeUI(string configClip, string configModel)
     {
         string[] linesClip = configClip.Split('\n');
-        string[] linesShowPart = Util.RemoveComments(configClip.Split('\n'));
+        string[] linesShowPart = Util.RemoveComments(configModel.Split('\n'));
 
         UIManager.Instance.Initialize(linesClip, linesShowPart);
     }

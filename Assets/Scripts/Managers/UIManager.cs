@@ -45,7 +45,7 @@ public class UIManager : MonoSingleton<UIManager>
         clipDropDown.SetupDropdown();
 
 
-        // * Initialize clip dropdown list
+        // * Initialize layer dropdown list
         List<string> englishName = new List<string>();
         // layer dropdown initialize
         foreach (string row in configShowPart)
