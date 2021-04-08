@@ -36,7 +36,6 @@ public class ConfigurationManager : MonoBehaviour
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
         HeatmapUpdater.Instance.InitializeHeatMap();
-        // StartCoroutine(DataServiceManager.Instance.GetHeatmap(HeatmapUpdater.Instance.UpdateHeatmap));
         HeatmapDatabaseUpdater.Instance.InitializeHeatmap();
         HeatLoadUpdater.Instance.InitializeHeatLoad();
         InsideStoveManager.Instance.Initialize();
