@@ -18563,7 +18563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2cdde3cba7de401fa383dee48d120fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tex2d: {fileID: 2800000, guid: 329738e2fd04dae419f9e327fb942384, type: 3}
+  tex2d: {fileID: 2800000, guid: cc33f582f3be4ee469e647bf1ef51fe3, type: 3}
 --- !u!1 &917905872
 GameObject:
   m_ObjectHideFlags: 0
