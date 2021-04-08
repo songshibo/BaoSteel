@@ -7,11 +7,12 @@ public class PointerEnterExitUI : MonoBehaviour, IPointerExitHandler, IPointerEn
 {
     public void OnPointerEnter(PointerEventData eventData)
     {
-        FocusController.Instance.lockCursor = true;
+        Debug.Log("Enter");
+        FocusController.Instance.CameraLock(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        FocusController.Instance.lockCursor = false;
+        FocusController.Instance.CameraLock(false);
     }
 }

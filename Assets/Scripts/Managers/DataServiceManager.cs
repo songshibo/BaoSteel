@@ -179,8 +179,6 @@ public class DataServiceManager : Singleton<DataServiceManager>
             }
             else
             {
-
-
                 DataArrangement(texDl.texture);
                 // Or retrieve results as binary data
 
@@ -323,7 +321,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
         if (initialized)
         {
 
-            UnityWebRequest www = UnityWebRequest.Get(url + "/heatmap");
+            UnityWebRequest www = UnityWebRequest.Get(url + "/heatmap_test");
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)

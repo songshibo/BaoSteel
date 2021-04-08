@@ -28,12 +28,12 @@ public class UIManager : MonoSingleton<UIManager>
     private FocusController focus; // 控制相机的跳转
     private float offset = 8.0f; // 相机与热电偶的距离
 
-    public void InitializeUI1(string[] configClip)
+    public void Initialize(string[] configClip, string[] configShowPart)
     {
         // 获取控制相机跳转的组件
         focus = GameObject.FindObjectOfType(typeof(FocusController)) as FocusController;
 
-        // first line : clip dropdown
+        // * Initialize clip dropdown
         string[] clipConfig = configClip[0].Split(' ');
         string spritePath = "Textures/Border/Circles/";
         Sprite clipIcon = Resources.Load<Sprite>(spritePath + "Circle Outline - Stroke 20px");
@@ -43,13 +43,9 @@ public class UIManager : MonoSingleton<UIManager>
         }
         clipDropDown.dropdownEvent.AddListener(ClipItemEvent);
         clipDropDown.SetupDropdown();
-    }
 
-    public void InitializeUI2(string[] configShowPart)
-    {
-        // Initialize clip dropdown list
-        string spritePath = "Textures/Border/Circles/";
-        Sprite clipIcon = Resources.Load<Sprite>(spritePath + "Circle Outline - Stroke 20px");
+
+        // * Initialize layer dropdown list
         List<string> englishName = new List<string>();
         // layer dropdown initialize
         foreach (string row in configShowPart)
@@ -92,6 +88,7 @@ public class UIManager : MonoSingleton<UIManager>
             //obj.GetComponent<EnterExitOutline>().SetTargets(config[1]);
         }
 
+        // * Other UI initialization
         EnterExitInfo = GameObject.Find("EnterExitInfo");
         EnterExitInfo.SetActive(false);
         Invoke("GenerateThermoUI", 3);
@@ -101,7 +98,8 @@ public class UIManager : MonoSingleton<UIManager>
         Invoke("GenerateTuyereUI", 3);
 
         // 热力图gradient的mode设置
-        heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapUpdater.Instance.SwitchGradientMode(value));
+        heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapDatabaseUpdater.Instance.SwitchGradientMode(value));
+        // heatMapGradientSelector.selectorEvent.AddListener((int value) => HeatmapUpdater.Instance.SwitchGradientMode(value));
         // 热负荷的gradient的mode设置
         heatLoadGradientSelector.selectorEvent.AddListener((int value) => HeatLoadUpdater.Instance.SwitchHeatLoad(value));
         // RenderType
@@ -115,7 +113,6 @@ public class UIManager : MonoSingleton<UIManager>
         renderType.SetupDropdown();
         // Options
         optionWindowManager = GameObject.Find("OptionWindow").GetComponent<ModalWindowManager>();
-
     }
 
     public void ShowTuyereUI()

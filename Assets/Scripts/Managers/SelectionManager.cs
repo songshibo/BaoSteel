@@ -52,7 +52,8 @@ public class SelectionManager : MonoSingleton<SelectionManager>
                 case SelectionType.heatmap:
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
-                        HeatmapUpdater.Instance.InvertSamplingFromRayCast(hit.point);
+                        // HeatmapUpdater.Instance.InvertSamplingFromRayCast(hit.point);
+                        HeatmapDatabaseUpdater.Instance.InvertSamplingFromRayCast(hit.point);
                     }
                     break;
                 default:
@@ -77,7 +78,7 @@ public class SelectionManager : MonoSingleton<SelectionManager>
         //no matter hit or not
         ThermocoupleUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.standard);
         // based on current selectionType to change the activity of the UI prefab
-        HeatmapUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatmap);
+        HeatmapDatabaseUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatmap);
 
         HeatLoadUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatload);
     }

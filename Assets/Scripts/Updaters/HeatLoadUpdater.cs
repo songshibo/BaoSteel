@@ -65,7 +65,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         }
         CancelPanel();
         GenerateHeatLoad();
-        
+
     }
 
     private Color GetColor(float position)
@@ -207,7 +207,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
 
     public void InitializeHeatLoad()
     {
-        yMax = Util.ReadModelProperty("max_height");
+        yMax = Util.MAX_HEIGHT;
         gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
         targetMat.SetTexture("_HeatLoadGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));

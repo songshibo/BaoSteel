@@ -16,13 +16,16 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
     [Space]
     public Image gradientUI;
     public SliderManager segmentUI;
+    [SerializeField]
     private int gradientRes = 64;
-    private CustomGradient customGradient;
+    [SerializeField]
+    private CustomGradient customGradient = new CustomGradient();
     private Texture2D gradientTex;
     // Heat map
     [Space]
-    private int width, height, maxHeight; //这些参数从数据库中读取
+    [SerializeField]
     private Texture2D heatmap;
+    private int w, h; //这些参数从数据库中读取
 
     // Mouse selection UI part
     private GameObject temperaturePanel; // 温度面板
@@ -33,21 +36,12 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
     public void InitializeHeatmap()
     {
         // Generate Gradient Texture
-        customGradient = new CustomGradient();
         gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
         material.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
-        // TODO: Get heatmap parameters
-        width = 0;
-        height = 0;
-        maxHeight = 0;
-        // TODO: Get heatmap from database
-        heatmap = new Texture2D(width, height)
-        {
-            wrapMode = TextureWrapMode.Repeat,
-            filterMode = FilterMode.Bilinear
-        };
-        material.SetTexture("Heatmap", heatmap);
+
+        UpdateHeatmap();
+        material.SetFloat("yHeight", Util.MAX_HEIGHT);
 
         //初始化UI部分
         temperaturePanel = Instantiate(Resources.Load<GameObject>("Prefabs/TemperaturePanel"), GameObject.Find("Canvas").transform);
@@ -56,10 +50,19 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
         positionText = temperaturePanel.transform.Find("Position").GetComponent<TextMeshProUGUI>();
     }
 
-    // TODO
+    // TODO: wait for YiXian to push backend to server
     public void UpdateHeatmap()
     {
+        StartCoroutine(DataServiceManager.Instance.GetHeatMapPic(FetchHeatmap));
+    }
 
+    private bool FetchHeatmap(Texture2D tex)
+    {
+        w = tex.width;
+        h = tex.height;
+        heatmap = tex;
+        material.SetTexture("Heatmap", heatmap);
+        return true;
     }
 
     public void UpdateGradient()
@@ -68,14 +71,13 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
     }
 
-    // TODO
     public void SwitchGradientMode(int i)
     {
         customGradient.blendMode = (i == 0) ? CustomGradient.BlendMode.Linear : CustomGradient.BlendMode.Discrete;
         gradientTex = customGradient.GetTexture(gradientRes, (int)float.Parse(segmentUI.valueText.text));
         material.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
-        // StartCoroutine(DataServiceManager.Instance.GetHeatmap(UpdateHeatmap));
+        UpdateGradient();
     }
 
     #region UI
@@ -83,8 +85,8 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
     {
         float angle = Util.ComputeThermocoupleAngle(hitPoint);
         float height = hitPoint.y;
-        int x = Mathf.RoundToInt(angle / 360 * width);
-        int y = Mathf.RoundToInt(height / maxHeight * width);
+        int x = Mathf.RoundToInt(angle / 360f * w);
+        int y = Mathf.RoundToInt(height / Util.MAX_HEIGHT * h);
 
         if (heatmap != null)
         {

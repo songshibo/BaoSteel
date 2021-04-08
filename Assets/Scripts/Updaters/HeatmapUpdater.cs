@@ -61,7 +61,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         float angle = Util.ComputeThermocoupleAngle(hitPoint);
         float height = hitPoint.y;
         int x = Mathf.RoundToInt(angle / 360 * xRes);
-        int y = Mathf.RoundToInt(height / Util.ReadModelProperty("max_height") * yRes);
+        int y = Mathf.RoundToInt(height / Util.MAX_HEIGHT * yRes);
 
         if (texture != null)
         {
@@ -141,7 +141,7 @@ public class HeatmapUpdater : MonoSingleton<HeatmapUpdater>
         }
 
         // read max height from configurations
-        float yMax = Util.ReadModelProperty("max_height");
+        float yMax = Util.MAX_HEIGHT;
         buffer = new ComputeBuffer(data.Count, Marshal.SizeOf(typeof(Vector3)));
         buffer.SetData(data);
 

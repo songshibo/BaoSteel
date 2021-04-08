@@ -20,7 +20,7 @@ public class FocusController : MonoSingleton<FocusController>
     private Quaternion rigRotation; // CameraRig的旋转，用于水平旋转相机
     private Quaternion verticalRotation; // VerticalRig的旋转，用于垂直旋转相机
 
-    public bool lockCursor = false; // true则禁止一切鼠标控制
+    private bool lockCursor = false; // true则禁止一切鼠标控制
     private Vector3 cameraRigOriginPos; // 记录camera rig的初始位置
     private Quaternion rigOriginRot; // 记录camera rig的初始旋转
     private Quaternion vertOriginRot; // 记录Vertical Rig的初始旋转
@@ -120,28 +120,25 @@ public class FocusController : MonoSingleton<FocusController>
 
     protected void Zoom()
     {
-        if (!lockCursor)
-        {
-            float amount = Input.GetAxis("Mouse ScrollWheel");
-            float dis = Vector2.Distance(transform.localPosition, Vector3.zero);
-            camPosition += new Vector3(0.0f, 0.0f, 1.0f) * zoomSpeed * amount;
-            Vector3 inv_dir = (transform.localPosition).normalized;
-            Vector3 target_inv_dir = camPosition;
+        float amount = lockCursor ? 0 : Input.GetAxis("Mouse ScrollWheel");
+        float dis = Vector2.Distance(transform.localPosition, Vector3.zero);
+        camPosition += new Vector3(0.0f, 0.0f, 1.0f) * zoomSpeed * amount;
+        Vector3 inv_dir = (transform.localPosition).normalized;
+        Vector3 target_inv_dir = camPosition;
 
-            float dot = Vector3.Dot(inv_dir, target_inv_dir);
-            if (dot < 0.0f)
+        float dot = Vector3.Dot(inv_dir, target_inv_dir);
+        if (dot < 0.0f)
+        {
+            camPosition = inv_dir * limitDistance;
+        }
+        else
+        {
+            if (target_inv_dir.magnitude <= limitDistance)
             {
                 camPosition = inv_dir * limitDistance;
             }
-            else
-            {
-                if (target_inv_dir.magnitude <= limitDistance)
-                {
-                    camPosition = inv_dir * limitDistance;
-                }
-            }
-            transform.localPosition = Vector3.Lerp(transform.localPosition, camPosition, Time.deltaTime * zoomDelta);
         }
+        transform.localPosition = Vector3.Lerp(transform.localPosition, camPosition, Time.deltaTime * zoomDelta);
     }
 
     protected void Rotate()
@@ -229,8 +226,8 @@ public class FocusController : MonoSingleton<FocusController>
         rigPosition = cameraRigOriginPos;
     }
 
-    public void DisableEnableMouseControl()
+    public void CameraLock(bool value)
     {
-        lockCursor = !lockCursor;
+        lockCursor = value;
     }
 }
