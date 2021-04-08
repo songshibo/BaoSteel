@@ -29,15 +29,18 @@ public class ConfigurationManager : MonoBehaviour
 
     private bool InitializeAll(string input)
     {
-        string timingConfig = "";
-        string cameraConfig = "";
-        string modelConfig = "";
-        string uiConfig = "";
+        string[] separators = new string[] { "@@@" };
+        // timing/camera/model/ui
+        string[] configs = input.Split(separators, StringSplitOptions.None);
+        foreach (string s in configs)
+        {
+            Debug.LogError(s);
+        }
 
-        InitilizeTiming(timingConfig);
-        InitializeCamera(cameraConfig);
-        InitializeModelManager(modelConfig);
-        InitilizeUI(uiConfig, modelConfig);
+        InitilizeTiming(configs[0]);
+        InitializeCamera(configs[1]);
+        InitializeModelManager(configs[2]);
+        InitilizeUI(configs[3], configs[2]);
 
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
