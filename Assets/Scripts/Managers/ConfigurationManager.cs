@@ -23,15 +23,21 @@ public class ConfigurationManager : MonoBehaviour
 #endif
         // No-Async
         InitializeDataServiceManager();
-        // InitilizeTiming();
-        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeTiming, "timing"));
-        // InitializeCamera();
-        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeCamera, "camera"));
-        // InitializeModelManager();
-        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeModelManager, "ModelManager"));
-        // InitilizeUI();
-        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeUI1, "ui"));
-        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitilizeUI2, "ModelManager"));
+        // Initialize all in one Coroutine
+        StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeAll, "all"));
+    }
+
+    private bool InitializeAll(string input)
+    {
+        string timingConfig = "";
+        string cameraConfig = "";
+        string modelConfig = "";
+        string uiConfig = "";
+
+        InitilizeTiming(timingConfig);
+        InitializeCamera(cameraConfig);
+        InitializeModelManager(modelConfig);
+        InitilizeUI(uiConfig, modelConfig);
 
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
@@ -41,13 +47,13 @@ public class ConfigurationManager : MonoBehaviour
         InsideStoveManager.Instance.Initialize();
         ResidualUpdater.Instance.Initialize();
 
-
         // Special Settings
         //InitilizeTuyere();
         CullingController.Instance.ResetMaterialProperties();
         // 单独处理heatmap材质，将其设置为正常渲染模式
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
 
+        return true;
     }
 
     private void InitilizeTuyere()
@@ -55,7 +61,6 @@ public class ConfigurationManager : MonoBehaviour
         // 风口更新器里需要初始化风口的大小，包括长宽高
         // 但是不确定风口什么时候生成，所以此处代码写在 ModelManager 里
         // 待风口生成好后，由 ModelManager 调用风口更新器里的 GetTuyereSize
-
     }
 
     public void ChangeIP(string newIP)
@@ -69,12 +74,13 @@ public class ConfigurationManager : MonoBehaviour
         print(newPort);
     }
 
-    private bool InitializeCamera(string config)
+    private void InitializeCamera(string config)
     {
-        // string filename = "camera.txt";
-        // string config = Util.ReadConfigFile(filename);
-
+#if (INIT_FROM_DATABASE)
         string[] lines = config.Split('\n');
+#else
+        string config = Util.ReadConfigFile("camera.txt");
+#endif
         Debug.Log("Camera parameters:\n" +
                   "zoom speed:" + lines[0] + "\n" +
                   "rotate speed:" + lines[1] + "\n" +
@@ -83,19 +89,17 @@ public class ConfigurationManager : MonoBehaviour
                   );
 
         FindObjectOfType<FocusController>().SetCameraParameters(float.Parse(lines[0]), float.Parse(lines[1]), float.Parse(lines[2]), float.Parse(lines[3]));
-        return true;
     }
 
-    private bool InitializeModelManager(string config)
+    private void InitializeModelManager(string config)
     {
-        // string filename = "ModelManager.txt";
-        // string config = Util.ReadConfigFile(filename);
-
+#if (INIT_FROM_DATABASE)
         string[] lines = Util.RemoveComments(config.Split('\n'));
-
+#else
+        string config = Util.ReadConfigFile("ModelManager.txt");
+#endif
         // GeneratePipeline: add tags, then generate models.
         ModelManager.Instance.GeneratePipeline(lines);
-        return true;
     }
 
     private void InitializeDataServiceManager()
@@ -129,30 +133,21 @@ public class ConfigurationManager : MonoBehaviour
         Debug.Log(log);
     }
 
-    private bool InitilizeUI1(string configClip)
+    private void InitilizeUI(string configClip, string configModel)
     {
-
         string[] linesClip = configClip.Split('\n');
-
-        UIManager.Instance.InitializeUI1(linesClip);
-
-        return true;
-    }
-
-    private bool InitilizeUI2(string configClip)
-    {
         string[] linesShowPart = Util.RemoveComments(configClip.Split('\n'));
 
-        UIManager.Instance.InitializeUI2(linesShowPart);
-
-        return true;
+        UIManager.Instance.Initialize(linesClip, linesShowPart);
     }
 
-    private bool InitilizeTiming(string configTiming)
+    private void InitilizeTiming(string configTiming)
     {
-        // string filetiming = "timing.txt";
-        // string configTiming = Util.ReadConfigFile(filetiming);
+#if (INIT_FROM_DATABASE)
         string[] linesTiming = configTiming.Split('\n');
+#else
+        string configTiming = Util.ReadConfigFile("timing.txt");
+#endif
 
         times = new Dictionary<string, float[]>();
         foreach (string line in linesTiming)
@@ -160,8 +155,6 @@ public class ConfigurationManager : MonoBehaviour
             string[] temp = line.Split(':');
             times[temp[0]] = new float[] { 0, float.Parse(temp[1]) };
         }
-
-        return true;
     }
 
     // 添加计时器需要做两步
