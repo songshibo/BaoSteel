@@ -322,6 +322,7 @@ public class UIManager : MonoSingleton<UIManager>
             EnterExitInfo.GetComponent<Text>().text = content;
             float x = obj.GetComponent<RectTransform>().localPosition.x;
             float y = obj.GetComponent<RectTransform>().localPosition.y;
+            print(x + " " + y);
 
             if (x < ThermocouplePanel_Width_Height.x / 2)
             {

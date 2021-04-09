@@ -21,6 +21,7 @@ public class ConfigurationManager : MonoBehaviour
 #else
         Debug.Log("Intialized from local configurations");
 #endif
+        times = new Dictionary<string, float[]>();
         // No-Async
         InitializeDataServiceManager();
         // Initialize all in one Coroutine
@@ -28,7 +29,6 @@ public class ConfigurationManager : MonoBehaviour
 
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
-        HeatmapUpdater.Instance.InitializeHeatMap();
         HeatmapDatabaseUpdater.Instance.InitializeHeatmap();
         HeatLoadUpdater.Instance.InitializeHeatLoad();
         InsideStoveManager.Instance.Initialize();
@@ -148,7 +148,6 @@ public class ConfigurationManager : MonoBehaviour
         string configTiming = Util.ReadConfigFile("timing.txt");
 #endif
 
-        times = new Dictionary<string, float[]>();
         foreach (string line in linesTiming)
         {
             string[] temp = line.Split(':');
@@ -188,13 +187,12 @@ public class ConfigurationManager : MonoBehaviour
                 else if (item.Key.Equals("heatmap_timing"))
                 {
                     Debug.Log("热力图定时更新");
-                    // StartCoroutine(DataServiceManager.Instance.GetHeatmap(HeatmapUpdater.Instance.UpdateHeatmap));
-                    HeatmapDatabaseUpdater.Instance.UpdateHeatmap();
+                    StartCoroutine(DataServiceManager.Instance.GetHeatMapPic(HeatmapDatabaseUpdater.Instance.UpdateHeatmap));
                 }
                 else if (item.Key.Equals("residual_timing"))
                 {
                     Debug.Log("残厚定时更新");
-                    StartCoroutine(DataServiceManager.Instance.GetResidual(ResidualUpdater.Instance.UpdateResidual));
+                    //StartCoroutine(DataServiceManager.Instance.GetResidual(ResidualUpdater.Instance.UpdateResidual));
                 }
                 else if (item.Key.Equals("liaoceng_timing"))
                 {

@@ -9,7 +9,7 @@ public class TextureEditorWindow : EditorWindow
     string info;
     Color infoColor;
 
-    [MenuItem("Tools/Export Texture")]
+    //[MenuItem("Tools/Export Texture")]
     public static void Init()
     {
         TextureEditorWindow window = GetWindow(typeof(TextureEditorWindow)) as TextureEditorWindow;

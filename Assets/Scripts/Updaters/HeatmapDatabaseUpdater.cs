@@ -40,7 +40,7 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
         material.SetTexture("_CustomGradient", gradientTex);
         gradientUI.sprite = Sprite.Create(gradientTex, new Rect(0, 0, gradientTex.width, gradientTex.height), new Vector2(0.5f, 0.5f));
 
-        UpdateHeatmap();
+        StartCoroutine(DataServiceManager.Instance.GetHeatMapPic(UpdateHeatmap));
         material.SetFloat("yHeight", Util.MAX_HEIGHT);
 
         //初始化UI部分
@@ -51,12 +51,7 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
     }
 
     // TODO: wait for YiXian to push backend to server
-    public void UpdateHeatmap()
-    {
-        StartCoroutine(DataServiceManager.Instance.GetHeatMapPic(FetchHeatmap));
-    }
-
-    private bool FetchHeatmap(Texture2D tex)
+    public bool UpdateHeatmap(Texture2D tex)
     {
         w = tex.width;
         h = tex.height;

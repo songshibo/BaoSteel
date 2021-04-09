@@ -79,7 +79,7 @@ namespace Michsky.UI.ModernUIPack
             }
             catch
             {
-                Debug.LogError("Dropdown - Cannot initalize the object due to missing resources.", this);
+                Debug.LogWarning("Dropdown - Cannot initalize the object due to missing resources.", this);
             }
 
             if (enableScrollbar == true)
