@@ -45,21 +45,21 @@ public class UIScroll : MonoBehaviour, IScrollHandler
 
     private void Update()
     {
-        //if (RectTransformUtility.RectangleContainsScreenPoint(viewport, Input.mousePosition)) // 鼠标进入viewport，才能进行缩放
-        //{
-        //    amount = Input.GetAxisRaw("Mouse ScrollWheel");
+        if (RectTransformUtility.RectangleContainsScreenPoint(viewport, Input.mousePosition)) // 鼠标进入viewport，才能进行缩放
+        {
+            amount = Input.GetAxisRaw("Mouse ScrollWheel");
 
-        //    float newScale = contain.localScale.x;
-        //    if (amount > 0)
-        //    {
-        //        newScale = Math.Min(maxFactor, newScale + amount * level); // 新的缩放值不能超过最大缩放值
-        //    }
-        //    else if (amount < 0)
-        //    {
-        //        newScale = Math.Max(minFactor, newScale + amount * level);
-        //    }
-        //    contain.localScale = new Vector3(newScale, newScale, 1);
-        //}
+            float newScale = contain.localScale.x;
+            if (amount > 0)
+            {
+                newScale = Math.Min(maxFactor, newScale + amount * level); // 新的缩放值不能超过最大缩放值
+            }
+            else if (amount < 0)
+            {
+                newScale = Math.Max(minFactor, newScale + amount * level);
+            }
+            contain.localScale = new Vector3(newScale, newScale, 1);
+        }
         //if (transform.localScale.x == 1f)
         //{
         //    GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);

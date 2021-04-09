@@ -18,13 +18,13 @@ public class InsideStoveManager : MonoSingleton<InsideStoveManager>
         Vector3[] vertices = new Vector3[4];
         Vector2[] uvs = new Vector2[4];
         // vertex positions
-        vertices[0] = new Vector3(0.5f, 0.5f, 0.0f);
+        vertices[0] = new Vector3(0.5f, 1f, 0.0f);
         uvs[0] = new Vector2(1f, 1f);
-        vertices[1] = new Vector3(0.5f, -0.5f, 0.0f);
+        vertices[1] = new Vector3(0.5f, 0f, 0.0f);
         uvs[1] = new Vector2(1f, 0f);
-        vertices[2] = new Vector3(-0.5f, -0.5f, 0.0f);
+        vertices[2] = new Vector3(-0.5f, 0f, 0.0f);
         uvs[2] = new Vector2(0f, 0f);
-        vertices[3] = new Vector3(-0.5f, 0.5f, 0.0f);
+        vertices[3] = new Vector3(-0.5f, 1f, 0.0f);
         uvs[3] = new Vector2(0f, 1f);
 
         mesh.vertices = vertices;
