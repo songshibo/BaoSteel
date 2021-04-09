@@ -67,7 +67,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: contextBackgroundColor.a
-    value: 255
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: buttonThemeType
@@ -76,7 +76,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: buttonFont
     value: 
-    objectReference: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: buttonFontSize
     value: 22.5
@@ -228,7 +228,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: dropdownFont
     value: 
-    objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: dropdownFontSize
     value: 22.5
@@ -332,7 +332,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: selectorFont
     value: 
-    objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: hSelectorFontSize
     value: 28
@@ -380,7 +380,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: inputFieldFont
     value: 
-    objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: inputFieldFontSize
     value: 28
@@ -404,11 +404,11 @@ Preset:
   - target: {fileID: 0}
     propertyPath: modalWindowTitleFont
     value: 
-    objectReference: {fileID: 11400000, guid: fa328c1ae3ffb6b4583cf371153b0be6, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: modalWindowContentFont
     value: 
-    objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: modalThemeType
     value: 0
@@ -496,7 +496,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: notificationTitleFont
     value: 
-    objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: notificationTitleFontSize
     value: 22.5
@@ -504,7 +504,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: notificationDescriptionFont
     value: 
-    objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: notificationDescriptionFontSize
     value: 18
@@ -580,7 +580,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: progressBarLabelFont
     value: 
-    objectReference: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: progressBarLabelFontSize
     value: 25
@@ -684,7 +684,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: sliderLabelFont
     value: 
-    objectReference: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: sliderLabelFontSize
     value: 24
@@ -840,7 +840,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: toggleFont
     value: 
-    objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: toggleFontSize
     value: 35
@@ -916,7 +916,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: tooltipFont
     value: 
-    objectReference: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
+    objectReference: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   - target: {fileID: 0}
     propertyPath: tooltipFontSize
     value: 22
