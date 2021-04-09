@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using XCharts;
 using System;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class TuyereUpdater : MonoSingleton<TuyereUpdater>
 {

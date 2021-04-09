@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using System;
 using XCharts;
+using TMPro;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -249,6 +250,11 @@ public class UIManager : MonoSingleton<UIManager>
         GameObject prefab = (GameObject)Resources.Load("Prefabs/thermocoupleButton");
         float translate = prefab.GetComponent<RectTransform>().sizeDelta.x / 2;  // 热电偶的平移量
         GameObject root = GameObject.Find("ThermoTemperaturePanel");
+
+        // 修改热电偶面板的高度与 viewport 相同，减去20是因为水平滑动杆的高度
+        float parent_height = root.transform.parent.GetComponent<RectTransform>().rect.height;
+        root.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(root.transform.GetComponent<RectTransform>().sizeDelta.x, parent_height - 20);
+
         ThermocouplePanel_Width_Height = root.GetComponent<RectTransform>().sizeDelta;
 
         float xRatio = root.GetComponent<RectTransform>().sizeDelta.x / 360;
@@ -277,7 +283,7 @@ public class UIManager : MonoSingleton<UIManager>
 
             UIobj.transform.Find("height").GetComponent<Text>().text = position.y.ToString("0.###") + "m";
             UIobj.transform.Find("angle").GetComponent<Text>().text = angle.ToString("0") + "°";
-            UIobj.transform.Find("temperature").GetComponent<Text>().text = "-";
+            UIobj.transform.Find("temperature").GetComponent<TMP_Text>().text = "-";
             UIobj.GetComponent<Button>().onClick.AddListener(delegate () { ThermoUIOnClick(thermo, UIobj); });
 
             EventTrigger eventTrigger = UIobj.AddComponent<EventTrigger>();
@@ -317,12 +323,11 @@ public class UIManager : MonoSingleton<UIManager>
         if (flag)
         {
             EnterExitInfo.SetActive(true);
-            string content = "编号：" + obj.name + "\n温度：" + obj.transform.Find("temperature").GetComponent<Text>().text +
+            string content = "编号：" + obj.name + "\n温度：" + obj.transform.Find("temperature").GetComponent<TMP_Text>().text +
                 "\n高度：" + obj.transform.Find("height").GetComponent<Text>().text + "\n角度：" + obj.transform.Find("angle").GetComponent<Text>().text;
             EnterExitInfo.GetComponent<Text>().text = content;
             float x = obj.GetComponent<RectTransform>().localPosition.x;
             float y = obj.GetComponent<RectTransform>().localPosition.y;
-            print(x + " " + y);
 
             if (x < ThermocouplePanel_Width_Height.x / 2)
             {

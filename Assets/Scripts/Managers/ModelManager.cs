@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using UnityEditor;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
+using TMPro;
 
 // 使用协程 需要 MonoBehavior
 // 继承 MonoBehavior 就不能 new， 也就不能使用普通单例
@@ -250,7 +251,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         GameObject[] tuyeres = GameObject.FindGameObjectsWithTag("tuyere");
         foreach (GameObject tuyere in tuyeres)
         {
-            tuyere.transform.Find("tuyere_model").Find("Canvas").Find("info").GetComponent<Text>().text = tuyere.name.Split('_')[1] + "号" + "\n" +
+            tuyere.transform.Find("tuyere_model").Find("Canvas").Find("info").GetComponent<TMP_Text>().text = tuyere.name.Split('_')[1] + "号" + "\n" +
                 tuyere.transform.localEulerAngles.y.ToString("#0") + "°";
 
         }

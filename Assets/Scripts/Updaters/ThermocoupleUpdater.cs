@@ -30,7 +30,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
         float angle = Util.ComputeThermocoupleAngle(lastHitted.transform.position);
         float height = (float)Math.Round(lastHitted.transform.position.y, 2);
         // 获取热电偶的温度
-        infoText.text = "温度:\n" + GetTempByName(mergedName) + "°C\n" + "角度:" + angle.ToString() + "° " + "高度:" + height.ToString() + "m";
+        infoText.text = "温度:" + GetTempByName(mergedName) + "°C\n" + "角度:" + angle.ToString() + "°\n" + "高度:" + height.ToString() + "m";
         return mergedName;
     }
 
@@ -59,7 +59,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
     public string GetTempByName(string name)
     {
         GameObject obj = name_gameobject[name.Split('-')[0]];
-        string temperatures = obj.transform.Find("temperature").GetComponent<Text>().text.TrimEnd(' ');
+        string temperatures = obj.transform.Find("temperature").GetComponent<TMP_Text>().text.TrimEnd(' ');
         return temperatures.Replace(" ", "°C-");
     }
 
@@ -102,14 +102,14 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
 
         foreach (var item in name_gameobject)
         {
-            item.Value.transform.Find("temperature").GetComponent<Text>().text = "";
+            item.Value.transform.Find("temperature").GetComponent<TMP_Text>().text = "";
             item.Value.GetComponent<Image>().color = Color.green;
         }
         foreach (var item in name_gameobject)
         {
             try
             {
-                item.Value.transform.Find("temperature").GetComponent<Text>().text += name_temperature[item.Key] + " ";
+                item.Value.transform.Find("temperature").GetComponent<TMP_Text>().text += name_temperature[item.Key] + " ";
             }
             catch (KeyNotFoundException)
             {

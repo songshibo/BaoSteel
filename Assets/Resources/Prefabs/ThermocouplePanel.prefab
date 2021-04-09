@@ -421,7 +421,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Temperature: \n200\xB0C\nAngle: 180\xB0 Height: 47.2m"
+  m_text: "\u6E29\u5EA6: 200\xB0C\n\u89D2\u5EA6: 180\xB0 \n\u9AD8\u5EA6: 47.2m"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   m_sharedMaterial: {fileID: 4808845907771783858, guid: 84403340998c62b4aa786792b57b5a05,
