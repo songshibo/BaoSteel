@@ -73,7 +73,7 @@ public class TuyereUpdater : MonoSingleton<TuyereUpdater>
             tuyere.transform.Find("tuyere_wind").Find("shape").localScale = new Vector3(width_scale, height_scale, depth_scale);
             tuyere.transform.Find("tuyere_wind").Find("wind").localScale = new Vector3(width_scale, depth_scale, height_scale);
         }
-        areaRatio.GetComponent<Text>().text = "面积比：" + (total_area / 147.196 * 100).ToString("0.##") + "%";
+        areaRatio.GetComponent<Text>().text = "面积比\n" + (total_area / 147.196 * 100).ToString("0.##") + "%";
         return true;
     }
 
