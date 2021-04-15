@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: residualThickness
+  m_Shader: {fileID: -6465566751694194690, guid: d5918f68425f2c8488fde703fdc97900,
+    type: 3}
+  m_ShaderKeywords: DISPLAYMODE_RESIDUALTHICKNESS
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpTex:
+        m_Texture: {fileID: 2800000, guid: 34fa1eb040da55445ba00c6ec3c098de, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 76e5d171f4c935e418dd6611608c8382, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Metallic:
+        m_Texture: {fileID: 2800000, guid: 220d239218244a540a37cd8234e172b4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ResidualThickness:
+        m_Texture: {fileID: 2800000, guid: fe5f6965c6f5fd04083e2fb5f93b2041, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - DISPLAYMODE: 1
+    - FadeDistance: 1.45
+    - _BottomRadius: 6
+    - _BumpScale: 1
+    - _CorrosionScale: 30
+    - _MaxHeight: 14.29
+    - _MinHeight: 8.132
+    - _Smoothness: 0.6
+    m_Colors:
+    - _Albedo: {r: 1, g: 1, b: 1, a: 0}
+    - _BottomPlane: {r: 0, g: 0, b: 0, a: 0}
+    - _SectionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _TopPlane: {r: 0, g: 200, b: 0, a: 0}
+    - _VerticalNormal: {r: 1, g: 0, b: 0, a: 0}
+    - _VerticalPlane: {r: 10.1, g: 0, b: 0, a: 0}
