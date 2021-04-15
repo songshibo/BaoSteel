@@ -252,8 +252,9 @@ public class UIManager : MonoSingleton<UIManager>
         GameObject root = GameObject.Find("ThermoTemperaturePanel");
 
         // 修改热电偶面板的高度与 viewport 相同，减去20是因为水平滑动杆的高度
+        float parent_width = root.transform.parent.GetComponent<RectTransform>().rect.width;
         float parent_height = root.transform.parent.GetComponent<RectTransform>().rect.height;
-        root.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(root.transform.GetComponent<RectTransform>().sizeDelta.x, parent_height - 20);
+        root.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(parent_width - 20, parent_height - 20);
 
         ThermocouplePanel_Width_Height = root.GetComponent<RectTransform>().sizeDelta;
 

@@ -120,6 +120,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
 
             if (item.Value.name.StartsWith(item.Key))
             {
+                //Debug.LogWarning(name_temperature[item.Key]);
                 float temp = float.Parse(name_temperature[item.Key].Split(' ')[0]);
                 if (temp > 50)
                 {
