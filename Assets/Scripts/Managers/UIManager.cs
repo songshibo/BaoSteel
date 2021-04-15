@@ -16,7 +16,6 @@ public class UIManager : MonoSingleton<UIManager>
     public CustomDropdown renderType;
     public HorizontalSelector heatMapGradientSelector;
     public HorizontalSelector heatLoadGradientSelector;
-    public GameObject tuyereUI;
 
     private GameObject EnterExitTuyereInfo;
     private GameObject EnterExitInfo;
@@ -349,13 +348,13 @@ public class UIManager : MonoSingleton<UIManager>
         if (flag)
         {
             //EnterExitTuyereInfo.SetActive(true);
-            string content = obj.transform.Find("info").GetComponent<Text>().text;
-            EnterExitTuyereInfo.GetComponent<Text>().text = content;
+            string content = obj.transform.Find("info").GetComponent<TMP_Text>().text;
+            EnterExitTuyereInfo.GetComponent<TMP_Text>().text = content;
         }
         else
         {
             //EnterExitTuyereInfo.SetActive(false);
-            EnterExitTuyereInfo.GetComponent<Text>().text = "";
+            EnterExitTuyereInfo.GetComponent<TMP_Text>().text = "";
         }
     }
 }
