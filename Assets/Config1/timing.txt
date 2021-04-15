@@ -1,7 +1,0 @@
-thermocouple_timing:10
-tuyere_timing:5
-batch_timing:4
-heatload_timing:5
-heatmap_timing:10
-residual_timing:10
-liaoceng_timing:10
