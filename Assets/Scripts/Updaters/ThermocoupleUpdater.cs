@@ -100,7 +100,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
                 name_temperature.Add(name, temperature);
             }
         }
-        Debug.LogWarning(JsonConvert.SerializeObject(name_temperature));
+
         foreach (KeyValuePair<string, GameObject> item in name_gameobject)
         {
             item.Value.transform.Find("temperature").GetComponent<TMP_Text>().text = "";
