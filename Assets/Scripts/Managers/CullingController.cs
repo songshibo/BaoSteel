@@ -2,11 +2,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class CullingController : Singleton<CullingController>
+public class CullingController : MonoSingleton<CullingController>
 {
+    public Material[] extraMaterials;
     private Material[] LoadMaterials()
     {
-        return Resources.LoadAll<Material>("ClippingMaterials/");
+        List<Material> mats = new List<Material>(Resources.LoadAll<Material>("ClippingMaterials/"));
+        if (extraMaterials.Length > 0)
+        {
+            mats.AddRange(extraMaterials);
+        }
+        return mats.ToArray();
         //GameObject[] prefabs = Resources.LoadAll("Prefabs", typeof(GameObject)).Cast<GameObject>().ToArray();
         //List<Material> sharedMaterials = new List<Material>();
         //for (int i = 0; i < prefabs.Length; i++)
