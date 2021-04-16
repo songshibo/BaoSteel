@@ -8,6 +8,8 @@ using System;
 
 public class ConfigurationManager : MonoBehaviour
 {
+    public string school = "";
+    public string baosteel = "";
     [SerializeField]
     private string ip = "";
     [SerializeField]

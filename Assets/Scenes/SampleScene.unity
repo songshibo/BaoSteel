@@ -9892,6 +9892,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5eab381ffb99a47b6e4e1c125bce10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  school: 59.77.13.212
+  baosteel: 168.15.15.34
   ip: 59.77.13.212
   port: 10000
 --- !u!1 &545283941
@@ -10814,7 +10816,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00033569336, y: 29.826721}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 480, y: 990}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &563228770
@@ -13796,8 +13798,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2031471205}
   m_HandleRect: {fileID: 2031471204}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99947935
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19913,7 +19915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -24.99997}
+  m_AnchoredPosition: {x: 0, y: -25}
   m_SizeDelta: {x: 0, y: -50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &976746787
@@ -35670,8 +35672,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 909958543}
   m_HandleRect: {fileID: 909958542}
   m_Direction: 2
-  m_Value: -0.000011255051
-  m_Size: 0.9392531
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -37265,7 +37267,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -29.99997}
+  m_AnchoredPosition: {x: 0, y: -30}
   m_SizeDelta: {x: 0, y: -60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2033040924
