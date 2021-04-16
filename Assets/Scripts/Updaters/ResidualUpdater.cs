@@ -10,53 +10,76 @@ using TMPro;
 
 public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 {
+    public enum ResidualType
+    {
+        Standard,
+        ResidualOnly,
+        Combined
+    }
+
     float yRes;
     float xRes;
+    public ResidualType displayMode;
+    public float maxHeight = 15f;
+    public float bottomRadius = 6.877f;
+    public float bottomHeight = 8.132f;
+    public float corrosionScale = 30f;
+    public Material residualMaterial;
 
-    public float yHeight = 20f;
-    public Material stoveInsideColoredMat;
-    public float displacement = -0.7f;
-    public Material stoveInsideTessMat;
-    // [SerializeField]
-    // Texture2D residualThicknessTex;
     [SerializeField]
-    CustomGradient customGradient = new CustomGradient();
-    Texture2D gradientTex;
+    public Texture2D residualThicknessTex;
 
     public void Initialize()
     {
-        if (stoveInsideColoredMat != null)
-        {
-            gradientTex = customGradient.GetTexture(64, 2);
-            // stoveInsideColoredMat.SetTexture("_ResidualThickness", residualThicknessTex);
-            stoveInsideColoredMat.SetTexture("_CustomGradient", gradientTex);
-            stoveInsideColoredMat.SetFloat("yHeight", yHeight);
-        }
+
     }
 
-    private void Start()
+    public void ResidualThicknessSwitch(bool value)
     {
-        yRes = 1024;
-        xRes = 2.6f * yRes;
+        if (value)
+        {
+            displayMode = ResidualType.ResidualOnly;
+        }
+        else
+        {
+            displayMode = ResidualType.Standard;
+        }
     }
 
     private void FixedUpdate()
     {
-        if (stoveInsideTessMat != null)
+        if (residualMaterial != null)
         {
-            stoveInsideTessMat.SetFloat("_DisplacementAmount", displacement);
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                MeshRenderer renderer = GameObject.Find("hearth").GetComponent<MeshRenderer>();
-                if (renderer.sharedMaterials[2].shader.name == "Custom/Tessellation Lit")
-                {
-                    renderer.sharedMaterials = new Material[] { renderer.sharedMaterials[0], renderer.sharedMaterials[1], stoveInsideColoredMat };
-                }
-                else
-                {
-                    renderer.sharedMaterials = new Material[] { renderer.sharedMaterials[0], renderer.sharedMaterials[1], stoveInsideTessMat };
-                }
-            }
+            residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
+            residualMaterial.SetFloat("_MaxHeight", maxHeight);
+            residualMaterial.SetFloat("_BottomRadius", bottomRadius);
+            residualMaterial.SetFloat("_MinHeight", bottomHeight);
+            residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
+            UpdateKeyword();
+        }
+    }
+
+    private void UpdateKeyword()
+    {
+        switch (displayMode)
+        {
+            case ResidualType.Standard:
+                residualMaterial.EnableKeyword("DISPLAYMODE_STANDARD");
+                residualMaterial.DisableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
+                residualMaterial.DisableKeyword("DISPLAYMODE_COMBINE");
+                break;
+            case ResidualType.ResidualOnly:
+                residualMaterial.DisableKeyword("DISPLAYMODE_STANDARD");
+                residualMaterial.EnableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
+                residualMaterial.DisableKeyword("DISPLAYMODE_COMBINE");
+                break;
+            case ResidualType.Combined:
+                residualMaterial.DisableKeyword("DISPLAYMODE_STANDARD");
+                residualMaterial.DisableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
+                residualMaterial.EnableKeyword("DISPLAYMODE_COMBINE");
+                break;
+            default:
+                break;
         }
     }
 
@@ -90,10 +113,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
                 }
             }
         }
-
-
-
-        print(content);
+        // print(content);
         return true;
     }
 }
