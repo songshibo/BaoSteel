@@ -25,10 +25,6 @@ public class UIScroll : MonoBehaviour, IScrollHandler, IPointerEnterHandler, IPo
         isShowPosition = false;
         level = maxFactor - minFactor + 1;
         scroll.AddListener(delegate () { ScrollEvent(); });
-        Debug.LogWarning(contain.rect);
-        Debug.LogWarning(contain.sizeDelta);
-        Debug.LogWarning(contain.rect.x * contain.localScale.x);
-        Debug.LogWarning(contain.rect.y * contain.localScale.y);
     }
 
     private void ScrollEvent()
@@ -84,8 +80,6 @@ public class UIScroll : MonoBehaviour, IScrollHandler, IPointerEnterHandler, IPo
 
             string angle = Math.Round(Math.Max(0, Math.Min(360, 360f * pos_x / (contain.rect.width * contain.localScale.x))), 0).ToString();
             string height = Math.Round(Math.Max(0, Math.Min(55, 55 * pos_y / (contain.rect.height * contain.localScale.y))), 2).ToString();
-            //Debug.LogWarning(Math.Round(dx, 0) + "  " + Math.Round(dy, 0) + "  " + Math.Round(pos_x, 0) + "  " + Math.Round(pos_y, 0) + "  " + angle + "  " + height);
-            //Debug.LogWarning(Input.mousePosition.x + "  " + Input.mousePosition.y + "  " + contain.position.x + "  " + contain.position.y);
             
             string content = "角度：" + angle + "°\n高度：" + height + "m";
 

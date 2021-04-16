@@ -3,7 +3,25 @@ guid: eb7cf53b7c3b36a4b9f4d2b688942503
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - buttonFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
+  - dropdownItemFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
+  - dropdownFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
+  - selectorFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
+  - inputFieldFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
+  - modalWindowTitleFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05,
+      type: 2}
+  - modalWindowContentFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05,
+      type: 2}
+  - notificationTitleFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05,
+      type: 2}
+  - notificationDescriptionFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05,
+      type: 2}
+  - progressBarLabelFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05,
+      type: 2}
+  - sliderLabelFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
+  - toggleFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
+  - tooltipFont: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
   executionOrder: 0
   icon: {fileID: 2800000, guid: f66c4aa44c09b6a42a2b5b9f9334d824, type: 3}
   userData: 

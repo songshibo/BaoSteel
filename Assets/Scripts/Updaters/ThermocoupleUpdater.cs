@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -81,15 +83,14 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
 
     public bool UpdateThermocoupleData(string content)
     {
-        content = content.Substring(1, content.Length - 2); // 去掉两边的大括号
-        string[] str = content.Split(',');
+        JToken items = JObject.Parse(content);
         Dictionary<string, string> name_temperature = new Dictionary<string, string>();
         char[] MyChar = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
-        foreach (string substr in str)
+
+        foreach (JProperty item in items)
         {
-            string[] single = substr.Split(':');
-            string name = single[0].Substring(1, single[0].Length - 2).TrimEnd(MyChar); // 去掉双引号和末尾的字母
-            string temperature = single[1];
+            string name = item.Name.Trim().TrimEnd(MyChar); // 去掉双引号和末尾的字母
+            string temperature = Math.Round(float.Parse(item.Value.ToString()), 0).ToString();
             if (name_temperature.ContainsKey(name))
             {
                 name_temperature[name] += " " + temperature;
@@ -100,12 +101,12 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
             }
         }
 
-        foreach (var item in name_gameobject)
+        foreach (KeyValuePair<string, GameObject> item in name_gameobject)
         {
             item.Value.transform.Find("temperature").GetComponent<TMP_Text>().text = "";
             item.Value.GetComponent<Image>().color = Color.green;
         }
-        foreach (var item in name_gameobject)
+        foreach (KeyValuePair<string, GameObject> item in name_gameobject)
         {
             try
             {
@@ -113,18 +114,29 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
             }
             catch (KeyNotFoundException)
             {
-                Debug.LogError(item.Key + "没有找到");
+                Debug.LogWarning(item.Key + "没有找到");
                 Debug.Log(DicStringString(name_temperature));
                 Debug.Log(DicStringGameobject(name_gameobject));
+            }
+            catch (FormatException)
+            {
+                Debug.LogWarning("键：" + item.Key + "值：" + name_temperature[item.Key] + "|长度：" + name_temperature[item.Key].Length);
+            }
+            catch (Exception)
+            {
+                Debug.LogWarning("未知错误");
             }
 
             if (item.Value.name.StartsWith(item.Key))
             {
-                //Debug.LogWarning(name_temperature[item.Key]);
                 float temp = float.Parse(name_temperature[item.Key].Split(' ')[0]);
-                if (temp > 50)
+                if (temp > 200)
                 {
                     item.Value.GetComponent<Image>().color = Color.red;
+                }
+                else if(temp < 10)
+                {
+                    item.Value.GetComponent<Image>().color = Color.blue;
                 }
             }
         }

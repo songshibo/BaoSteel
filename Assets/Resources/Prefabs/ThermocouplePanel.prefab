@@ -421,10 +421,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u6E29\u5EA6: 200\xB0C\n\u89D2\u5EA6: 180\xB0 \n\u9AD8\u5EA6: 47.2m"
+  m_text: "\u6E29\u5EA6:3\xB0C\n\u89D2\u5EA6:270\xB0\n\u9AD8\u5EA6:33.39m"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
-  m_sharedMaterial: {fileID: 4808845907771783858, guid: 84403340998c62b4aa786792b57b5a05,
+  m_sharedMaterial: {fileID: 6709834962504197611, guid: 84403340998c62b4aa786792b57b5a05,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

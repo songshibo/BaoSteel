@@ -94,8 +94,8 @@ public class HeatmapDatabaseUpdater : MonoSingleton<HeatmapDatabaseUpdater>
             temperatureText.text = "";
             if (temperature == 1f)
                 temperatureText.text += "≥";
-            temperatureText.text += Math.Round(temperature * (maxt - mint) + mint, 2).ToString() + "°C";
-            positionText.text = "角度:" + angle.ToString() + "°\n" + "高度:" + height.ToString() + "m";
+            temperatureText.text += Math.Round(temperature * (maxt - mint) + mint, 0).ToString() + "°C";
+            positionText.text = "角度:" + Math.Round(angle, 0).ToString() + "°\n" + "高度:" + Math.Round(height, 2).ToString() + "m";
         }
         else
         {

@@ -65,7 +65,7 @@ public class TuyereUpdater : MonoSingleton<TuyereUpdater>
             float height_scale = data[2] / tuyeresize.height;
             float width_scale = data[3] / tuyeresize.width;
 
-            tuyereUISingles[int.Parse(number)-1].transform.Find("info").GetComponent<Text>().text = 
+            tuyereUISingles[int.Parse(number)-1].transform.Find("info").GetComponent<TMP_Text>().text = 
                 "编号：" + tuyere.name + "\n长：" + data[1].ToString("0.##") + "\n宽：" + data[3].ToString("0.##") + 
                 "\n高：" + data[2].ToString("0.##") + "\n面积：" + data[0].ToString("0.##");
             tuyereUISingles[int.Parse(number)-1].GetComponent<RectTransform>().localScale = new Vector3(depth_scale, width_scale, 1);
@@ -73,7 +73,7 @@ public class TuyereUpdater : MonoSingleton<TuyereUpdater>
             tuyere.transform.Find("tuyere_wind").Find("shape").localScale = new Vector3(width_scale, height_scale, depth_scale);
             tuyere.transform.Find("tuyere_wind").Find("wind").localScale = new Vector3(width_scale, depth_scale, height_scale);
         }
-        areaRatio.GetComponent<Text>().text = "面积比\n" + (total_area / 147.196 * 100).ToString("0.##") + "%";
+        areaRatio.GetComponent<TMP_Text>().text = "面积比\n" + (total_area / 147.196 * 100).ToString("0.##") + "%";
         return true;
     }
 
