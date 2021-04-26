@@ -181,7 +181,6 @@ public class DataServiceManager : Singleton<DataServiceManager>
             {
                 DataArrangement(texDl.texture);
                 // Or retrieve results as binary data
-
             }
 
         }
