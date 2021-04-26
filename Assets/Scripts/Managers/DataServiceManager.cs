@@ -20,7 +20,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
 
     private string ip = null;
     private string port = null;
-
+    private DownloadHandlerTexture texDl;
     // public static DataServiceManager Instance()
     // {
 
@@ -74,7 +74,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
         //     }
 
         // }
-
+        texDl = new DownloadHandlerTexture(true);
         bool ip_exist = false;
         bool port_exit = false;
         foreach (KeyValuePair<string, string> c in config)
@@ -144,7 +144,6 @@ public class DataServiceManager : Singleton<DataServiceManager>
         if (initialized)
         {
             UnityWebRequest www = UnityWebRequest.Get(url + "/internal?target_data=" + targetData); //创建UnityWebRequest对象
-            DownloadHandlerTexture texDl = new DownloadHandlerTexture(true);
             www.downloadHandler = texDl;
             yield return www.SendWebRequest();                                 //等待返回请求的信息
 
@@ -157,9 +156,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
 
                 DataArrangement(texDl.texture);
                 // Or retrieve results as binary data
-
             }
-
         }
     }
 
@@ -169,7 +166,6 @@ public class DataServiceManager : Singleton<DataServiceManager>
         if (initialized)
         {
             UnityWebRequest www = UnityWebRequest.Get(url + "/heatmap"); //创建UnityWebRequest对象
-            DownloadHandlerTexture texDl = new DownloadHandlerTexture(true);
             www.downloadHandler = texDl;
             yield return www.SendWebRequest();                                 //等待返回请求的信息
 
@@ -182,7 +178,6 @@ public class DataServiceManager : Singleton<DataServiceManager>
                 DataArrangement(texDl.texture);
                 // Or retrieve results as binary data
             }
-
         }
     }
 

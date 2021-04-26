@@ -3248,11 +3248,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a701333b7685c5418687d6dbe7178c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSpeed: 7.5
+  zoomSpeed: 20
   zoomDelta: 5
   rotateSpeed: 7.5
   rotateDelta: 5
-  dragSpeed: 10
+  dragSpeed: 3
   limitDistance: 5
   sleepThreshold: 10
   autoRotateSpeed: 0.05

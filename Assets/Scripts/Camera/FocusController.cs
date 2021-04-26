@@ -9,7 +9,7 @@ public class FocusController : MonoSingleton<FocusController>
 
     private Transform verticalRig;
 
-    [SerializeField, Range(1f, 10f)] protected float zoomSpeed = 7.5f, zoomDelta = 5f;
+    [SerializeField, Range(1f, 20f)] protected float zoomSpeed = 7.5f, zoomDelta = 5f;
 
     [SerializeField, Range(1f, 10f)] protected float rotateSpeed = 7.5f, rotateDelta = 5f;
     [SerializeField, Range(1f, 10f)] protected float dragSpeed = 1.0f;
