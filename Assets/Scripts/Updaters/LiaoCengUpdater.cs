@@ -7,7 +7,7 @@ public class LiaoCengUpdater : MonoSingleton<LiaoCengUpdater>
 {
     public bool UpdateLiaoCeng(Texture2D arg)
     {
-
+        InsideStoveManager.Instance.UpdateLiaoceng(arg);
         return true;
     }
 }
