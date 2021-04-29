@@ -9892,6 +9892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5eab381ffb99a47b6e4e1c125bce10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableLiaoceng: 0
   school: 59.77.13.212
   baosteel: 168.15.15.34
   ip: 59.77.13.212
@@ -10816,7 +10817,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000076293945, y: 29.82605}
+  m_AnchoredPosition: {x: 0.062301636, y: 0.12854004}
   m_SizeDelta: {x: 480, y: 990}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &563228770
@@ -13798,8 +13799,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2031471205}
   m_HandleRect: {fileID: 2031471204}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.99247915
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19138,7 +19139,7 @@ Transform:
   m_GameObject: {fileID: 908846440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 18, y: 50, z: 1}
+  m_LocalScale: {x: 17.64, y: 50, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -19155,7 +19156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2cdde3cba7de401fa383dee48d120fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tex2d: {fileID: 2800000, guid: dddf76bbaf7b1fe48b957f291ceef4a4, type: 3}
+  tex2d: {fileID: 2800000, guid: b34d39af302f2164cb7ffb008d655571, type: 3}
 --- !u!1 &909958541
 GameObject:
   m_ObjectHideFlags: 0
@@ -19915,7 +19916,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -24.99997}
+  m_AnchoredPosition: {x: 0, y: -25}
   m_SizeDelta: {x: 0, y: -50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &976746787
@@ -35672,8 +35673,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 909958543}
   m_HandleRect: {fileID: 909958542}
   m_Direction: 2
-  m_Value: -0.0000010231875
-  m_Size: 0.9397455
+  m_Value: 0
+  m_Size: 0.9924551
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -37267,7 +37268,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -29.99997}
+  m_AnchoredPosition: {x: 0, y: -30}
   m_SizeDelta: {x: 0, y: -60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2033040924
