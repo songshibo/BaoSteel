@@ -4326,8 +4326,8 @@ Material:
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _TopPlane: {r: 0, g: 200, b: 0, a: 0}
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-    - _VerticalNormal: {r: -0.00000008742278, g: 0, b: -1, a: 0}
-    - _VerticalPlane: {r: 0, g: 0, b: 0, a: 0}
+    - _VerticalNormal: {r: 1, g: 0, b: 0, a: 0}
+    - _VerticalPlane: {r: 200, g: 0, b: 0, a: 0}
 --- !u!28 &7986462561601425225
 Texture2D:
   m_ObjectHideFlags: 0
