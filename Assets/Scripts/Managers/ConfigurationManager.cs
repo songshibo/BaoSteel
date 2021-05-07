@@ -8,6 +8,7 @@ using System;
 
 public class ConfigurationManager : MonoBehaviour
 {
+    public bool enableLiaoceng = false;
     public string school = "";
     public string baosteel = "";
     [SerializeField]
@@ -196,7 +197,7 @@ public class ConfigurationManager : MonoBehaviour
                     Debug.Log("残厚定时更新");
                     //StartCoroutine(DataServiceManager.Instance.GetResidual(ResidualUpdater.Instance.UpdateResidual));
                 }
-                else if (item.Key.Equals("liaoceng_timing"))
+                else if (item.Key.Equals("liaoceng_timing") && enableLiaoceng)
                 {
                     Debug.Log("料层定时更新");
                     StartCoroutine(DataServiceManager.Instance.GetInternalDataPic(LiaoCengUpdater.Instance.UpdateLiaoCeng, "liaoceng"));
