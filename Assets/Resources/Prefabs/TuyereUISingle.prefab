@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4627451, g: 0.8156863, b: 0.8980392, a: 1}
+  m_Color: {r: 0.9019608, g: 0.3137255, b: 0.078431375, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
-  m_sharedMaterial: {fileID: 4808845907771783858, guid: 84403340998c62b4aa786792b57b5a05,
+  m_sharedMaterial: {fileID: 1328667481471920332, guid: 84403340998c62b4aa786792b57b5a05,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
