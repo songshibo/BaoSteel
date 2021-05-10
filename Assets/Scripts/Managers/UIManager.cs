@@ -354,7 +354,7 @@ public class UIManager : MonoSingleton<UIManager>
         else
         {
             //EnterExitTuyereInfo.SetActive(false);
-            EnterExitTuyereInfo.GetComponent<TMP_Text>().text = "";
+            //EnterExitTuyereInfo.GetComponent<TMP_Text>().text = "";
         }
     }
 }
