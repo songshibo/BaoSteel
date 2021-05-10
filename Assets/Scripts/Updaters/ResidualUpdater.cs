@@ -17,6 +17,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         Combined
     }
 
+    public CustomGradient gradient = new CustomGradient();
     float yRes;
     float xRes;
     public ResidualType displayMode;
@@ -31,7 +32,16 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 
     public void Initialize()
     {
-
+        if (residualMaterial != null)
+        {
+            residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
+            residualMaterial.SetFloat("_MaxHeight", maxHeight);
+            residualMaterial.SetFloat("_BottomRadius", bottomRadius);
+            residualMaterial.SetFloat("_MinHeight", bottomHeight);
+            residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
+            residualMaterial.SetTexture("_Gradient", gradient.GetTexture(512, 1));
+            UpdateKeyword();
+        }
     }
 
     public void ResidualThicknessSwitch(bool value)
@@ -50,11 +60,11 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     {
         if (residualMaterial != null)
         {
-            residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
-            residualMaterial.SetFloat("_MaxHeight", maxHeight);
-            residualMaterial.SetFloat("_BottomRadius", bottomRadius);
-            residualMaterial.SetFloat("_MinHeight", bottomHeight);
-            residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
+            // residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
+            // residualMaterial.SetFloat("_MaxHeight", maxHeight);
+            // residualMaterial.SetFloat("_BottomRadius", bottomRadius);
+            // residualMaterial.SetFloat("_MinHeight", bottomHeight);
+            // residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
             UpdateKeyword();
         }
     }
@@ -64,16 +74,21 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         switch (displayMode)
         {
             case ResidualType.Standard:
+                // Debug.Log("Residual Thickness Display Mode: Standard");
                 residualMaterial.EnableKeyword("DISPLAYMODE_STANDARD");
                 residualMaterial.DisableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
                 residualMaterial.DisableKeyword("DISPLAYMODE_COMBINE");
                 break;
             case ResidualType.ResidualOnly:
+                // Debug.Log("Residual Thickness Display Mode: Residual Only");
+                // Debug.Log("Corrsion Scale:" + residualMaterial.GetFloat("_CorrosionScale"));
+                // Debug.Log("Bottom Radius:" + residualMaterial.GetFloat("_BottomRadius"));
                 residualMaterial.DisableKeyword("DISPLAYMODE_STANDARD");
                 residualMaterial.EnableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
                 residualMaterial.DisableKeyword("DISPLAYMODE_COMBINE");
                 break;
             case ResidualType.Combined:
+                // Debug.Log("Residual Thickness Display Mode: Combined");
                 residualMaterial.DisableKeyword("DISPLAYMODE_STANDARD");
                 residualMaterial.DisableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
                 residualMaterial.EnableKeyword("DISPLAYMODE_COMBINE");
