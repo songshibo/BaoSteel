@@ -179,8 +179,9 @@ public class ConfigurationManager : MonoBehaviour
                 }
                 else if (item.Key.Equals("batch_timing"))
                 {
-                    // TODO
-                    //BatchLayerUpdater.Instance.NewLayer(item.Value[1]);
+                    Debug.Log("料层定时更新");
+                    // 应该从数据库获取，料层编号
+                    BatchLayerUpdater.Instance.UpdateBatchLayer(System.DateTime.Now.ToString());
                 }
                 else if (item.Key.Equals("heatload_timing"))
                 {
@@ -199,8 +200,8 @@ public class ConfigurationManager : MonoBehaviour
                 }
                 else if (item.Key.Equals("liaoceng_timing") && enableLiaoceng)
                 {
-                    Debug.Log("料层定时更新");
-                    StartCoroutine(DataServiceManager.Instance.GetInternalDataPic(LiaoCengUpdater.Instance.UpdateLiaoCeng, "liaoceng"));
+                    Debug.Log("炉内定时更新");
+                    StartCoroutine(DataServiceManager.Instance.GetInternalDataPic(InsideStoveUpdater.Instance.UpdateInsideStove, "liaoceng"));
                 }
 
                 item.Value[0] = 0;

@@ -174,6 +174,7 @@ public class UIManager : MonoSingleton<UIManager>
             FindObjectOfType<FocusController>().FaceClipSurface(angle);
             // show inside-stove panel
             InsideStoveManager.Instance.ControlPanel(true, angle);
+            BatchLayerUpdater.Instance.Rotate(angle);
         }
         else
         {
