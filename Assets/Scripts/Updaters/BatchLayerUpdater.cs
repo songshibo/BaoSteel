@@ -31,10 +31,10 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
         AlembicStreamPlayer al = obj.GetComponent<AlembicStreamPlayer>();
         obj.name = number;
         ChangeLayer(obj.transform);
-        for (float time=startTime; time < endTime;)
+        for (float time=startTime; time < endTime * 5;)
         {
             // 设置obj的时间
-            al.CurrentTime = time;
+            al.CurrentTime = time / 5;
             time += Time.fixedDeltaTime;
             yield return 0;
         }
