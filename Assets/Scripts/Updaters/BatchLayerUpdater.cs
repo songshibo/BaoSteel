@@ -74,5 +74,25 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
     internal void Rotate(float angle)
     {
         transform.rotation = Quaternion.Euler(0, angle, 0);
+        transform.localPosition = new Vector3(0, 0, 0);
+        if (angle == 0)
+        {
+            transform.localPosition = new Vector3(0, 0, 0.01f);
+        }
+        else if (angle == 90)
+        {
+            transform.localPosition = new Vector3(0.01f, 0, 0);
+        }
+        else if (angle == 180)
+        {
+            transform.localPosition = new Vector3(0, 0, -0.01f);
+        }else if(angle == 270)
+        {
+            transform.localPosition = new Vector3(-0.01f, 0, 0);
+        }
+        else
+        {
+            Debug.LogError("这个是什么角度？？？");
+        }
     }
 }
