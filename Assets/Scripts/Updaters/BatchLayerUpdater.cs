@@ -40,7 +40,7 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
         for (float time=startTime; time < endTime * 5;)
         {
             mesh.RecalculateBounds();
-            c.localPosition = mesh.bounds.center + new Vector3(0, 0, 0.01f);
+            c.localPosition = mesh.bounds.center + new Vector3(-mesh.bounds.extents.x - 4, 0, 0.01f);
 
             // 设置obj的时间
             al.CurrentTime = time / 5;

@@ -67,7 +67,7 @@ MonoBehaviour:
   m_text: " 55.75 \xB0C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
-  m_sharedMaterial: {fileID: 4808845907771783858, guid: 84403340998c62b4aa786792b57b5a05,
+  m_sharedMaterial: {fileID: 1328667481471920332, guid: 84403340998c62b4aa786792b57b5a05,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -540,7 +540,7 @@ MonoBehaviour:
     Height: 47.2'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
-  m_sharedMaterial: {fileID: 4808845907771783858, guid: 84403340998c62b4aa786792b57b5a05,
+  m_sharedMaterial: {fileID: 1328667481471920332, guid: 84403340998c62b4aa786792b57b5a05,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
