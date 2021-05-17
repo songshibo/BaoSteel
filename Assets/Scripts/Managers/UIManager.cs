@@ -173,7 +173,7 @@ public class UIManager : MonoSingleton<UIManager>
             CullingController.Instance.ClipMaterialsAtAngle(angle);
             FindObjectOfType<FocusController>().FaceClipSurface(angle);
             // show inside-stove panel
-            InsideStoveManager.Instance.ControlPanel(true, angle);
+            InsideStoveManager.Instance.ControlPanel(angle);
             BatchLayerUpdater.Instance.Rotate(angle);
         }
         else
@@ -181,7 +181,7 @@ public class UIManager : MonoSingleton<UIManager>
             CullingController.Instance.ResetMaterialProperties();
             FindObjectOfType<FocusController>().FaceClipSurface();
             // hide inside-stove panel
-            InsideStoveManager.Instance.ControlPanel(false, 0);
+            InsideStoveManager.Instance.ControlPanel(0);
         }
     }
 

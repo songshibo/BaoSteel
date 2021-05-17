@@ -14,7 +14,8 @@ public class CampassController : MonoBehaviour
     private void Update()
     {
         arrowPivot.localRotation = cameraRig.rotation;
-        angle.text = Math.Round(Util.ComputeThermocoupleAngle(cameraPosition.position), 0).ToString() + "°";
+        Vector3 actualPos = cameraPosition.position - cameraRig.position;
+        angle.text = Math.Round(Util.ComputeThermocoupleAngle(actualPos), 0).ToString() + "°";
 
         float scale = cameraPosition.position.magnitude / 100f;
         transform.parent.localScale = Vector3.one * Mathf.Lerp(minScale, maxScale, scale);
