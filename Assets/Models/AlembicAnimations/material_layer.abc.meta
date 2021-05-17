@@ -15,7 +15,7 @@ ScriptedImporter:
     tangents: 1
     cameraAspectRatio: 2
     importVisibility: 1
-    scaleFactor: 0.01
+    scaleFactor: 1
     swapHandedness: 1
     flipFaces: 0
     interpolateSamples: 1
@@ -26,12 +26,10 @@ ScriptedImporter:
     importCameras: 1
     importMeshes: 1
     importPoints: 0
-  abcStartTime: 0.03333333333333333
-  abcEndTime: 7.333333333333333
-  startTime: 0.03333333333333333
-  endTime: 7.333333333333333
+  abcStartTime: -0.03333333333333333
+  abcEndTime: 7.3
+  startTime: -0.03333333333333333
+  endTime: 7.3
   importWarning: 
-  varyingTopologyMeshNames:
-  - Plane_001
-  splittingMeshNames: []
   firstImport: 0
+  isHDF5: 0
