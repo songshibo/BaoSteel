@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6626305199353140358}
   - component: {fileID: 7807701260136323875}
   - component: {fileID: 5457924748427882473}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: bosh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
