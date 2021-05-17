@@ -69,13 +69,13 @@ public class InsideStoveManager : MonoSingleton<InsideStoveManager>
         meshRenderer.enabled = isOn;
     }
 
-    public void ControlPanel(bool isOn, float angle)
+    public void ControlPanel(float angle)
     {
         transform.rotation = Quaternion.Euler(0, 180 + angle, 0);
-        meshRenderer.enabled = isOn;
+        // meshRenderer.enabled = isOn;
         // Auto Change combine UI value;
-        if (swtichUI.isOn != meshRenderer.enabled)
-            swtichUI.AnimateSwitch();
+        // if (swtichUI.isOn != meshRenderer.enabled)
+        //     swtichUI.AnimateSwitch();
         Debug.Log("Turn " + (meshRenderer.enabled ? "On" : "Off") +
             " the inside-stove panel");
     }

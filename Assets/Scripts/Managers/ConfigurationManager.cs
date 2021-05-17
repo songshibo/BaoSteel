@@ -181,7 +181,10 @@ public class ConfigurationManager : MonoBehaviour
                 {
                     Debug.Log("料层定时更新");
                     // 应该从数据库获取，料层编号
-                    BatchLayerUpdater.Instance.UpdateBatchLayer(System.DateTime.Now.ToString());
+                    int hour = DateTime.Now.Hour;
+                    int minute = DateTime.Now.Minute;
+                    int second = DateTime.Now.Second;
+                    BatchLayerUpdater.Instance.UpdateBatchLayer(string.Format("{0:D2}:{1:D2}:{2:D2}", hour, minute, second));
                 }
                 else if (item.Key.Equals("heatload_timing"))
                 {
