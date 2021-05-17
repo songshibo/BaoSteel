@@ -79,7 +79,7 @@ public class InsideStoveManager : MonoSingleton<InsideStoveManager>
         Debug.Log("Turn " + (meshRenderer.enabled ? "On" : "Off") +
             " the inside-stove panel");
     }
-    public void UpdateLiaoceng(Texture2D arg)
+    public void UpdateInsideStove(Texture2D arg)
     {
         meshRenderer.sharedMaterial.SetTexture("_MainTex", arg);
     }

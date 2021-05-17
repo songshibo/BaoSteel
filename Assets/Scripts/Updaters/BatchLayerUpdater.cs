@@ -1,114 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-using Newtonsoft.Json.Linq;
-using UnityEngine.UI;
-using Newtonsoft.Json;
-using System;
+using UnityEngine.Formats.Alembic.Importer;
+
+
 
 public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
 {
-    private Vector3 from;
-    private Vector3 target;
-    private float moveSpeed;
-    private int count = 1; // 料层的编号
-    private int number = 21; // 料层最大数量
+    private enum ShowBatchLayer
+    {
+        no = 0,  // 默认层
+        yes = 9,  // 高亮层
+    }
+
+    private float startTime;
+    private float endTime;
+    private GameObject prefab;
+    private ShowBatchLayer showBatchLayer;
 
     private void Start()
     {
-        from = new Vector3(2.5f, 41, 0);
-        target = new Vector3(2.5f, 22, 0);
-        moveSpeed = 1f;
-
+        prefab = Resources.Load<GameObject>("Prefabs/material_layer");
+        startTime = prefab.GetComponent<AlembicStreamPlayer>().StartTime;
+        endTime = prefab.GetComponent<AlembicStreamPlayer>().EndTime; // 应该和abc文件的生命周期保持一致
     }
 
     IEnumerator GenerateLayer(string number)
     {
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/layer");
         GameObject obj = Instantiate(prefab, transform);
-        obj.transform.localPosition = from;
-        obj.transform.Find("Canvas").Find("number").GetComponent<Text>().text = number;
+        AlembicStreamPlayer al = obj.GetComponent<AlembicStreamPlayer>();
         obj.name = number;
-
-        while (obj.transform.position.y > target.y)
+        ChangeLayer(obj.transform);
+        for (float time=startTime; time < endTime * 5;)
         {
-            float y = obj.transform.position.y - moveSpeed * Time.deltaTime;
-            float x = GetX(y);
-            float z = 0;
-            obj.transform.position = new Vector3(x, y, z);
+            // 设置obj的时间
+            al.CurrentTime = time / 5;
+            time += Time.fixedDeltaTime;
             yield return 0;
         }
-        //yield return 0;
+        yield return 0;
         DestroyImmediate(obj);
     }
 
-    private float GetX(float y)
+    public void UpdateBatchLayer(string name)
     {
-        return (float)(6.8 - Math.Log(3.67 * (y - 21)));
+        StartCoroutine(GenerateLayer(name));
     }
 
-    public void NewLayer(float time)
+    public void BatchLayerSwitch(bool value)
     {
-        moveSpeed = (from.y - target.y) / (number * time);
-        StartCoroutine(GenerateLayer("layer" + count.ToString()));
-        count++;
+        
+        if (value)
+        {
+            showBatchLayer = ShowBatchLayer.yes;
+        }
+        else
+        {
+            showBatchLayer = ShowBatchLayer.no;
+        }
+
+        ChangeLayer(transform);
     }
 
+    private void ChangeLayer(Transform t)
+    {
+        Transform[] trans = t.GetComponentsInChildren<Transform>();
+        foreach (Transform node in trans)
+        {
+            node.gameObject.layer = (int)showBatchLayer;
+        }
+    }
 
-    //private Dictionary<string, float> data;
-    //private int start;
-    //private void Start()
-    //{
-    //    data = new Dictionary<string, float>();
-    //    for (int i = 0; i < 17; i++)
-    //    {
-    //        data.Add("layer" + i.ToString(), 23 + i);
-    //    }
-    //    start = 0;
-
-    //}
-
-    //private void Update()
-    //{
-    //    transform.position -= new Vector3(0, 0.25f, 0) * Time.deltaTime;
-    //}
-
-    //public void UpdateBatch()
-    //{
-    //    GenerateBatchLayer(JsonConvert.SerializeObject(data));
-
-    //    data.Remove("layer" + start.ToString());
-    //    data.Add("layer" + (start + 17).ToString(), data["layer" + (start + 16).ToString()] + 1);
-    //    start++;
-
-    //    //for (int i = 0; i < data.Count; i++)
-    //    //{
-    //    //    data["layer" + (start + i).ToString()]--;
-    //    //}
-
-    //    print("料层");
-    //}
-
-    //public bool GenerateBatchLayer(string content)
-    //{
-    //    for (int child = 0; child < transform.childCount;)
-    //    {
-    //        DestroyImmediate(transform.GetChild(child).gameObject);
-    //    }
-
-    //    GameObject prefab = Resources.Load<GameObject>("Prefabs/layer");
-
-    //    JToken items = JObject.Parse(content);
-    //    foreach (JProperty item in items)
-    //    {
-    //        string number = item.Name;
-    //        float height = float.Parse(item.Value.ToString());
-    //        GameObject obj = Instantiate(prefab, transform);
-    //        obj.transform.localPosition = new Vector3(2.5f, height, 0);
-    //        obj.transform.Find("Canvas").Find("number").GetComponent<Text>().text = number;
-    //        obj.name = number;
-    //    }
-
-    //    return true;
-    //}
+    internal void Rotate(float angle)
+    {
+        transform.rotation = Quaternion.Euler(0, angle, 0);
+    }
 }
