@@ -27,6 +27,8 @@ public class ConfigurationManager : MonoBehaviour
         times = new Dictionary<string, float[]>();
         // No-Async
         InitializeDataServiceManager();
+        // initialize batch layer, read all frame of batch layer
+        InitializeBatchLayerUpdater();
         // Initialize all in one Coroutine
         StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeAll, "all"));
 
@@ -42,6 +44,11 @@ public class ConfigurationManager : MonoBehaviour
         CullingController.Instance.ResetMaterialProperties();
         // 单独处理heatmap材质，将其设置为正常渲染模式
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
+    }
+
+    private void InitializeBatchLayerUpdater()
+    {
+        BatchLayerUpdater.Instance.Initialize();
     }
 
     private bool InitializeAll(string input)

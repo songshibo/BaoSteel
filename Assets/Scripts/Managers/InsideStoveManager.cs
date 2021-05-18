@@ -41,7 +41,7 @@ public class InsideStoveManager : MonoSingleton<InsideStoveManager>
     {
         if (!TryGetComponent(out filter))
         {
-            filter = gameObject.AddComponent<MeshFilter>();
+            filter = gameObject.AddComponent<MeshFilter>(); 
         }
         if (!TryGetComponent(out meshRenderer))
         {

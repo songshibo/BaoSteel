@@ -11025,7 +11025,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000579834, y: 0.0010986328}
+  m_AnchoredPosition: {x: 0.4091034, y: 0.8438721}
   m_SizeDelta: {x: 480, y: 990}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &563228770
@@ -11232,6 +11232,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f332ce032b16e429034edc78ab964b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startTime: 0
+  endTime: 40
+  frameNumber: 220
 --- !u!4 &572821297
 Transform:
   m_ObjectHideFlags: 0
@@ -14054,7 +14057,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2031471204}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99676096
+  m_Size: 0.9979549
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -36335,7 +36338,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 909958542}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9967505
+  m_Size: 0.9979484
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -40298,7 +40301,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.6681e-41, z: 0, w: 29.375}
+  m_BoundingSphereOverride: {x: 0, y: 1.1737e-41, z: 0, w: -1}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

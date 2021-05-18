@@ -1,54 +1,74 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Formats.Alembic.Importer;
 
 
 public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
 {
     private enum ShowBatchLayer
     {
-        no = 0,  // 默认层
-        yes = 9,  // 高亮层
+        no = 0,
+        yes = 1,
     }
 
-    private float startTime;
-    private float endTime;
-    private GameObject prefab;
-    private ShowBatchLayer showBatchLayer;
+    public float startTime = 0f;
+    public float endTime = 40f;
+    public int frameNumber = 220;
 
-    private void Start()
+    private Mesh[] meshes;
+    private ShowBatchLayer showBatchLayer;
+    private Material material;
+    private GameObject canvas;
+    private float time_per_frame;
+
+    public void Initialize()
     {
-        prefab = Resources.Load<GameObject>("Prefabs/material_layer");
-        startTime = prefab.GetComponent<AlembicStreamPlayer>().StartTime;
-        endTime = prefab.GetComponent<AlembicStreamPlayer>().EndTime; // 应该和abc文件的生命周期保持一致
+        time_per_frame = (endTime - startTime) / frameNumber;
+        material = Resources.Load<Material>("layer");
+        canvas = Resources.Load<GameObject>("Canvas_frame_info");
+
+        meshes = new Mesh[frameNumber];
+        for(int i=0; i < frameNumber; i++)
+        {
+            GameObject g = Resources.Load<GameObject>("Prefabs/Frames/frame" + i.ToString());
+            meshes[i] = g.GetComponent<MeshFilter>().sharedMesh;
+        }
     }
 
     IEnumerator GenerateLayer(string number)
     {
-        GameObject obj = Instantiate(prefab, transform);
-        obj.name = number;
-        ChangeLayer(obj.transform);
-        Transform c = obj.transform.Find("Canvas");
+        GameObject obj = new GameObject(number);
+        Transform c = Instantiate(canvas, transform).transform;
+
+        obj.layer = 9;
+        obj.transform.parent = transform;
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        c.localPosition = Vector3.zero;
+
+        ShowOrNot(obj.transform);
+        ShowOrNot(c);
+
+        MeshFilter meshFilter = obj.AddComponent<MeshFilter>();
+        MeshRenderer meshRenderer = obj.AddComponent<MeshRenderer>();
+        meshRenderer.sharedMaterial = material;
+
+        c.name = number + "_info";
         c.Find("name").GetComponent<TMP_Text>().text = number;
-
-
-        Mesh mesh = obj.transform.Find("MateralLayer").Find("material_layer").gameObject.GetComponent<MeshFilter>().sharedMesh;
-        AlembicStreamPlayer al = obj.GetComponent<AlembicStreamPlayer>();
         
-        for (float time=startTime; time < endTime * 5;)
+        for (float time=startTime; time < endTime;)
         {
-            mesh.RecalculateBounds();
-            c.localPosition = mesh.bounds.center + new Vector3(-mesh.bounds.extents.x - 4, 0, 0.01f);
+            int id = (int)(time / time_per_frame);
 
-            // 设置obj的时间
-            al.CurrentTime = time / 5;
+            meshFilter.mesh = meshes[id];
+            c.localPosition = meshes[id].bounds.center + new Vector3(-meshes[id].bounds.extents.x, 0, 0.01f);
+
             time += Time.fixedDeltaTime;
             yield return 0;
         }
         yield return 0;
         DestroyImmediate(obj);
+        DestroyImmediate(c.gameObject);
     }
 
     public void UpdateBatchLayer(string name)
@@ -68,16 +88,15 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
             showBatchLayer = ShowBatchLayer.no;
         }
 
-        ChangeLayer(transform);
+        foreach (Transform child in transform)
+        {
+            ShowOrNot(child);  // 遍历，将每个孩子传递进去
+        }
     }
 
-    private void ChangeLayer(Transform t)
+    private void ShowOrNot(Transform t)
     {
-        Transform[] trans = t.GetComponentsInChildren<Transform>();
-        foreach (Transform node in trans)
-        {
-            node.gameObject.layer = (int)showBatchLayer;
-        }
+        t.gameObject.SetActive(showBatchLayer != ShowBatchLayer.no);
     }
 
     internal void Rotate(float angle)
