@@ -11,6 +11,7 @@
 ## 制作prefab
 材质; 布料材质 溜槽材质 地面材质
 修改transform position
+炉子要加碰撞体
 
 ## Assets/Docs/ModelManager.txt
 该文件里每一行对应一个tag。

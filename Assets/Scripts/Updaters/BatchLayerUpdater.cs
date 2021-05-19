@@ -11,8 +11,7 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
         yes = 1,
     }
 
-    public float startTime = 0f;
-    public float endTime = 40f;
+    public float lifecycle = 40f;
     public int frameNumber = 220;
 
     private Mesh[] meshes;
@@ -23,7 +22,7 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
 
     public void Initialize()
     {
-        time_per_frame = (endTime - startTime) / frameNumber;
+        time_per_frame = lifecycle / frameNumber;
         material = Resources.Load<Material>("material_layer_vertex_color");
         canvas = Resources.Load<GameObject>("Canvas_frame_info");
 
@@ -57,16 +56,17 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
 
         c.name = number + "_info";
         c.Find("name").GetComponent<TMP_Text>().text = number;
-        
-        for (float time=startTime; time < endTime;)
+
+        float start = Time.time;
+        for (float time=Time.time-start; time < lifecycle;)
         {
             int id = (int)(time / time_per_frame);
 
             meshFilter.mesh = meshes[id];
             c.localPosition = meshes[id].bounds.center + new Vector3(-meshes[id].bounds.extents.x, 0, 0.01f);
 
-            time += Time.fixedDeltaTime;
             yield return 0;
+            time = Time.time - start;
         }
         yield return 0;
         DestroyImmediate(obj);
