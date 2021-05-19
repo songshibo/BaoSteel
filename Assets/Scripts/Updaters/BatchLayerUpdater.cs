@@ -24,7 +24,7 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
     public void Initialize()
     {
         time_per_frame = (endTime - startTime) / frameNumber;
-        material = Resources.Load<Material>("layer");
+        material = Resources.Load<Material>("material_layer_vertex_color");
         canvas = Resources.Load<GameObject>("Canvas_frame_info");
 
         meshes = new Mesh[frameNumber];
@@ -52,6 +52,8 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
         MeshFilter meshFilter = obj.AddComponent<MeshFilter>();
         MeshRenderer meshRenderer = obj.AddComponent<MeshRenderer>();
         meshRenderer.sharedMaterial = material;
+        meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        meshRenderer.receiveShadows = false;
 
         c.name = number + "_info";
         c.Find("name").GetComponent<TMP_Text>().text = number;
