@@ -29,9 +29,11 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 
     [SerializeField]
     public Texture2D residualThicknessTex;
+    private Texture2D gradientTex;
 
     public void Initialize()
     {
+        gradientTex = gradient.GetTexture(512, 1);
         if (residualMaterial != null)
         {
             residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
@@ -39,7 +41,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
             residualMaterial.SetFloat("_BottomRadius", bottomRadius);
             residualMaterial.SetFloat("_MinHeight", bottomHeight);
             residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
-            residualMaterial.SetTexture("_Gradient", gradient.GetTexture(512, 1));
+            residualMaterial.SetTexture("_Gradient", gradientTex);
             UpdateKeyword();
         }
     }
@@ -49,22 +51,11 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         if (value)
         {
             displayMode = ResidualType.ResidualOnly;
+            UpdateKeyword();
         }
         else
         {
             displayMode = ResidualType.Standard;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (residualMaterial != null)
-        {
-            // residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
-            // residualMaterial.SetFloat("_MaxHeight", maxHeight);
-            // residualMaterial.SetFloat("_BottomRadius", bottomRadius);
-            // residualMaterial.SetFloat("_MinHeight", bottomHeight);
-            // residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
             UpdateKeyword();
         }
     }
