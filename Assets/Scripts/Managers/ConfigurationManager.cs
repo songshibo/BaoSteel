@@ -168,7 +168,7 @@ public class ConfigurationManager : MonoBehaviour
     // 添加计时器需要做两步
     // 第一，在 timing.txt 中添加计时器
     // 第二，在 Update() 中添加该调用的方法
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         foreach (var item in times)
         {
@@ -216,7 +216,7 @@ public class ConfigurationManager : MonoBehaviour
 
                 item.Value[0] = 0;
             }
-            item.Value[0] += Time.deltaTime;
+            item.Value[0] += Time.fixedDeltaTime;
         }
     }
 }
