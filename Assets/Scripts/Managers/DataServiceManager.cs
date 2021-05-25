@@ -21,6 +21,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
     private string ip = null;
     private string port = null;
     private DownloadHandlerTexture texDl;
+    private DownloadHandlerTexture residualHandler;
     // public static DataServiceManager Instance()
     // {
 
@@ -75,6 +76,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
 
         // }
         texDl = new DownloadHandlerTexture(true);
+        residualHandler = new DownloadHandlerTexture(true);
         bool ip_exist = false;
         bool port_exit = false;
         foreach (KeyValuePair<string, string> c in config)
@@ -176,6 +178,27 @@ public class DataServiceManager : Singleton<DataServiceManager>
             else
             {
                 DataArrangement(texDl.texture);
+                // Or retrieve results as binary data
+            }
+        }
+    }
+
+    public IEnumerator GetResidualThicknessPic(Func<Texture2D, bool> DataArrangement)
+    {
+        if (initialized)
+        {
+            UnityWebRequest www = UnityWebRequest.Get(url + "/residualThickness"); //创建UnityWebRequest对象
+            www.downloadHandler = residualHandler;
+            yield return www.SendWebRequest();                                 //等待返回请求的信息
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+                yield break;
+            }
+            else
+            {
+                DataArrangement(residualHandler.texture);
                 // Or retrieve results as binary data
             }
         }

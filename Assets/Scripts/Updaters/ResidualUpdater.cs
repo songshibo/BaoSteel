@@ -21,9 +21,6 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     float yRes;
     float xRes;
     public ResidualType displayMode;
-    public float maxHeight = 15f;
-    public float bottomRadius = 6.877f;
-    public float bottomHeight = 8.132f;
     public float corrosionScale = 30f;
     public Material residualMaterial;
 
@@ -34,16 +31,28 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     public void Initialize()
     {
         gradientTex = gradient.GetTexture(512, 1);
+
+        StartCoroutine(DataServiceManager.Instance.GetResidualThicknessPic(UpdateResidual));
+
         if (residualMaterial != null)
         {
             residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
-            residualMaterial.SetFloat("_MaxHeight", maxHeight);
-            residualMaterial.SetFloat("_BottomRadius", bottomRadius);
-            residualMaterial.SetFloat("_MinHeight", bottomHeight);
-            residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
+            residualMaterial.SetFloat("_MaxHeight", Util.HEARTH_HEIGHT);
+            residualMaterial.SetFloat("_BottomRadius", Util.BOTTOM_R);
+            residualMaterial.SetFloat("_MinHeight", Util.BOTTOM_H);
             residualMaterial.SetTexture("_Gradient", gradientTex);
             UpdateKeyword();
         }
+    }
+
+    public bool UpdateResidual(Texture2D tex)
+    {
+        xRes = tex.width;
+        yRes = tex.height;
+        residualThicknessTex = tex;
+        residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
+        residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
+        return true;
     }
 
     public void ResidualThicknessSwitch(bool value)
@@ -57,6 +66,34 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         {
             displayMode = ResidualType.Standard;
             UpdateKeyword();
+        }
+    }
+
+    public void InvertSamplingFromRayCast(Vector3 hitpoint, bool isBottom)
+    {
+        int x, y;
+        float angle = Util.ComputeThermocoupleAngle(hitpoint);
+        float height = 0;
+        if (!isBottom)
+        {
+            height = hitpoint.y;
+        }
+        else
+        {
+            float radius = new Vector2(hitpoint.x, hitpoint.z).magnitude;
+            height = (radius / Util.BOTTOM_R * Util.BOTTOM_H);
+        }
+
+        x = Mathf.RoundToInt(angle / 350f * xRes);
+        y = Mathf.RoundToInt(height / Util.HEARTH_HEIGHT * yRes);
+
+
+        if (residualThicknessTex != null)
+        {
+            float value = residualThicknessTex.GetPixel(x, y).r;
+
+            //TODO: mapping value to defined range
+            //TODO: update the UI component
         }
     }
 
@@ -87,39 +124,5 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
             default:
                 break;
         }
-    }
-
-    public bool UpdateResidual(string content)
-    {
-        Dictionary<string, Dictionary<string, float>> furnace_core = new Dictionary<string, Dictionary<string, float>>(); // 保存炉底的残厚信息
-        Dictionary<string, Dictionary<string, float>> furnace_wall = new Dictionary<string, Dictionary<string, float>>();
-        JToken items = JToken.Parse(content);
-        foreach (JProperty item in items)
-        {
-            if (item.Name.Equals("furnace_core"))
-            {
-                foreach (JProperty data in item.Value)
-                {
-                    furnace_core.Add(data.Name, new Dictionary<string, float>());
-                    foreach (JProperty info in data.Value)
-                    {
-                        furnace_core[data.Name].Add(info.Name, float.Parse(info.Value.ToString()));
-                    }
-                }
-            }
-            else if (item.Name.Equals("furnace_wall"))
-            {
-                foreach (JProperty data in item.Value)
-                {
-                    furnace_wall.Add(data.Name, new Dictionary<string, float>());
-                    foreach (JProperty info in data.Value)
-                    {
-                        furnace_wall[data.Name].Add(info.Name, float.Parse(info.Value.ToString()));
-                    }
-                }
-            }
-        }
-        // print(content);
-        return true;
     }
 }
