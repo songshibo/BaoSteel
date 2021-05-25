@@ -206,7 +206,7 @@ public class ConfigurationManager : MonoBehaviour
                 else if (item.Key.Equals("residual_timing"))
                 {
                     Debug.Log("残厚定时更新");
-                    //StartCoroutine(DataServiceManager.Instance.GetResidual(ResidualUpdater.Instance.UpdateResidual));
+                    StartCoroutine(DataServiceManager.Instance.GetResidualThicknessPic(ResidualUpdater.Instance.UpdateResidual));
                 }
                 else if (item.Key.Equals("liaoceng_timing") && enableLiaoceng)
                 {

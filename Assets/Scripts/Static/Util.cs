@@ -9,6 +9,9 @@ public static class Util
 {
     public static char[] endChar = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     public static float MAX_HEIGHT = 47.8f;
+    public static float HEARTH_HEIGHT = 14.29f;
+    public static float BOTTOM_R = 6.877f; //炉缸内壁底面的半径
+    public static float BOTTOM_H = 8.132f; //炉缸内壁底面的高度
 
     public static string ReadConfigFile(string filename)
     {
