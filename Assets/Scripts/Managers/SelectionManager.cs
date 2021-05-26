@@ -37,14 +37,17 @@ public class SelectionManager : MonoSingleton<SelectionManager>
 
             RaycastHit[] hitArr = Physics.RaycastAll(ray, Mathf.Infinity, RayCastLayer);
             ResidualUpdater.Instance.ClickAndShowResidualDetail(hitArr);
-
+            foreach (var h in hitArr)
+            {
+                Debug.LogWarning(h.transform.name);
+            }
             if (Physics.Raycast(ray, out RaycastHit hit, RayCastLayer))
             {
                 Debug.DrawLine(Camera.main.transform.position, hit.point, Color.red);
                 switch (selectionType)
                 {
                     case SelectionType.standard: // standard渲染下可以选择热点偶
-                        if (hit.transform.CompareTag("thermocouple")) // 鼠标左键按下
+                        if (hit.transform.CompareTag("thermocouple"))
                         {
                             ThermocoupleUpdater.Instance.DisplayHittedThermocoupleInfo(hit.transform.gameObject);
                         }
@@ -74,8 +77,6 @@ public class SelectionManager : MonoSingleton<SelectionManager>
                         break;
                 }
             }
-            
-
         }
 
         //no matter hit or not
@@ -84,6 +85,7 @@ public class SelectionManager : MonoSingleton<SelectionManager>
         HeatmapDatabaseUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatmap);
 
         HeatLoadUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatload);
+        ResidualUpdater.Instance.UpdateUIPanel();
     }
 
     /// <summary>

@@ -16,6 +16,10 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         ResidualOnly,
         Combined
     }
+    public struct LastPos{
+        public Vector3 pos;
+        public bool isBottom;
+    }
 
     public CustomGradient gradient = new CustomGradient();
     float yRes;
@@ -31,6 +35,14 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     private Mesh[] meshes;
     private MeshFilter filter;
     private MeshCollider mc;
+
+    private GameObject residualPanel;
+    private TextMeshProUGUI residualText;
+    private TextMeshProUGUI positionText;
+
+    private LastPos last;
+
+    private bool profileStatus;
 
     public void Initialize()
     {
@@ -69,29 +81,51 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         }
         mc.sharedMesh = meshes[0];
 
-        MeshRenderer meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        meshRenderer.sharedMaterial = Resources.Load<Material>("ClippingMaterials/inside_no_tess");
-        meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        meshRenderer.receiveShadows = false;
+        string prefab_path = "Prefabs/ResidualPanel";
+        residualPanel = Instantiate(Resources.Load<GameObject>(prefab_path), GameObject.Find("Canvas").transform);
+        residualPanel.SetActive(false);
+
+        residualText = residualPanel.transform.Find("Residual").GetComponent<TextMeshProUGUI>();
+        positionText = residualPanel.transform.Find("Position").GetComponent<TextMeshProUGUI>();
     }
 
     public void ClickAndShowResidualDetail(RaycastHit[] hitArr)
     {
-        foreach (RaycastHit hit in hitArr)
+        if(profileStatus && displayMode == ResidualType.ResidualOnly)
         {
-            if (hit.transform.name.Equals(transform.name))
+            foreach (RaycastHit hit in hitArr)
             {
-                if(hit.normal.y == 1)
+                if (hit.transform.name.Equals(transform.name))
                 {
-                    InvertSamplingFromRayCast(hit.point, true);
+                    if (hit.normal.y == 1)
+                    {
+                        InvertSamplingFromRayCast(hit.point, true);
+                    }
+                    else
+                    {
+                        InvertSamplingFromRayCast(hit.point, false);
+                    }
+                    break;
                 }
-                else
-                {
-                    InvertSamplingFromRayCast(hit.point, false);
-                }
-                break;
             }
         }
+    }
+
+    internal void UpdateUIPanel()
+    {
+        if (profileStatus && displayMode == ResidualType.ResidualOnly)
+        {
+            residualPanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(last.pos));
+        }
+    }
+
+    private void ShowResidualPanel(bool status)
+    {
+        if(last.pos.y != 0)
+        {
+            residualPanel.SetActive(status);
+        }
+        
     }
 
     public bool UpdateResidual(Texture2D tex)
@@ -108,11 +142,13 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     {
         if (value)
         {
+            ShowResidualPanel(profileStatus);
             displayMode = ResidualType.ResidualOnly;
             UpdateKeyword();
         }
         else
         {
+            ShowResidualPanel(false);
             displayMode = ResidualType.Standard;
             UpdateKeyword();
         }
@@ -142,7 +178,12 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
             float value = residualThicknessTex.GetPixel(x, y).r;
 
             //TODO: mapping value to defined range
-            //TODO: update the UI component
+            last.pos = hitpoint;
+            last.isBottom = isBottom;
+            residualPanel.SetActive(true);
+            residualPanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(hitpoint));
+            residualText.text = "0.1m";
+            positionText.text = "角度：" + Math.Round(angle, 0) + "°\n高度：" + Math.Round(hitpoint.y, 1) + "m";
         }
     }
 
@@ -172,6 +213,19 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
                 break;
             default:
                 break;
+        }
+    }
+
+    public void SwitchProfile(bool v)
+    {
+        profileStatus = v;
+        if (v)
+        {
+            ShowResidualPanel(displayMode == ResidualType.ResidualOnly);
+        }
+        else
+        {
+            ShowResidualPanel(false);
         }
     }
 }

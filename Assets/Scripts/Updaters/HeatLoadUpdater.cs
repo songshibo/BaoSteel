@@ -214,7 +214,7 @@ public class HeatLoadUpdater : MonoSingleton<HeatLoadUpdater>
         part = part_cooling_plate;
 
         hitpoint = new Vector3(8.8f, 8.8f, 0);
-        string prefab = "TuyerePanel";
+        string prefab = "HeatLoadPanel";
         tuyerePanel = Instantiate((GameObject)Resources.Load("Prefabs/" + prefab), GameObject.Find("Canvas").transform);
         tuyerePanel.transform.Find("TemperatureBackgroud/cancel").GetComponent<Button>().onClick.AddListener(CancelPanel);
         tuyerePanel.name = prefab;
