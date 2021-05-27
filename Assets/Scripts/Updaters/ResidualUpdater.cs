@@ -16,6 +16,10 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         ResidualOnly,
         Combined
     }
+    public struct LastPos{
+        public Vector3 pos;
+        public bool isBottom;
+    }
 
     public CustomGradient gradient = new CustomGradient();
     float yRes;
@@ -27,6 +31,18 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     [SerializeField]
     public Texture2D residualThicknessTex;
     private Texture2D gradientTex;
+
+    private Mesh[] meshes;
+    private MeshFilter filter;
+    private MeshCollider mc;
+
+    private GameObject residualPanel;
+    private TextMeshProUGUI residualText;
+    private TextMeshProUGUI positionText;
+
+    private LastPos last;
+
+    private bool profileStatus;
 
     public void Initialize()
     {
@@ -43,6 +59,73 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
             residualMaterial.SetTexture("_Gradient", gradientTex);
             UpdateKeyword();
         }
+
+        meshes = new Mesh[5];
+        meshes[0] = Resources.Load<GameObject>("hearth-inside/inside-0").GetComponent<MeshFilter>().sharedMesh;
+        meshes[1] = Resources.Load<GameObject>("hearth-inside/inside-90").GetComponent<MeshFilter>().sharedMesh;
+        meshes[2] = Resources.Load<GameObject>("hearth-inside/inside-180").GetComponent<MeshFilter>().sharedMesh;
+        meshes[3] = Resources.Load<GameObject>("hearth-inside/inside-270").GetComponent<MeshFilter>().sharedMesh;
+        meshes[4] = Resources.Load<GameObject>("hearth-inside/inside-full").GetComponent<MeshFilter>().sharedMesh;
+
+        transform.gameObject.layer = 9;
+
+        if (!TryGetComponent(out filter))
+        {
+            filter = gameObject.AddComponent<MeshFilter>();
+        }
+        filter.sharedMesh = meshes[0];
+
+        if (!TryGetComponent(out mc))
+        {
+            mc = gameObject.AddComponent<MeshCollider>();
+        }
+        mc.sharedMesh = meshes[0];
+
+        string prefab_path = "Prefabs/ResidualPanel";
+        residualPanel = Instantiate(Resources.Load<GameObject>(prefab_path), GameObject.Find("Canvas").transform);
+        residualPanel.SetActive(false);
+
+        residualText = residualPanel.transform.Find("Residual").GetComponent<TextMeshProUGUI>();
+        positionText = residualPanel.transform.Find("Position").GetComponent<TextMeshProUGUI>();
+    }
+
+    public void ClickAndShowResidualDetail(RaycastHit[] hitArr)
+    {
+        if(profileStatus && displayMode == ResidualType.ResidualOnly)
+        {
+            foreach (RaycastHit hit in hitArr)
+            {
+                if (hit.transform.name.Equals(transform.name))
+                {
+                    if (hit.normal.y == 1)
+                    {
+                        InvertSamplingFromRayCast(hit.point, true);
+                    }
+                    else
+                    {
+                        InvertSamplingFromRayCast(hit.point, false);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    internal void UpdateUIPanel()
+    {
+        if (profileStatus && displayMode == ResidualType.ResidualOnly)
+        {
+            residualPanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(last.pos));
+        }
+    }
+
+    private void ShowResidualPanel(bool status)
+    {
+        if(last.pos.y != 0)
+        {
+            residualPanel.SetActive(status);
+        }
+        
     }
 
     public bool UpdateResidual(Texture2D tex)
@@ -59,11 +142,13 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     {
         if (value)
         {
+            ShowResidualPanel(profileStatus);
             displayMode = ResidualType.ResidualOnly;
             UpdateKeyword();
         }
         else
         {
+            ShowResidualPanel(false);
             displayMode = ResidualType.Standard;
             UpdateKeyword();
         }
@@ -93,7 +178,12 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
             float value = residualThicknessTex.GetPixel(x, y).r;
 
             //TODO: mapping value to defined range
-            //TODO: update the UI component
+            last.pos = hitpoint;
+            last.isBottom = isBottom;
+            residualPanel.SetActive(true);
+            residualPanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(hitpoint));
+            residualText.text = "0.1m";
+            positionText.text = "角度：" + Math.Round(angle, 0) + "°\n高度：" + Math.Round(hitpoint.y, 1) + "m";
         }
     }
 
@@ -123,6 +213,19 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
                 break;
             default:
                 break;
+        }
+    }
+
+    public void SwitchProfile(bool v)
+    {
+        profileStatus = v;
+        if (v)
+        {
+            ShowResidualPanel(displayMode == ResidualType.ResidualOnly);
+        }
+        else
+        {
+            ShowResidualPanel(false);
         }
     }
 }
