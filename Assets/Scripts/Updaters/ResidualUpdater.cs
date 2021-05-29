@@ -216,16 +216,39 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         }
     }
 
-    public void SwitchProfile(bool v)
+    public void SwitchProfile(float angle)
     {
-        profileStatus = v;
-        if (v)
+        if(angle == -1)
         {
-            ShowResidualPanel(displayMode == ResidualType.ResidualOnly);
+            profileStatus = false;
+            ShowResidualPanel(false);
         }
         else
         {
-            ShowResidualPanel(false);
+            profileStatus = true;
+            ShowResidualPanel(displayMode == ResidualType.ResidualOnly);
+            switch (angle)
+            {
+                case 0:
+                    filter.sharedMesh = meshes[0];
+                    mc.sharedMesh = meshes[0];
+                    break;
+                case 90:
+                    filter.sharedMesh = meshes[1];
+                    mc.sharedMesh = meshes[1];
+                    break;
+                case 180:
+                    filter.sharedMesh = meshes[2];
+                    mc.sharedMesh = meshes[2];
+                    break;
+                case 270:
+                    filter.sharedMesh = meshes[3];
+                    mc.sharedMesh = meshes[3];
+                    break;
+                default:
+                    Debug.LogWarning("角度不对");
+                    break;
+            }
         }
     }
 }
