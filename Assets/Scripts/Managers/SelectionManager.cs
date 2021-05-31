@@ -35,7 +35,7 @@ public class SelectionManager : MonoSingleton<SelectionManager>
         if (Input.GetKeyDown(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject()) // 如果在UI上，则不处理，避免和UI逻辑冲突
         {
 
-            RaycastHit[] hitArr = Physics.RaycastAll(ray, Mathf.Infinity, RayCastLayer);
+            RaycastHit[] hitArr = Physics.RaycastAll(ray, 200, RayCastLayer);
             ResidualUpdater.Instance.ClickAndShowResidualDetail(hitArr);
             foreach (var h in hitArr)
             {
