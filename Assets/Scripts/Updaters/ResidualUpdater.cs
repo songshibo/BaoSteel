@@ -16,7 +16,8 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         ResidualOnly,
         Combined
     }
-    public struct LastPos{
+    public struct LastPos
+    {
         public Vector3 pos;
         public bool isBottom;
     }
@@ -91,7 +92,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 
     public void ClickAndShowResidualDetail(RaycastHit[] hitArr)
     {
-        if(profileStatus && displayMode == ResidualType.ResidualOnly)
+        if (profileStatus && displayMode == ResidualType.ResidualOnly)
         {
             foreach (RaycastHit hit in hitArr)
             {
@@ -121,11 +122,11 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 
     private void ShowResidualPanel(bool status)
     {
-        if(last.pos.y != 0)
+        if (last.pos.y != 0)
         {
             residualPanel.SetActive(status);
         }
-        
+
     }
 
     public bool UpdateResidual(Texture2D tex)
@@ -178,11 +179,12 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
             float value = residualThicknessTex.GetPixel(x, y).r;
 
             //TODO: mapping value to defined range
+            float corosion = Util.MAX_CORROSION * value;
             last.pos = hitpoint;
             last.isBottom = isBottom;
             residualPanel.SetActive(true);
             residualPanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(hitpoint));
-            residualText.text = "0.1m";
+            residualText.text = Math.Round(corosion, 3).ToString() + "m";
             positionText.text = "角度：" + Math.Round(angle, 0) + "°\n高度：" + Math.Round(hitpoint.y, 1) + "m";
         }
     }
@@ -218,7 +220,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 
     public void SwitchProfile(float angle)
     {
-        if(angle == -1)
+        if (angle == -1)
         {
             profileStatus = false;
             ShowResidualPanel(false);

@@ -12,6 +12,7 @@ public static class Util
     public static float HEARTH_HEIGHT = 14.29f;
     public static float BOTTOM_R = 6.877f; //炉缸内壁底面的半径
     public static float BOTTOM_H = 8.132f; //炉缸内壁底面的高度
+    public static float MAX_CORROSION = 1.372f; //最大残厚腐蚀深度
 
     public static string ReadConfigFile(string filename)
     {
