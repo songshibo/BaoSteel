@@ -12,6 +12,7 @@ public class SelectionManager : MonoSingleton<SelectionManager>
         heatmap
     }
 
+    public bool isSimple = false;
     public SelectionType selectionType;
     public int RayCastLayer { get; set; } = 1 << 9; // default layer: highlight
 
@@ -84,8 +85,16 @@ public class SelectionManager : MonoSingleton<SelectionManager>
         // based on current selectionType to change the activity of the UI prefab
         HeatmapDatabaseUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatmap);
 
-        HeatLoadUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatload);
+        if (!isSimple)
+        {
+            HeatLoadUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatload);
+        }
         ResidualUpdater.Instance.UpdateUIPanel();
+    }
+
+    public void Initialize()
+    {
+        isSimple = true;
     }
 
     /// <summary>

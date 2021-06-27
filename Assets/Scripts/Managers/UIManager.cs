@@ -108,11 +108,17 @@ public class UIManager : MonoSingleton<UIManager>
         TuyereWindowManager = GameObject.Find("TuyereWindow").GetComponent<ModalWindowManager>();
         renderType.CreateNewItem("标准模式", clipIcon);
         renderType.CreateNewItem("热力图模式", clipIcon);
-        renderType.CreateNewItem("热负荷模式", clipIcon);
+        if (configShowPart.Length != 0)
+        {
+            renderType.CreateNewItem("热负荷模式", clipIcon);
+        }
         renderType.dropdownEvent.AddListener(RenderTypeEvent);
         renderType.SetupDropdown();
-        // Options
-        optionWindowManager = GameObject.Find("OptionWindow").GetComponent<ModalWindowManager>();
+        if (configShowPart.Length != 0)
+        {
+            // Options
+            optionWindowManager = GameObject.Find("OptionWindow").GetComponent<ModalWindowManager>();
+        }
     }
 
     public void ShowTuyereUI()
