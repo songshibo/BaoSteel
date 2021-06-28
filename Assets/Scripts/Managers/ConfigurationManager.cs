@@ -9,6 +9,7 @@ using System;
 public class ConfigurationManager : MonoBehaviour
 {
     public bool enableLiaoceng = false;
+    public string yixian = "";
     public string school = "";
     public string baosteel = "";
     [SerializeField]
