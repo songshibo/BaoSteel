@@ -8213,6 +8213,7 @@ MonoBehaviour:
   renderType: {fileID: 2112209172}
   heatMapGradientSelector: {fileID: 2123123928}
   heatLoadGradientSelector: {fileID: 1257958061}
+  isSimple: 0
 --- !u!4 &447419898
 Transform:
   m_ObjectHideFlags: 0
@@ -10101,9 +10102,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableLiaoceng: 0
+  xiange: 172.16.10.198
   school: 59.77.13.212
   baosteel: 168.15.15.34
-  ip: 172.16.12.9
+  ip: 172.16.10.198
   port: 10000
 --- !u!1 &545283941
 GameObject:
@@ -10780,7 +10782,7 @@ MonoBehaviour:
         m_CallState: 2
   saveValue: 0
   switchTag: Switch
-  isOn: 1
+  isOn: 0
   invokeAtStart: 0
   switchAnimator: {fileID: 0}
   switchButton: {fileID: 0}
@@ -11025,7 +11027,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.009262085, y: 0.019195557}
+  m_AnchoredPosition: {x: 8.82322, y: 18.197962}
   m_SizeDelta: {x: 480, y: 990}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &563228770
@@ -11232,8 +11234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f332ce032b16e429034edc78ab964b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifecycle: 40
   frameNumber: 220
+  speedMeterHour: 7.2
 --- !u!4 &572821297
 Transform:
   m_ObjectHideFlags: 0
@@ -14056,7 +14058,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2031471204}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9988698
+  m_Size: 0.91770387
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -18872,7 +18874,7 @@ MonoBehaviour:
         m_CallState: 2
   saveValue: 0
   switchTag: Switch
-  isOn: 0
+  isOn: 1
   invokeAtStart: 0
   switchAnimator: {fileID: 0}
   switchButton: {fileID: 0}
@@ -31875,6 +31877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6135429adb5a440e39a4dfaa7c262e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSimple: 0
   selectionType: 0
 --- !u!1 &1640151496
 GameObject:
@@ -36373,7 +36376,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 909958542}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9988663
+  m_Size: 0.9174399
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

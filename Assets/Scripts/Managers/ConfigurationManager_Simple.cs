@@ -37,6 +37,7 @@ public class ConfigurationManager_Simple : MonoBehaviour
 
         ResidualUpdater.Instance.Initialize();
         SelectionManager.Instance.Initialize();
+        UIManager.Instance.isSimple = true;
 
         // Special Settings
         //InitilizeTuyere();

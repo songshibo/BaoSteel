@@ -33,50 +33,57 @@ public class SelectionManager : MonoSingleton<SelectionManager>
     private void FixedUpdate()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject()) // 如果在UI上，则不处理，避免和UI逻辑冲突
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-
-            RaycastHit[] hitArr = Physics.RaycastAll(ray, 200, RayCastLayer);
-            ResidualUpdater.Instance.ClickAndShowResidualDetail(hitArr);
-            foreach (var h in hitArr)
+            if (!EventSystem.current.IsPointerOverGameObject()) // 如果在UI上，则不处理，避免和UI逻辑冲突
             {
-                Debug.LogWarning(h.transform.name);
-            }
-            if (Physics.Raycast(ray, out RaycastHit hit, RayCastLayer))
-            {
-                Debug.DrawLine(Camera.main.transform.position, hit.point, Color.red);
-                switch (selectionType)
+                RaycastHit[] hitArr = Physics.RaycastAll(ray, 400, RayCastLayer);
+                ResidualUpdater.Instance.ClickAndShowResidualDetail(hitArr);
+                foreach (var h in hitArr)
                 {
-                    case SelectionType.standard: // standard渲染下可以选择热点偶
-                        if (hit.transform.CompareTag("thermocouple"))
-                        {
-                            ThermocoupleUpdater.Instance.DisplayHittedThermocoupleInfo(hit.transform.gameObject);
-                        }
-                        break;
-                    case SelectionType.heatload:
-                        HeatLoadUpdater.Instance.ClickAndShowHeatLoadDetail(hit.point);
-                        break;
-                    case SelectionType.heatmap:
-                        // HeatmapUpdater.Instance.InvertSamplingFromRayCast(hit.point);
-                        HeatmapDatabaseUpdater.Instance.InvertSamplingFromRayCast(hit.point);
-                        break;
-                    default:
-                        break;
+                    Debug.LogWarning(h.transform.name);
                 }
+                if (Physics.Raycast(ray, out RaycastHit hit, RayCastLayer))
+                {
+                    Debug.DrawLine(Camera.main.transform.position, hit.point, Color.red);
+                    switch (selectionType)
+                    {
+                        case SelectionType.standard: // standard渲染下可以选择热点偶
+                            if (hit.transform.CompareTag("thermocouple"))
+                            {
+                                ThermocoupleUpdater.Instance.DisplayHittedThermocoupleInfo(hit.transform.gameObject);
+                            }
+                            break;
+                        case SelectionType.heatload:
+                            HeatLoadUpdater.Instance.ClickAndShowHeatLoadDetail(hit.point);
+                            break;
+                        case SelectionType.heatmap:
+                            // HeatmapUpdater.Instance.InvertSamplingFromRayCast(hit.point);
+                            HeatmapDatabaseUpdater.Instance.InvertSamplingFromRayCast(hit.point);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (selectionType)
+                    {
+                        case SelectionType.standard:
+                            break;
+                        case SelectionType.heatload:
+                            break;
+                        case SelectionType.heatmap:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                Debug.LogWarning("不在UI上");
             }
             else
             {
-                switch (selectionType)
-                {
-                    case SelectionType.standard:
-                        break;
-                    case SelectionType.heatload:
-                        break;
-                    case SelectionType.heatmap:
-                        break;
-                    default:
-                        break;
-                }
+                Debug.LogWarning("在UI上");
             }
         }
 
@@ -90,6 +97,7 @@ public class SelectionManager : MonoSingleton<SelectionManager>
             HeatLoadUpdater.Instance.UpdateUIPanel(selectionType != SelectionType.heatload);
         }
         ResidualUpdater.Instance.UpdateUIPanel();
+        
     }
 
     public void Initialize()
