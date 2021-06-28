@@ -88,6 +88,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 
         residualText = residualPanel.transform.Find("Residual").GetComponent<TextMeshProUGUI>();
         positionText = residualPanel.transform.Find("Position").GetComponent<TextMeshProUGUI>();
+        ResidualThicknessSwitch(true);
     }
 
     public void ClickAndShowResidualDetail(RaycastHit[] hitArr)

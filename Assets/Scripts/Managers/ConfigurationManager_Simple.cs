@@ -6,9 +6,8 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using System;
 
-public class ConfigurationManager : MonoBehaviour
+public class ConfigurationManager_Simple : MonoBehaviour
 {
-    public bool enableLiaoceng = false;
     public string xiange = "";
     public string school = "";
     public string baosteel = "";
@@ -28,28 +27,23 @@ public class ConfigurationManager : MonoBehaviour
         times = new Dictionary<string, float[]>();
         // No-Async
         InitializeDataServiceManager();
-        // initialize batch layer, read all frame of batch layer
-        InitializeBatchLayerUpdater();
+        
         // Initialize all in one Coroutine
         StartCoroutine(DataServiceManager.Instance.GetUnityConfig(InitializeAll, "all"));
 
         LayerManager.Instance.SetBackgroundColorMaskWeight(0);
         ThermocoupleUpdater.Instance.InitializeThermocouple();
         HeatmapDatabaseUpdater.Instance.InitializeHeatmap();
-        HeatLoadUpdater.Instance.InitializeHeatLoad();
-        InsideStoveManager.Instance.Initialize();
+
         ResidualUpdater.Instance.Initialize();
+        SelectionManager.Instance.Initialize();
+        UIManager.Instance.isSimple = true;
 
         // Special Settings
         //InitilizeTuyere();
         CullingController.Instance.ResetMaterialProperties();
         // 单独处理heatmap材质，将其设置为正常渲染模式
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
-    }
-
-    private void InitializeBatchLayerUpdater()
-    {
-        BatchLayerUpdater.Instance.Initialize();
     }
 
     private bool InitializeAll(string input)
@@ -108,6 +102,18 @@ public class ConfigurationManager : MonoBehaviour
 #else
         string config = Util.ReadConfigFile("ModelManager.txt");
 #endif
+
+        // 只要炉缸部分的模型数据
+        List<string> temp = new List<string>();
+        foreach (string line in lines)
+        {
+            if (line.StartsWith("hearth"))
+            {
+                temp.Add(line);
+            }
+        }
+        lines = temp.ToArray();
+
         // GeneratePipeline: add tags, then generate models.
         ModelManager.Instance.GeneratePipeline(lines);
     }
@@ -147,8 +153,8 @@ public class ConfigurationManager : MonoBehaviour
     {
         string[] linesClip = configClip.Split('\n');
         string[] linesShowPart = Util.RemoveComments(configModel.Split('\n'));
-
-        UIManager.Instance.Initialize(linesClip, linesShowPart);
+        List<string> temp = new List<string>();
+        UIManager.Instance.Initialize(linesClip, temp.ToArray());
     }
 
     private void InitilizeTiming(string configTiming)
@@ -185,20 +191,6 @@ public class ConfigurationManager : MonoBehaviour
                     Debug.Log("风口定时更新");
                     StartCoroutine(DataServiceManager.Instance.GetTuyereSize(TuyereUpdater.Instance.UpdateTuyereData));
                 }
-                else if (item.Key.Equals("batch_timing"))
-                {
-                    Debug.Log("料层定时更新");
-                    // 应该从数据库获取，料层编号
-                    int hour = DateTime.Now.Hour;
-                    int minute = DateTime.Now.Minute;
-                    int second = DateTime.Now.Second;
-                    BatchLayerUpdater.Instance.UpdateBatchLayer(string.Format("{0:D2}:{1:D2}:{2:D2}", hour, minute, second));
-                }
-                else if (item.Key.Equals("heatload_timing"))
-                {
-                    Debug.Log("热负荷图定时更新");
-                    StartCoroutine(DataServiceManager.Instance.GetHeatLoad(HeatLoadUpdater.Instance.UpdateHeatLoad));
-                }
                 else if (item.Key.Equals("heatmap_timing"))
                 {
                     Debug.Log("热力图定时更新");
@@ -209,12 +201,6 @@ public class ConfigurationManager : MonoBehaviour
                     Debug.Log("残厚定时更新");
                     StartCoroutine(DataServiceManager.Instance.GetResidualThicknessPic(ResidualUpdater.Instance.UpdateResidual));
                 }
-                else if (item.Key.Equals("liaoceng_timing") && enableLiaoceng)
-                {
-                    Debug.Log("炉内定时更新");
-                    StartCoroutine(DataServiceManager.Instance.GetInternalDataPic(InsideStoveUpdater.Instance.UpdateInsideStove, "liaoceng"));
-                }
-
                 item.Value[0] = 0;
             }
             item.Value[0] += Time.fixedDeltaTime;

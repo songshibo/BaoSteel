@@ -27,6 +27,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     private FocusController focus; // 控制相机的跳转
     private float offset = 8.0f; // 相机与热电偶的距离
+    public bool isSimple = false;
 
     public void Initialize(string[] configClip, string[] configShowPart)
     {
@@ -108,11 +109,17 @@ public class UIManager : MonoSingleton<UIManager>
         TuyereWindowManager = GameObject.Find("TuyereWindow").GetComponent<ModalWindowManager>();
         renderType.CreateNewItem("标准模式", clipIcon);
         renderType.CreateNewItem("热力图模式", clipIcon);
-        renderType.CreateNewItem("热负荷模式", clipIcon);
+        if (!isSimple)
+        {
+            renderType.CreateNewItem("热负荷模式", clipIcon);
+        }
         renderType.dropdownEvent.AddListener(RenderTypeEvent);
         renderType.SetupDropdown();
-        // Options
-        optionWindowManager = GameObject.Find("OptionWindow").GetComponent<ModalWindowManager>();
+        if (!isSimple)
+        {
+            // Options
+            optionWindowManager = GameObject.Find("OptionWindow").GetComponent<ModalWindowManager>();
+        }
     }
 
     public void ShowTuyereUI()
@@ -172,17 +179,22 @@ public class UIManager : MonoSingleton<UIManager>
             float angle = float.Parse(info[1]);
             CullingController.Instance.ClipMaterialsAtAngle(angle);
             FindObjectOfType<FocusController>().FaceClipSurface(angle);
-            // show inside-stove panel
-            InsideStoveManager.Instance.ControlPanel(angle);
             ResidualUpdater.Instance.SwitchProfile(angle);
-            BatchLayerUpdater.Instance.Rotate(angle);
+            if (!isSimple)
+            {
+                InsideStoveManager.Instance.ControlPanel(angle);
+                BatchLayerUpdater.Instance.Rotate(angle);
+            }
         }
         else
         {
             CullingController.Instance.ResetMaterialProperties();
             FindObjectOfType<FocusController>().FaceClipSurface();
             // hide inside-stove panel
-            InsideStoveManager.Instance.ControlPanel(0);
+            if (!isSimple)
+            {
+                InsideStoveManager.Instance.ControlPanel(0);
+            }
             ResidualUpdater.Instance.SwitchProfile(-1);
         }
     }

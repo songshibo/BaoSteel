@@ -84,6 +84,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
                 }
             }
         }
+        
     }
 
     private void DestroyIronOutlet()
@@ -233,6 +234,7 @@ public sealed class ModelManager : MonoSingleton<ModelManager>
         if (type == "cooling_wall")
         {
             DestroyIronOutlet();
+            HideUselessModels(true);
         }
         else if (type == "thermocouple")
         {

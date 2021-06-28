@@ -11,18 +11,18 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
         yes = 1,
     }
 
-    public float lifecycle = 40f;
     public int frameNumber = 220;
-
+    [Tooltip("米每小时")]
+    public float speedMeterHour = 7.2f;
+    
     private Mesh[] meshes;
     private ShowBatchLayer showBatchLayer;
     private Material material;
     private GameObject canvas;
-    private float time_per_frame;
+    private float maxS;
 
     public void Initialize()
     {
-        time_per_frame = lifecycle / frameNumber;
         material = Resources.Load<Material>("material_layer_vertex_color");
         canvas = Resources.Load<GameObject>("Canvas_frame_info");
 
@@ -32,6 +32,8 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
             GameObject g = Resources.Load<GameObject>("Prefabs/Frames/frame" + i.ToString());
             meshes[i] = g.GetComponent<MeshFilter>().sharedMesh;
         }
+        maxS = meshes[0].bounds.center.y - meshes[frameNumber - 1].bounds.center.y;
+        Debug.LogWarning("料层的最大运动路程" + maxS);
     }
 
     IEnumerator GenerateLayer(string number)
@@ -57,16 +59,14 @@ public class BatchLayerUpdater : MonoSingleton<BatchLayerUpdater>
         c.name = number + "_info";
         c.Find("name").GetComponent<TMP_Text>().text = number;
 
-        float start = Time.time;
-        for (float time=Time.time-start; time < lifecycle;)
+        float s = 0f; // 路程
+        for (; s < maxS;)
         {
-            int id = (int)(time / time_per_frame);
-
+            int id = (int)Mathf.Floor((frameNumber * (s / maxS)));
             meshFilter.mesh = meshes[id];
             c.localPosition = meshes[id].bounds.center + new Vector3(-meshes[id].bounds.extents.x, 0, 0.01f);
-
             yield return 0;
-            time = Time.time - start;
+            s += (speedMeterHour / 3600) * Time.fixedDeltaTime;
         }
         yield return 0;
         DestroyImmediate(obj);
