@@ -10102,17 +10102,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableLiaoceng: 0
-<<<<<<< HEAD
-  yixian: 172.16.12.9
-  school: 59.77.13.212
-  baosteel: 168.15.15.34
-  ip: 168.15.15.34
-=======
   xiange: 172.16.10.198
   school: 59.77.13.212
   baosteel: 168.15.15.34
   ip: 172.16.10.198
->>>>>>> 95c71bb88d3edafd89959014ab4a6f677c544bf9
   port: 10000
 --- !u!1 &545283941
 GameObject:
@@ -11034,11 +11027,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-<<<<<<< HEAD
-  m_AnchoredPosition: {x: 0, y: 0}
-=======
   m_AnchoredPosition: {x: 8.82322, y: 18.197962}
->>>>>>> 95c71bb88d3edafd89959014ab4a6f677c544bf9
   m_SizeDelta: {x: 480, y: 990}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &563228770
@@ -14069,11 +14058,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2031471204}
   m_Direction: 0
   m_Value: 0
-<<<<<<< HEAD
-  m_Size: 1
-=======
   m_Size: 0.91770387
->>>>>>> 95c71bb88d3edafd89959014ab4a6f677c544bf9
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -36390,13 +36375,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 909958543}
   m_HandleRect: {fileID: 909958542}
   m_Direction: 2
-<<<<<<< HEAD
-  m_Value: 0.49999887
-  m_Size: 0.9459923
-=======
   m_Value: 0
   m_Size: 0.9174399
->>>>>>> 95c71bb88d3edafd89959014ab4a6f677c544bf9
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
