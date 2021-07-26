@@ -45,6 +45,23 @@ public class ConfigurationManager : MonoBehaviour
         CullingController.Instance.ResetMaterialProperties();
         // 单独处理heatmap材质，将其设置为正常渲染模式
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
+
+        string name = "admin";
+        string password = "admin";
+        StartCoroutine(DataServiceManager.Instance.Login(verify, name, password));
+    }
+
+    private bool verify(string content)
+    {
+        if (content.Equals("true"))
+        {
+            Debug.LogWarning("success");
+        }
+        else
+        {
+            Debug.LogWarning("fail");
+        }
+        return true;
     }
 
     private void InitializeBatchLayerUpdater()

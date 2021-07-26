@@ -110,6 +110,23 @@ public class DataServiceManager : Singleton<DataServiceManager>
 
     }
 
+    public IEnumerator Login(Func<string, bool> DataArrangement, string name, string password)
+    {
+        if (initialized)
+        {
+            UnityWebRequest www = UnityWebRequest.Get(url + "/verify?username=" + name + "&password=" + password);
+            yield return www.SendWebRequest();
+            if(www.isNetworkError || www.isHttpError)
+            {
+                Debug.LogWarning(www.error);
+            }
+            else
+            {
+                DataArrangement(www.downloadHandler.text);
+            }
+        }
+    }
+
     public IEnumerator GetUnityConfig(Func<string, bool> DataArrangement, string config_file)
     {
 
