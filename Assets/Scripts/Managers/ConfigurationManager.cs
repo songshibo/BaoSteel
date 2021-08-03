@@ -8,7 +8,7 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 
-public class ConfigurationManager : MonoBehaviour
+public class ConfigurationManager : MonoSingleton<ConfigurationManager>
 {
     public bool enableLiaoceng = false;
     public string xiange = "";
@@ -21,10 +21,10 @@ public class ConfigurationManager : MonoBehaviour
     private Dictionary<string, float[]> times;
 
     //login
-    Transform bg;
-    TMP_InputField user_name;
-    TMP_InputField user_password;
-    TextMeshProUGUI message;
+    private Transform bg;
+    private TMP_InputField user_name;
+    private TMP_InputField user_password;
+    private TextMeshProUGUI message;
 
     private void Awake()
     {
@@ -72,8 +72,7 @@ public class ConfigurationManager : MonoBehaviour
     {
         if (content.Equals("true"))
         {
-            message.text = "登录成功...";
-            DestroyImmediate(bg);
+            DestroyImmediate(bg.gameObject);
         }
         else
         {
@@ -81,7 +80,6 @@ public class ConfigurationManager : MonoBehaviour
         }
         return true;
     }
-
 
     private void InitializeBatchLayerUpdater()
     {
