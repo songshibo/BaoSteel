@@ -14,6 +14,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     {
         Standard,
         ResidualOnly,
+        CondensateOnly,
         Combined
     }
     public struct LastPos
@@ -31,6 +32,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 
     [SerializeField]
     public Texture2D residualThicknessTex;
+    public Texture2D condensateIronTex;
     private Texture2D gradientTex;
 
     private Mesh[] meshes;
@@ -43,13 +45,13 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 
     private LastPos last;
 
-    private bool profileStatus;
+    private bool profileStatus; // 是否打开了剖面
 
     public void Initialize()
     {
         gradientTex = gradient.GetTexture(512, 1);
 
-        StartCoroutine(DataServiceManager.Instance.GetResidualThicknessPic(UpdateResidual));
+        //StartCoroutine(DataServiceManager.Instance.GetResidualThicknessPic(UpdateResidual));
 
         if (residualMaterial != null)
         {
@@ -88,12 +90,12 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 
         residualText = residualPanel.transform.Find("Residual").GetComponent<TextMeshProUGUI>();
         positionText = residualPanel.transform.Find("Position").GetComponent<TextMeshProUGUI>();
-        ResidualThicknessSwitch(true);
+        ToStandard();
     }
 
     public void ClickAndShowResidualDetail(RaycastHit[] hitArr)
     {
-        if (profileStatus && displayMode == ResidualType.ResidualOnly)
+        if (profileStatus && (displayMode == ResidualType.ResidualOnly || displayMode == ResidualType.CondensateOnly))
         {
             foreach (RaycastHit hit in hitArr)
             {
@@ -113,49 +115,90 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         }
     }
 
+    // 更新信息面板的位置
     internal void UpdateUIPanel()
     {
-        if (profileStatus && displayMode == ResidualType.ResidualOnly)
+        if (profileStatus && (displayMode == ResidualType.ResidualOnly || displayMode == ResidualType.CondensateOnly))
         {
             residualPanel.transform.localPosition = Util.ComputeUIPosition(Camera.main.WorldToScreenPoint(last.pos));
         }
     }
 
+    // 显示或隐藏信息面板，PS: 如果没有点击过炉缸，就不应该显示信息面板
     private void ShowResidualPanel(bool status)
     {
-        if (last.pos.y != 0)
+        if (last.pos.y != 0) 
         {
             residualPanel.SetActive(status);
         }
-
     }
 
-    public bool UpdateResidual(Texture2D tex)
+    // 更新残厚贴图
+    public bool UpdateResidual(Texture2D residual)
     {
-        xRes = tex.width;
-        yRes = tex.height;
-        residualThicknessTex = tex;
-        residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
+        xRes = residual.width;
+        yRes = residual.height;
+        residualThicknessTex = residual;
+
+        if(displayMode == ResidualType.ResidualOnly)
+        {
+            residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
+        }
         residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
+        if (last.pos.y != 0 && displayMode == ResidualType.ResidualOnly && residualPanel.activeSelf)
+        {
+            InvertSamplingFromRayCast(last.pos, last.isBottom);
+        }
+        
         return true;
     }
 
-    public void ResidualThicknessSwitch(bool value)
+    // 更新凝铁层贴图
+    public bool UpdateCondensate(Texture2D condensate)
     {
-        if (value)
+        xRes = condensate.width;
+        yRes = condensate.height;
+        condensateIronTex = condensate;
+        if (displayMode == ResidualType.CondensateOnly)
         {
-            ShowResidualPanel(profileStatus);
-            displayMode = ResidualType.ResidualOnly;
-            UpdateKeyword();
+            residualMaterial.SetTexture("_ResidualThickness", condensateIronTex);
         }
-        else
+        
+        residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
+        if (last.pos.y != 0 && displayMode == ResidualType.CondensateOnly && residualPanel.activeSelf)
         {
-            ShowResidualPanel(false);
-            displayMode = ResidualType.Standard;
-            UpdateKeyword();
+            InvertSamplingFromRayCast(last.pos, last.isBottom);
         }
+        return true;
     }
 
+    // 切换到标准状态，显示正常的炉缸
+    public void ToStandard()
+    {
+        ShowResidualPanel(false);
+        displayMode = ResidualType.Standard;
+        UpdateKeyword();
+    }
+
+    // 切换到残厚
+    public void ToResidualThickness()
+    {
+        ShowResidualPanel(false);
+        displayMode = ResidualType.ResidualOnly;
+        residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
+        UpdateKeyword(); // 启动shader关键字
+    }
+
+    // 切换到凝铁层
+    public void ToCondensateIron()
+    {
+        ShowResidualPanel(false);
+        displayMode = ResidualType.CondensateOnly;
+        residualMaterial.SetTexture("_ResidualThickness", condensateIronTex);
+        UpdateKeyword();
+    }
+
+    // 碰撞点，然后采样得到碰撞点腐蚀的详细信息
     public void InvertSamplingFromRayCast(Vector3 hitpoint, bool isBottom)
     {
         int x, y;
@@ -175,11 +218,18 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         y = Mathf.RoundToInt(height / Util.HEARTH_HEIGHT * yRes);
 
 
-        if (residualThicknessTex != null)
+        if (residualThicknessTex != null && condensateIronTex != null)
         {
-            float value = residualThicknessTex.GetPixel(x, y).r;
+            float value = 0f;
+            if (displayMode == ResidualType.ResidualOnly)
+            {
+                value = residualThicknessTex.GetPixel(x, y).r;
+            }
+            else if(displayMode == ResidualType.CondensateOnly)
+            {
+                value = condensateIronTex.GetPixel(x, y).r;
+            }
 
-            //TODO: mapping value to defined range
             float corosion = Util.MAX_CORROSION * value;
             last.pos = hitpoint;
             last.isBottom = isBottom;
@@ -208,6 +258,14 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
                 residualMaterial.EnableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
                 residualMaterial.DisableKeyword("DISPLAYMODE_COMBINE");
                 break;
+            case ResidualType.CondensateOnly:
+                // Debug.Log("Residual Thickness Display Mode: CondensateOnly");
+                // Debug.Log("Corrsion Scale:" + residualMaterial.GetFloat("_CorrosionScale"));
+                // Debug.Log("Bottom Radius:" + residualMaterial.GetFloat("_BottomRadius"));
+                residualMaterial.DisableKeyword("DISPLAYMODE_STANDARD");
+                residualMaterial.EnableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
+                residualMaterial.DisableKeyword("DISPLAYMODE_COMBINE");
+                break;
             case ResidualType.Combined:
                 // Debug.Log("Residual Thickness Display Mode: Combined");
                 residualMaterial.DisableKeyword("DISPLAYMODE_STANDARD");
@@ -229,7 +287,8 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         else
         {
             profileStatus = true;
-            ShowResidualPanel(displayMode == ResidualType.ResidualOnly);
+            //ShowResidualPanel((displayMode == ResidualType.ResidualOnly || displayMode == ResidualType.CondensateOnly));
+
             switch (angle)
             {
                 case 0:

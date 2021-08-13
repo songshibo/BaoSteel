@@ -240,8 +240,9 @@ public class ConfigurationManager : MonoSingleton<ConfigurationManager>
                 }
                 else if (item.Key.Equals("residual_timing"))
                 {
-                    Debug.Log("残厚定时更新");
+                    Debug.Log("残厚和凝铁层定时更新");
                     StartCoroutine(DataServiceManager.Instance.GetResidualThicknessPic(ResidualUpdater.Instance.UpdateResidual));
+                    StartCoroutine(DataServiceManager.Instance.GetCondensateIronPic(ResidualUpdater.Instance.UpdateCondensate));
                 }
                 else if (item.Key.Equals("liaoceng_timing") && enableLiaoceng)
                 {
