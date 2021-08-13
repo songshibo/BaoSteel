@@ -20,7 +20,8 @@ public class DataServiceManager : Singleton<DataServiceManager>
 
     private string ip = null;
     private string port = null;
-    private DownloadHandlerTexture texDl;
+    private DownloadHandlerTexture heatMapPic;
+    private DownloadHandlerTexture internalDataPic;
     private DownloadHandlerTexture residualHandler;
     // public static DataServiceManager Instance()
     // {
@@ -75,7 +76,8 @@ public class DataServiceManager : Singleton<DataServiceManager>
         //     }
 
         // }
-        texDl = new DownloadHandlerTexture(true);
+        heatMapPic = new DownloadHandlerTexture(true);
+        internalDataPic = new DownloadHandlerTexture(true);
         residualHandler = new DownloadHandlerTexture(true);
         bool ip_exist = false;
         bool port_exit = false;
@@ -146,7 +148,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
         if (initialized)
         {
             UnityWebRequest www = UnityWebRequest.Get(url + "/internal?target_data=" + targetData); //创建UnityWebRequest对象
-            www.downloadHandler = texDl;
+            www.downloadHandler = internalDataPic;
             yield return www.SendWebRequest();                                 //等待返回请求的信息
 
             if (www.isNetworkError || www.isHttpError)
@@ -156,7 +158,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
             else
             {
 
-                DataArrangement(texDl.texture);
+                DataArrangement(internalDataPic.texture);
                 // Or retrieve results as binary data
             }
         }
@@ -168,7 +170,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
         if (initialized)
         {
             UnityWebRequest www = UnityWebRequest.Get(url + "/heatmap"); //创建UnityWebRequest对象
-            www.downloadHandler = texDl;
+            www.downloadHandler = heatMapPic;
             yield return www.SendWebRequest();                                 //等待返回请求的信息
 
             if (www.isNetworkError || www.isHttpError)
@@ -177,7 +179,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
             }
             else
             {
-                DataArrangement(texDl.texture);
+                DataArrangement(heatMapPic.texture);
                 // Or retrieve results as binary data
             }
         }
