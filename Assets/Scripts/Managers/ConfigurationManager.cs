@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using System;
+using TMPro;
+using UnityEngine.UI;
 
-public class ConfigurationManager : MonoBehaviour
+public class ConfigurationManager : MonoSingleton<ConfigurationManager>
 {
     public bool enableLiaoceng = false;
     public string xiange = "";
@@ -18,6 +20,12 @@ public class ConfigurationManager : MonoBehaviour
     private string port = "";
     private Dictionary<string, float[]> times;
 
+    //login
+    private Transform bg;
+    private TMP_InputField user_name;
+    private TMP_InputField user_password;
+    private TextMeshProUGUI message;
+
     private void Awake()
     {
 #if (INIT_FROM_DATABASE)
@@ -25,6 +33,12 @@ public class ConfigurationManager : MonoBehaviour
 #else
         Debug.Log("Intialized from local configurations");
 #endif
+        // login
+        bg = GameObject.Find("LoginBG").transform;
+        user_name = bg.Find("user_name").GetComponent<TMP_InputField>();
+        user_password = bg.Find("user_password").GetComponent<TMP_InputField>();
+        message = bg.Find("message").GetComponent<TextMeshProUGUI>();
+
         times = new Dictionary<string, float[]>();
         // No-Async
         InitializeDataServiceManager();
@@ -45,6 +59,26 @@ public class ConfigurationManager : MonoBehaviour
         CullingController.Instance.ResetMaterialProperties();
         // 单独处理heatmap材质，将其设置为正常渲染模式
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
+    }
+
+    public void Login()
+    {
+        string name = user_name.text;
+        string password = user_password.text;
+        StartCoroutine(DataServiceManager.Instance.Login(Process, name, password));
+    }
+
+    private bool Process(string content)
+    {
+        if (content.Equals("true"))
+        {
+            DestroyImmediate(bg.gameObject);
+        }
+        else
+        {
+            message.text = "用户名或密码错误...";
+        }
+        return true;
     }
 
     private void InitializeBatchLayerUpdater()
@@ -206,8 +240,9 @@ public class ConfigurationManager : MonoBehaviour
                 }
                 else if (item.Key.Equals("residual_timing"))
                 {
-                    Debug.Log("残厚定时更新");
+                    Debug.Log("残厚和凝铁层定时更新");
                     StartCoroutine(DataServiceManager.Instance.GetResidualThicknessPic(ResidualUpdater.Instance.UpdateResidual));
+                    StartCoroutine(DataServiceManager.Instance.GetCondensateIronPic(ResidualUpdater.Instance.UpdateCondensate));
                 }
                 else if (item.Key.Equals("liaoceng_timing") && enableLiaoceng)
                 {

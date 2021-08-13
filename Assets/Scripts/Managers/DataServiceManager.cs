@@ -20,9 +20,10 @@ public class DataServiceManager : Singleton<DataServiceManager>
 
     private string ip = null;
     private string port = null;
-    private DownloadHandlerTexture heatMapPic;
-    private DownloadHandlerTexture internalDataPic;
-    private DownloadHandlerTexture residualHandler;
+    private DownloadHandlerTexture heatMapPic; // 热力图
+    private DownloadHandlerTexture internalDataPic; // 炉内
+    private DownloadHandlerTexture residualHandler; // 残厚
+    private DownloadHandlerTexture condensateHandler; // 凝铁层
     // public static DataServiceManager Instance()
     // {
 
@@ -79,6 +80,7 @@ public class DataServiceManager : Singleton<DataServiceManager>
         heatMapPic = new DownloadHandlerTexture(true);
         internalDataPic = new DownloadHandlerTexture(true);
         residualHandler = new DownloadHandlerTexture(true);
+        condensateHandler = new DownloadHandlerTexture(true);
         bool ip_exist = false;
         bool port_exit = false;
         foreach (KeyValuePair<string, string> c in config)
@@ -108,6 +110,23 @@ public class DataServiceManager : Singleton<DataServiceManager>
             Debug.Log("No ip or port, please set the config file!");
         }
 
+    }
+
+    public IEnumerator Login(Func<string, bool> DataArrangement, string name, string password)
+    {
+        if (initialized)
+        {
+            UnityWebRequest www = UnityWebRequest.Get(url + "/verify?username=" + name + "&password=" + password);
+            yield return www.SendWebRequest();
+            if(www.isNetworkError || www.isHttpError)
+            {
+                Debug.LogWarning(www.error);
+            }
+            else
+            {
+                DataArrangement(www.downloadHandler.text);
+            }
+        }
     }
 
     public IEnumerator GetUnityConfig(Func<string, bool> DataArrangement, string config_file)
@@ -189,13 +208,14 @@ public class DataServiceManager : Singleton<DataServiceManager>
     {
         if (initialized)
         {
-            UnityWebRequest www = UnityWebRequest.Get(url + "/residualThickness"); //创建UnityWebRequest对象
-            www.downloadHandler = residualHandler;
-            yield return www.SendWebRequest();                                 //等待返回请求的信息
+            UnityWebRequest www_residual = UnityWebRequest.Get(url + "/residualThicknessFromBG"); //创建UnityWebRequest对象
+            www_residual.downloadHandler = residualHandler;
 
-            if (www.isNetworkError || www.isHttpError)
+            yield return www_residual.SendWebRequest(); //等待返回请求的信息
+
+            if (www_residual.isNetworkError || www_residual.isHttpError)
             {
-                Debug.Log(www.error);
+                Debug.Log(www_residual.error);
                 yield break;
             }
             else
@@ -205,6 +225,28 @@ public class DataServiceManager : Singleton<DataServiceManager>
             }
         }
     }
+
+    public IEnumerator GetCondensateIronPic(Func<Texture2D, bool> DataArrangement)
+    {
+        if (initialized)
+        {
+            UnityWebRequest www_condensate = UnityWebRequest.Get(url + "/ningtieFromBG");
+            www_condensate.downloadHandler = condensateHandler;
+            yield return www_condensate.SendWebRequest(); //等待返回请求的信息
+
+            if (www_condensate.isNetworkError || www_condensate.isHttpError)
+            {
+                Debug.Log(www_condensate.error);
+                yield break;
+            }
+            else
+            {
+                DataArrangement(condensateHandler.texture);
+                // Or retrieve results as binary data
+            }
+        }
+    }
+
 
     public IEnumerator GetTemperature(Func<string, bool> DataArrangement, string layer = "0")
     {

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using System;
 
-public class ConfigurationManager_Simple : MonoBehaviour
+public class ConfigurationManager_Simple : MonoSingleton<ConfigurationManager_Simple>
 {
     public string xiange = "";
     public string school = "";
