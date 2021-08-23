@@ -242,7 +242,9 @@ public class ConfigurationManager : MonoSingleton<ConfigurationManager>
                 {
                     Debug.Log("残厚和凝铁层定时更新");
                     StartCoroutine(DataServiceManager.Instance.GetResidualThicknessPic(ResidualUpdater.Instance.UpdateResidual));
+                    StartCoroutine(DataServiceManager.Instance.GetResidualThicknessMaxMin(ResidualUpdater.Instance.UpdateResidualThicknessMaxMin));
                     StartCoroutine(DataServiceManager.Instance.GetCondensateIronPic(ResidualUpdater.Instance.UpdateCondensate));
+                    StartCoroutine(DataServiceManager.Instance.GetCondensateIronMaxMin(ResidualUpdater.Instance.UpdateCondensateIronMaxMin));
                 }
                 else if (item.Key.Equals("liaoceng_timing") && enableLiaoceng)
                 {

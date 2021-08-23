@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using System.Security.Cryptography;
 using System;
 
-public class DataServiceManager : Singleton<DataServiceManager>
+public class DataServiceManager : MonoSingleton<DataServiceManager>
 {
     // private static DataServiceManager _instance = null;
     // private static readonly object lockHelper = new object();
@@ -44,7 +44,6 @@ public class DataServiceManager : Singleton<DataServiceManager>
 
     public void initialize(Dictionary<string, string> config)
     {
-
         // Regex regex = new Regex(@"(?<key>\S+)\s*:\s*(?<item>\S+)", RegexOptions.IgnoreCase);
         // config = new Dictionary<string, string>();
         // string[] config_lines = System.IO.File.ReadAllLines(config_path);
@@ -226,6 +225,25 @@ public class DataServiceManager : Singleton<DataServiceManager>
         }
     }
 
+    public IEnumerator GetResidualThicknessMaxMin(Func<string, bool> DataArrangement)
+    {
+        if (initialized)
+        {
+            UnityWebRequest www = UnityWebRequest.Get(url + "/residualThicknessFromBGMaxMin");
+            yield return www.SendWebRequest(); //等待返回请求的信息
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+                yield break;
+            }
+            else
+            {
+                DataArrangement(www.downloadHandler.text);
+            }
+        }
+    }
+
     public IEnumerator GetCondensateIronPic(Func<Texture2D, bool> DataArrangement)
     {
         if (initialized)
@@ -243,6 +261,25 @@ public class DataServiceManager : Singleton<DataServiceManager>
             {
                 DataArrangement(condensateHandler.texture);
                 // Or retrieve results as binary data
+            }
+        }
+    }
+
+    public IEnumerator GetCondensateIronMaxMin(Func<string, bool> DataArrangement)
+    {
+        if (initialized)
+        {
+            UnityWebRequest www = UnityWebRequest.Get(url + "/ningtieFromBGMaxMin");
+            yield return www.SendWebRequest(); //等待返回请求的信息
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+                yield break;
+            }
+            else
+            {
+                DataArrangement(www.downloadHandler.text);
             }
         }
     }
