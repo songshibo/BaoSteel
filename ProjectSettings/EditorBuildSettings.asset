@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/BakeScene.unity
     guid: 043bad1f751347e448bfca42197b00bf
+  - enabled: 0
+    path: Assets/Scenes/SimpleScene.unity
+    guid: ed0dc45ead447ea4fa984d61ed5c3623
   m_configObjects: {}

@@ -47,6 +47,11 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 
     private bool profileStatus; // 是否打开了剖面
 
+    private float condensateIronMax;
+    private float condensateIronMin;
+    private float residualThicknessMax;
+    private float residualThicknessMin;
+
     public void Initialize()
     {
         gradientTex = gradient.GetTexture(512, 1);
@@ -149,7 +154,6 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         {
             InvertSamplingFromRayCast(last.pos, last.isBottom);
         }
-        
         return true;
     }
 
@@ -198,7 +202,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         UpdateKeyword();
     }
 
-    // 碰撞点，然后采样得到碰撞点腐蚀的详细信息
+    // 碰撞点，然后采样得到碰撞点处的残厚详细信息
     public void InvertSamplingFromRayCast(Vector3 hitpoint, bool isBottom)
     {
         int x, y;
@@ -221,16 +225,22 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         if (residualThicknessTex != null && condensateIronTex != null)
         {
             float value = 0f;
+            float corosion = 0f;
             if (displayMode == ResidualType.ResidualOnly)
             {
                 value = residualThicknessTex.GetPixel(x, y).r;
+                corosion = value * (residualThicknessMax - residualThicknessMin) + residualThicknessMin;
+                Debug.LogWarning("贴图:" + value + "   最大值:" + residualThicknessMax + "  最小值:" + residualThicknessMin);
             }
             else if(displayMode == ResidualType.CondensateOnly)
             {
                 value = condensateIronTex.GetPixel(x, y).r;
+                corosion = value * (condensateIronMax - condensateIronMin) + condensateIronMin;
+                Debug.LogWarning("贴图:" + value + "   最大值:" + condensateIronMax + "  最小值:" + condensateIronMin);
             }
+            
+            //corosion = Util.MAX_CORROSION * value;
 
-            float corosion = Util.MAX_CORROSION * value;
             last.pos = hitpoint;
             last.isBottom = isBottom;
             residualPanel.SetActive(true);
@@ -275,6 +285,42 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
             default:
                 break;
         }
+    }
+
+    // 更新凝铁层数据的最大值最小值
+    internal bool UpdateCondensateIronMaxMin(string content)
+    {
+        JToken items = JObject.Parse(content);
+        foreach (JProperty item in items)
+        {
+            if (item.Name.Equals("max"))
+            {
+                condensateIronMax = float.Parse(item.Value.ToString());
+            }
+            else if (item.Name.Equals("min"))
+            {
+                condensateIronMin = float.Parse(item.Value.ToString());
+            }
+        }
+        return true;
+    }
+
+    // 更新残厚数据的最大值最小值
+    internal bool UpdateResidualThicknessMaxMin(string content)
+    {
+        JToken items = JObject.Parse(content);
+        foreach (JProperty item in items)
+        {
+            if (item.Name.Equals("max"))
+            {
+                residualThicknessMax = float.Parse(item.Value.ToString());
+            }
+            else if (item.Name.Equals("min"))
+            {
+                residualThicknessMin = float.Parse(item.Value.ToString());
+            }
+        }
+        return true;
     }
 
     public void SwitchProfile(float angle)
