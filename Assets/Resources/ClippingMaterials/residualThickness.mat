@@ -43,16 +43,16 @@ Material:
     m_Floats:
     - DISPLAYMODE: 0
     - FadeDistance: 1.45
-    - _BottomRadius: 6.877
+    - _BottomRadius: 5.845
     - _BumpScale: 1
-    - _CorrosionScale: 2
-    - _MaxHeight: 14.29
-    - _MinHeight: 8.132
+    - _CorrosionScale: 1
+    - _MaxHeight: 16.59
+    - _MinHeight: 8.36
     - _Smoothness: 0.6
     m_Colors:
     - _Albedo: {r: 1, g: 1, b: 1, a: 0}
     - _BottomPlane: {r: 0, g: 0, b: 0, a: 0}
     - _SectionColor: {r: 0, g: 0, b: 0, a: 0}
     - _TopPlane: {r: 0, g: 200, b: 0, a: 0}
-    - _VerticalNormal: {r: -1, g: 0, b: 0.000000011924881, a: 0}
+    - _VerticalNormal: {r: 0, g: 0, b: 1, a: 0}
     - _VerticalPlane: {r: 0, g: 0, b: 0, a: 0}
