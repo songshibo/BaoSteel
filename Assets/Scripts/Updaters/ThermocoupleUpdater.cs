@@ -31,8 +31,10 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
         // 目前是计算，可以考虑从数据库里读取
         float angle = Util.ComputeThermocoupleAngle(lastHitted.transform.position);
         float height = (float)Math.Round(lastHitted.transform.position.y, 2);
-        // 获取热电偶的温度
-        infoText.text = "温度:" + GetTempByName(mergedName) + "°C\n" + "角度:" + angle.ToString() + "°\n" + "高度:" + height.ToString() + "m";
+
+        string residual = ResidualUpdater.Instance.GetResidualString(angle, height);
+
+        infoText.text = "温度:" + GetTempByName(mergedName) + "°C\n" + residual + "角度:" + angle.ToString() + "°\n" + "高度:" + height.ToString() + "m";
         return mergedName;
     }
 

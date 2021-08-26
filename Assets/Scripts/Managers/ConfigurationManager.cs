@@ -34,10 +34,7 @@ public class ConfigurationManager : MonoSingleton<ConfigurationManager>
         Debug.Log("Intialized from local configurations");
 #endif
         // login
-        bg = GameObject.Find("LoginBG").transform;
-        user_name = bg.Find("user_name").GetComponent<TMP_InputField>();
-        user_password = bg.Find("user_password").GetComponent<TMP_InputField>();
-        message = bg.Find("message").GetComponent<TextMeshProUGUI>();
+        //InitializeLogin();
 
         times = new Dictionary<string, float[]>();
         // No-Async
@@ -59,6 +56,14 @@ public class ConfigurationManager : MonoSingleton<ConfigurationManager>
         CullingController.Instance.ResetMaterialProperties();
         // 单独处理heatmap材质，将其设置为正常渲染模式
         Resources.Load<Material>("ClippingMaterials/heatmap").SetFloat("_RenderType", 0);
+    }
+
+    private void InitializeLogin()
+    {
+        bg = GameObject.Find("LoginBG").transform;
+        user_name = bg.Find("user_name").GetComponent<TMP_InputField>();
+        user_password = bg.Find("user_password").GetComponent<TMP_InputField>();
+        message = bg.Find("message").GetComponent<TextMeshProUGUI>();
     }
 
     public void Login()

@@ -202,10 +202,57 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         UpdateKeyword();
     }
 
+    // 根据高度角度 获取 残厚  或  凝铁层的腐蚀值
+    private float GetResidual(float angle, float height)
+    {
+        int x, y;
+        x = Mathf.RoundToInt(angle / 350f * xRes);
+        y = Mathf.RoundToInt(height / Util.HEARTH_HEIGHT * yRes);
+        float value = 0f;
+        float corosion = -1f;
+        if (displayMode == ResidualType.ResidualOnly)
+        {
+            value = residualThicknessTex.GetPixel(x, y).r;
+            corosion = value * (residualThicknessMax - residualThicknessMin) + residualThicknessMin;
+        }
+        else if (displayMode == ResidualType.CondensateOnly)
+        {
+            value = condensateIronTex.GetPixel(x, y).r;
+            corosion = value * (condensateIronMax - condensateIronMin) + condensateIronMin;
+        }
+        return corosion;
+    }
+
+    // 根据高度角度 获取 残厚  和  凝铁层的腐蚀值，返回字符串
+    // 点击热电偶时调用
+    public string GetResidualString(float angle, float height)
+    {
+        string residual = "";
+        if (height > 8.36f && height < 16.58f)
+        {
+            int x, y;
+            x = Mathf.RoundToInt(angle / 350f * xRes);
+            y = Mathf.RoundToInt(height / Util.HEARTH_HEIGHT * yRes);
+            float value = 0f;
+            float corosion = -1f;
+
+            residual += "残厚:";
+            value = residualThicknessTex.GetPixel(x, y).r;
+            corosion = value * (residualThicknessMax - residualThicknessMin) + residualThicknessMin;
+            residual += Math.Round(corosion, 3).ToString() + "m\n";
+            
+            residual += "凝铁层:";
+            value = condensateIronTex.GetPixel(x, y).r;
+            corosion = value * (condensateIronMax - condensateIronMin) + condensateIronMin;
+            residual += Math.Round(corosion, 3).ToString() + "m\n";
+        }
+        return residual;
+    }
+
     // 碰撞点，然后采样得到碰撞点处的残厚详细信息
     public void InvertSamplingFromRayCast(Vector3 hitpoint, bool isBottom)
     {
-        int x, y;
+        
         float angle = Util.ComputeThermocoupleAngle(hitpoint);
         float height = 0;
         if (!isBottom)
@@ -218,29 +265,10 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
             height = (radius / Util.BOTTOM_R * Util.BOTTOM_H);
         }
 
-        x = Mathf.RoundToInt(angle / 350f * xRes);
-        y = Mathf.RoundToInt(height / Util.HEARTH_HEIGHT * yRes);
-
-
         if (residualThicknessTex != null && condensateIronTex != null)
         {
-            float value = 0f;
-            float corosion = 0f;
-            if (displayMode == ResidualType.ResidualOnly)
-            {
-                value = residualThicknessTex.GetPixel(x, y).r;
-                corosion = value * (residualThicknessMax - residualThicknessMin) + residualThicknessMin;
-                Debug.LogWarning("贴图:" + value + "   最大值:" + residualThicknessMax + "  最小值:" + residualThicknessMin);
-            }
-            else if(displayMode == ResidualType.CondensateOnly)
-            {
-                value = condensateIronTex.GetPixel(x, y).r;
-                corosion = value * (condensateIronMax - condensateIronMin) + condensateIronMin;
-                Debug.LogWarning("贴图:" + value + "   最大值:" + condensateIronMax + "  最小值:" + condensateIronMin);
-            }
-            
+            float corosion = GetResidual(angle, height);
             //corosion = Util.MAX_CORROSION * value;
-
             last.pos = hitpoint;
             last.isBottom = isBottom;
             residualPanel.SetActive(true);

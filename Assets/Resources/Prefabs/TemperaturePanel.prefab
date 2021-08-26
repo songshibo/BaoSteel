@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 12.5, y: 17.5}
-  m_SizeDelta: {x: -25, y: -35}
+  m_AnchoredPosition: {x: 12.496062, y: 17.5}
+  m_SizeDelta: {x: -24.992125, y: -35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &517009157707691301
 CanvasRenderer:
@@ -64,10 +64,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: " 55.75 \xB0C"
+  m_text: "55.75 \xB0C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
-  m_sharedMaterial: {fileID: 1328667481471920332, guid: 84403340998c62b4aa786792b57b5a05,
+  m_sharedMaterial: {fileID: -2337177162335540816, guid: 84403340998c62b4aa786792b57b5a05,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -535,12 +535,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Angle: 180
-
-    Height: 47.2'
+  m_text: "\u89D2\u5EA6: 180\n\u9AD8\u5EA6: 47.2"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84403340998c62b4aa786792b57b5a05, type: 2}
-  m_sharedMaterial: {fileID: 1328667481471920332, guid: 84403340998c62b4aa786792b57b5a05,
+  m_sharedMaterial: {fileID: -2337177162335540816, guid: 84403340998c62b4aa786792b57b5a05,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
