@@ -104,6 +104,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         {
             foreach (RaycastHit hit in hitArr)
             {
+                Debug.LogWarning(hit.transform.name);
                 if (hit.transform.name.Equals(transform.name))
                 {
                     if (hit.normal.y == 1)

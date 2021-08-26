@@ -43,11 +43,11 @@ Material:
     m_Floats:
     - DISPLAYMODE: 0
     - FadeDistance: 1.45
-    - _BottomRadius: 6.877
+    - _BottomRadius: 5.845
     - _BumpScale: 1
     - _CorrosionScale: 1
-    - _MaxHeight: 14.29
-    - _MinHeight: 8.132
+    - _MaxHeight: 16.59
+    - _MinHeight: 8.36
     - _Smoothness: 0.6
     m_Colors:
     - _Albedo: {r: 1, g: 1, b: 1, a: 0}
