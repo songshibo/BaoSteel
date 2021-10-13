@@ -34,7 +34,7 @@ public class ConfigurationManager : MonoSingleton<ConfigurationManager>
         Debug.Log("Intialized from local configurations");
 #endif
         // login
-        //InitializeLogin();
+        // InitializeLogin();
 
         times = new Dictionary<string, float[]>();
         // No-Async

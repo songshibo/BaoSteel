@@ -14,8 +14,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     {
         Standard,
         ResidualOnly,
-        CondensateOnly,
-        Combined
+        CondensateOnly
     }
     public struct LastPos
     {
@@ -60,7 +59,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
 
         if (residualMaterial != null)
         {
-            residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
+            //residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
             residualMaterial.SetFloat("_MaxHeight", Util.HEARTH_HEIGHT);
             residualMaterial.SetFloat("_BottomRadius", Util.BOTTOM_R);
             residualMaterial.SetFloat("_MinHeight", Util.BOTTOM_H);
@@ -150,7 +149,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         {
             residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
         }
-        residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
+        //residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
         if (last.pos.y != 0 && displayMode == ResidualType.ResidualOnly && residualPanel.activeSelf)
         {
             InvertSamplingFromRayCast(last.pos, last.isBottom);
@@ -169,7 +168,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
             residualMaterial.SetTexture("_ResidualThickness", condensateIronTex);
         }
         
-        residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
+        //residualMaterial.SetFloat("_CorrosionScale", corrosionScale);
         if (last.pos.y != 0 && displayMode == ResidualType.CondensateOnly && residualPanel.activeSelf)
         {
             InvertSamplingFromRayCast(last.pos, last.isBottom);
@@ -180,6 +179,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     // 切换到标准状态，显示正常的炉缸
     public void ToStandard()
     {
+        Debug.LogWarning("ToStandard");
         ShowResidualPanel(false);
         displayMode = ResidualType.Standard;
         UpdateKeyword();
@@ -188,6 +188,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     // 切换到残厚
     public void ToResidualThickness()
     {
+        Debug.LogWarning("Toresidual");
         ShowResidualPanel(false);
         displayMode = ResidualType.ResidualOnly;
         residualMaterial.SetTexture("_ResidualThickness", residualThicknessTex);
@@ -197,6 +198,7 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
     // 切换到凝铁层
     public void ToCondensateIron()
     {
+        Debug.LogWarning("ToCondensate");
         ShowResidualPanel(false);
         displayMode = ResidualType.CondensateOnly;
         residualMaterial.SetTexture("_ResidualThickness", condensateIronTex);
@@ -284,32 +286,26 @@ public class ResidualUpdater : MonoSingleton<ResidualUpdater>
         switch (displayMode)
         {
             case ResidualType.Standard:
+                Debug.LogWarning("standard updatekeyword");
                 // Debug.Log("Residual Thickness Display Mode: Standard");
                 residualMaterial.EnableKeyword("DISPLAYMODE_STANDARD");
                 residualMaterial.DisableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
-                residualMaterial.DisableKeyword("DISPLAYMODE_COMBINE");
                 break;
             case ResidualType.ResidualOnly:
+                Debug.LogWarning("residual updatekeyword");
                 // Debug.Log("Residual Thickness Display Mode: Residual Only");
                 // Debug.Log("Corrsion Scale:" + residualMaterial.GetFloat("_CorrosionScale"));
                 // Debug.Log("Bottom Radius:" + residualMaterial.GetFloat("_BottomRadius"));
                 residualMaterial.DisableKeyword("DISPLAYMODE_STANDARD");
                 residualMaterial.EnableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
-                residualMaterial.DisableKeyword("DISPLAYMODE_COMBINE");
                 break;
             case ResidualType.CondensateOnly:
+                Debug.LogWarning("condensate updatekeyword");
                 // Debug.Log("Residual Thickness Display Mode: CondensateOnly");
                 // Debug.Log("Corrsion Scale:" + residualMaterial.GetFloat("_CorrosionScale"));
                 // Debug.Log("Bottom Radius:" + residualMaterial.GetFloat("_BottomRadius"));
                 residualMaterial.DisableKeyword("DISPLAYMODE_STANDARD");
                 residualMaterial.EnableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
-                residualMaterial.DisableKeyword("DISPLAYMODE_COMBINE");
-                break;
-            case ResidualType.Combined:
-                // Debug.Log("Residual Thickness Display Mode: Combined");
-                residualMaterial.DisableKeyword("DISPLAYMODE_STANDARD");
-                residualMaterial.DisableKeyword("DISPLAYMODE_RESIDUALTHICKNESS");
-                residualMaterial.EnableKeyword("DISPLAYMODE_COMBINE");
                 break;
             default:
                 break;
