@@ -85,7 +85,7 @@ public class ThermocoupleUpdater : MonoSingleton<ThermocoupleUpdater>
 
     public bool UpdateThermocoupleData(string content)
     {
-        print(content);
+        // print(content);
         JToken items = JObject.Parse(content);
         Dictionary<string, string> name_temperature = new Dictionary<string, string>();
         char[] MyChar = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
